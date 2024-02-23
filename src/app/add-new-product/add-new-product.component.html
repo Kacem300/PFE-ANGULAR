@@ -1,0 +1,98 @@
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/Drag-Drop-File-Input-Upload.css">
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+<div class="container mt-5">
+  <div class="card p-2">
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+          <form #productForm="ngForm"(ngSubmit)="addProduct(productForm)" >
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>productName</mat-label>
+            <input matInput placeholder="productName" [(ngModel)]="product.productName" name="productName"
+            >
+
+
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>productDescription</mat-label>
+            <input matInput placeholder="productDescription"
+            [(ngModel)]="product.productDescription" name="productDescription"
+            >
+
+
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>productDiscountPrice</mat-label>
+            <input matInput placeholder="productDiscountPrice" [(ngModel)]="product.productDiscountprice" name="productDiscountPrice">
+
+
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>productActualPrice</mat-label>
+            <input matInput placeholder="productActualPrice" [(ngModel)]="product.productActualprice" name="productActualPrice">
+
+
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>productNote</mat-label>
+            <input matInput placeholder="productNote" [(ngModel)]="product.productNote"name="productNote">
+
+
+          </mat-form-field>
+
+          <div style="text-align:end">
+
+            <button class="buttonaddprod"mat-stroked-button color="primary" style="margin-right: 3px;" >Clear</button>
+          <button  class="buttonaddprod" type="submit" mat-stroked-button color="primary" *ngIf="newbutton==true">Add New Product</button>
+          <button  class="buttonaddprod" type="submit" mat-stroked-button color="primary" *ngIf="newbutton==false">Update</button>
+
+        </div>
+
+        </form>
+      </div>
+
+
+      <div class="col-lg-6 col-md-12">
+        <div>
+            <div class="dropzone"
+            appDrag
+            (files)="fileDropped($event)" >
+               <div class="text-wrap">
+                <div class="centered">
+                  <a (click)="selectFile.click()" class="broswse"> Drag and Drop your file or browse a file</a>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="form-group files color"><input type="file" multiple="" name="files"></div> -->
+
+            <input type="file" style="display: none;" value="select" #selectFile
+            (change)="SelectFile($event)">
+          </div>
+           <div class="mt-5">
+            <div class="row">
+              <mat-grid-list cols="4" rowHeight="1:1">
+                <mat-grid-tile *ngFor="let file of product.productImages;let  i = index;" >
+                <div style="position: relative">
+                  <span class="btn-remove-image" (click)="removeimage(i)">X</span>
+                <img [src]="file.url" width="100px" height="100px">
+                </div>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+           </div>
+       </div>
+
+
+    </div>
+
+
+</div>
+</div>
+

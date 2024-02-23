@@ -1,0 +1,42 @@
+ .space-buttons{
+  flex: 1 1 auto;
+}
+.home{
+  font-size: medium;
+}
+
+button{
+margin-left: auto;
+}
+
+html, body {
+  height: 0%;
+}
+
+
+body {
+  padding-top: 70px; /* Adjust this value as needed */
+}
+.main-content {
+  padding-top: 70px; /* Adjust this value as needed */
+}
+
+
+.navbar.navbar-expand-lg.navbar-dark{
+background: rgb(34, 34, 34);
+border-radius: 20;
+border-top-left-radius: 20;
+border-top-right-radius: 20;
+border-bottom-right-radius: 20;
+border-bottom-left-radius: 20;
+border-style: none;
+padding-top:0px;
+padding-bottom: 10px;
+margin-bottom: 20px;
+position: fixed;
+width: 100%;
+top: 0;
+z-index: 1000;
+
+}
+

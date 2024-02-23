@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Shopping Grid</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Roboto.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/Shopping-Grid.css">
+</head>
+
+<body><div class="shopping-grid">
+    <div class="container">
+    <h3 align="center">Newest Trends</h3>
+    <div class="row">
+        <div class="col-md-3 col-sm-6" style="padding-bottom: 40px;" *ngFor="let item of productDetails" >
+            <div class="product-grid7">
+              <div class="product-image7" >
+                <img  [class]="getClass(i)" [src]="fileHandle.url" *ngFor="let fileHandle of item.productImages; let i = index">
+
+                    <ul class="social">
+                        <li><a href="" class="fa fa-search"></a></li>
+                        <li><a href="" class="fa fa-shopping-bag"></a></li>
+                        <li><a href="" class="fa fa-shopping-cart"></a></li>
+                    </ul>
+                    <span class="product-new-label">New</span>
+                </div>
+                <div class="product-content">
+                    <h3 class="title"><a href="#">{{item.productName}}</a></h3>
+                    <ul class="rating">
+                        <li class="fa fa-star"></li>
+                        <li class="fa fa-star"></li>
+                        <li class="fa fa-star"></li>
+                        <li class="fa fa-star"></li>
+                        <li class="fa fa-star"></li>
+                    </ul>
+                    <div>
+                      {{item.productDescription}}
+                    </div>
+                    <div class="price">{{item.productDiscountprice}} TND
+                        <span>{{item.productActualprice}} TND</span>
+                    </div>
+                    <div class="d-flex justify-content-center w-60">
+                      <button class="btn btn-primary btn-sm custom-button" (click)="showprodcut(item.productId)"> Details </button>
+                      <button class="btn btn-primary btn-sm custom-button" (click)="item.show=true" *ngIf="!item.show"> ADD </button>
+                      <input type="number" class="form-control" *ngIf="item.show" [(ngModel)]="amount" min="1">
+                      <button type="button" class="btn btn-danger custom-button" *ngIf="item.show" (click)="add();item.show=false">ADD</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+</div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+

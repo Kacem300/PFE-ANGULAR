@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+<!--   style="background: rgb(34, 34, 34);border-radius: 20;border-top-left-radius: 20;border-top-right-radius: 20;border-bottom-right-radius: 20;border-bottom-left-radius: 20;border-style: none;padding-top:0px;padding-bottom: 10px;margin-bottom: 20px;" -->  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="" style="color: rgba(224,217,217,0.9);"><i class="bi bi-landscape"></i> THE VALLEY</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isloggedIn()">
+        <li class="nav-item">
+          <a class="nav-link " aria-current="page" routerLink="" style="color: rgba(224,217,217,0.9);"><i class="bi bi-house-door"></i>Home</a>
+        </li>
+
+        <li class="nav-item" *ngIf="UserService.roleMatch(['Admin'])" >
+          <a class="nav-link " aria-current="page"  routerLink="/addNewProduct" *ngIf="isAdmin()"><i class="bi bi-house-door"></i>Add Product</a>
+        </li>
+        <li class="nav-item" *ngIf="UserService.roleMatch(['Admin'])" >
+          <a class="nav-link " aria-current="page"  routerLink="/productDetails" *ngIf="isAdmin()"><i class="bi bi-house-door"></i>Products</a>
+        </li>
+        <li class="nav-item" *ngIf="UserService.roleMatch(['Admin'])">
+          <a class="nav-link" aria-current="page" routerLink="/admin"><i class="bi bi-gear"></i>Dashboard</a>
+        </li>
+        <li class="nav-item" *ngIf="UserService.roleMatch(['User'])">
+          <a class="nav-link" aria-current="page" routerLink="/user"><i class="bi bi-person"></i>Dashboard</a>
+        </li>
+      </ul>
+      <button type="button" class="btn btn-success" routerLink="/login" *ngIf="!isloggedIn()" style="color: rgba(0,0,0,0.9);background: var(--bs-gray-200);border-radius: 10px;border-style: solid;border-color: rgba(0,0,0,0.9);font-size: 16px;padding: 5px 8px;"> <i class="bi bi-box-arrow-in-right"></i> Login</button>
+      <button type="button" class="btn btn-danger" *ngIf="isloggedIn()" (click)='islogout()' style="color: rgba(0,0,0,0.9);background: var(--bs-gray-200);border-radius: 10px;border-style: solid;border-color: rgba(0,0,0,0.9);font-size: 16px;padding: 5px 8px;"><i class="bi bi-box-arrow-right"></i> Logout</button>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink=""><i class="bi bi-landscape"></i> THE VALLEY</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isloggedIn()">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink=""><i class="bi bi-house-door"></i> Home</a>
+        </li>
+
+        <li class="nav-item" *ngIf="UserService.roleMatch(['Admin'])" >
+          <a class="nav-link active" aria-current="page"  routerLink="/addNewProduct" *ngIf="isAdmin()"><i class="bi bi-house-door"></i>Add new product</a>
+        </li>
+        <li class="nav-item" *ngIf="UserService.roleMatch(['Admin'])" >
+          <a class="nav-link active" aria-current="page"  routerLink="/productDetails" *ngIf="isAdmin()"><i class="bi bi-house-door"></i>product details</a>
+        </li>
+        <li class="nav-item" *ngIf="UserService.roleMatch(['Admin'])">
+          <a class="nav-link" aria-current="page" routerLink="/admin"><i class="bi bi-gear"></i> Admin Dashboard</a>
+        </li>
+        <li class="nav-item" *ngIf="UserService.roleMatch(['User'])">
+          <a class="nav-link" aria-current="page" routerLink="/user"><i class="bi bi-person"></i> User Dashboard</a>
+        </li>
+      </ul>
+      <button type="button" class="btn btn-success" routerLink="/login" *ngIf="!isloggedIn()" > <i class="bi bi-box-arrow-in-right"></i> Login</button>
+      <button type="button" class="btn btn-danger" *ngIf="isloggedIn()" (click)='islogout()' ><i class="bi bi-box-arrow-right"></i> Logout</button>
+
+    </div>
+  </div>
+</nav>
+ -->

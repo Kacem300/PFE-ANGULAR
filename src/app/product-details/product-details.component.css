@@ -1,0 +1,10 @@
+/* .description{
+    font-size: 20px;
+    color: #5a5a5a;
+    margin-top: 20px;
+}
+ */
+ .description{
+  width: 35% !important;
+  text-align: left;
+ }
