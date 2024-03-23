@@ -21,13 +21,15 @@ export class AuthInterceptor implements HttpInterceptor{
     if(token){
       req = this.addToken(req,token);
     }
-   console.log("Authorization header: ", req.headers.get('Authorization'));
+
    return next.handle(req).pipe(
     catchError(
       (err:HttpErrorResponse)=>{
         console.log(err.status);
         if(err.status === 401 ){
-          this.router.navigate(['/login']);
+         /*  this.router.navigate(['/login']); */
+         console.log("unauthorized" + err.message)
+          console.log("unauthorized" + err.message)
         } else if(err.status === 403){
           this.router.navigate(['/forbidden']);
 

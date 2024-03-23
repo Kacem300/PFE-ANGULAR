@@ -1,39 +1,7 @@
-.container{
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
-p{
-  background-color: rgba(11,64,39,0.95);
-font-size: small;
-  color: aliceblue;
-
-}
-button.custom-button {
-  background-color: rgb(0, 0, 0) !important;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-  outline: none;
-  padding: 10px;
-  font-size: 16px;
-  margin-right: 1%;
-  margin-left: 1%;
+.text-primary {
+  color: #007bff; /* This is the primary color in Bootstrap. Adjust as needed. */
 }
 
-.card{
-  float: right;
-  margin-right: 5%;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  margin-left: 5%;
-  width: 18rem;
-  height: 28rem;
-
-
+.font-48px {
+  font-size: 48px;
 }
-.card:hover{
-  transform: scale(1.1);
-}
-
-

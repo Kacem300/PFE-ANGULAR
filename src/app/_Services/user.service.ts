@@ -13,7 +13,10 @@ export class UserService {
   )
   constructor(private httpclient:HttpClient,private userauthservice:UserAuthService) { }
 
-
+  public registerNewUser(registerData :any){
+    return this.httpclient.post(this.PATH+"/registerNewUser",registerData);
+      }
+      //headers content json/bearer
   public login(loginData: any){
     return this.httpclient.post(this.PATH + "/authenticate",loginData,{headers:this.requestHeaders})
   }
@@ -46,4 +49,6 @@ export class UserService {
     }
     return isMatch;
   }
+
+
 }

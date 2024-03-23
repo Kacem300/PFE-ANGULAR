@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { product } from '../_model/product.model';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ProductService } from '../_Services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FileHandle } from '../_model/file-handle.model';
@@ -14,6 +14,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AddNewProductComponent implements OnInit {
 newbutton :boolean = true ;
+
+
+
 product:product = {
   productId:0,
   productName:"",
@@ -23,17 +26,23 @@ product:product = {
   productNote:0,
   productImages:[]
 }
+
 constructor(private productService:ProductService,private sanitizer:DomSanitizer,private router:Router,private activatedroute:ActivatedRoute) {}
+
+
 ngOnInit(): void {
-  if(this.product = this.activatedroute.snapshot.data['product']){
+  if (this.product = this.activatedroute.snapshot.data['product']) {
     console.log("resolver wokring")
-   }else{
+  } else {
     console.log("resolver is not working")
-   }
-   if(this.product && this.product.productId){
-    this.newbutton=false;
-   }
+  }
+  if (this.product && this.product.productId) {
+    this.newbutton = false;
+  }
 }
+
+
+
 addProduct(productForm:NgForm){
  const productFormData =  this.prepareFromData(this.product)
 

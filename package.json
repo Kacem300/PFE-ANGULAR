@@ -27,7 +27,9 @@
     "jquery": "^3.7.1",
     "mdb-angular-ui-kit": "^6.0.0",
     "mdb-ui-kit": "^7.1.0",
-    "primeng": "^17.6.0",
+    "primeflex": "^3.3.1",
+    "primeicons": "^6.0.1",
+    "primeng": "^17.9.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

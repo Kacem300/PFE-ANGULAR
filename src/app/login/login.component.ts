@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  showPassword: boolean = false; // Initially password is hidden
+
+
 constructor(private userService: UserService, private  userAuthService:UserAuthService,private router:Router){
 
 }
@@ -35,5 +38,14 @@ constructor(private userService: UserService, private  userAuthService:UserAuthS
         console.log(error+ "Error in Logging In");
       }
     });
+  }
+
+  register(){
+    this.router.navigate(['/register']);
+  }
+
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

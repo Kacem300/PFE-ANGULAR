@@ -14,6 +14,11 @@ import { Router } from '@angular/router';
   styleUrl: './product-details.component.css'
 })
 export class ProductDetailsComponent implements OnInit {
+
+
+  showLoadMoreProductButton = false;
+
+  pageNumber: number = 0;
   productDetails:product[]=[];
 constructor(private productService:ProductService,
    public dialog:MatDialog,
@@ -27,9 +32,20 @@ ngOnInit():void{
 add(){
   this.router.navigate(['/addNewProduct'])
   }
+  loadMoreProduct() {
+    this.pageNumber = this.pageNumber + 1;
+    this.getAllProduct();
+  }
 
-public getAllProduct(){
-this.productService.getAllProduct()
+  searchByKeyword(searchkeyword:string) {
+    console.log(searchkeyword);
+    this.pageNumber = 0;
+    this.productDetails = [];
+    this.getAllProduct(searchkeyword);
+  }
+
+public getAllProduct(searchKeyword: string = ""){
+this.productService.getAllProduct(this.pageNumber,searchKeyword)
 .pipe(
   map((x: product[], i) => x.map((product: product) => this.imageService.createimage(product)))
 )
@@ -37,6 +53,12 @@ this.productService.getAllProduct()
   next:(response:product[])=>{
     console.log(response)
     this.productDetails = response;
+    if(response.length == 8) {
+      this.showLoadMoreProductButton = true;
+    } else {
+      this.showLoadMoreProductButton = false;
+    }
+
   },
   error:(Error:HttpErrorResponse) =>{
     console.log(Error+ " Error product-details")

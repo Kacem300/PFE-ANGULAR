@@ -27,6 +27,11 @@
   margin: auto;
   width: 100%;
   height: auto;
+  transition: transform 0.3s ease; /* Add transition for smooth zoom effect */
+
+}
+.product-zoom-image:hover {
+  transform: translate(-50%, -50%) scale(1.1); /* Scale the image up to 110% when hovered */
 }
 
 @media screen and (max-width: 768px) {

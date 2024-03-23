@@ -9,8 +9,14 @@ import { ImageProcesService } from './image-proces.service';
   providedIn: 'root'
 })
 export class ResolverService {
-  constructor(private productService:ProductService,private imageprocess:ImageProcesService) { }
-  resolve: ResolveFn<Observable<product>> = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+  constructor(
+    private productService:ProductService,
+    private imageprocess:ImageProcesService) { }
+
+  resolve: ResolveFn<Observable<product>> = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+    ) => {
 
     const id = Number(route.paramMap.get("productId"));
     if(id){
@@ -19,6 +25,7 @@ export class ResolverService {
     }else{
       return of(this.getProducts())
       console.log("error else resolver")
+
     }
   }
   getProducts(){
@@ -36,7 +43,5 @@ export class ResolverService {
 
   }
 }
-
-
 };
 

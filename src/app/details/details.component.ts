@@ -10,9 +10,6 @@ import { ProductService } from '../_Services/product.service';
 })
 export class DetailsComponent implements OnInit{
 
-
-
-
   selectedProductIndex = 0;
 
   product:product = {
@@ -24,7 +21,8 @@ export class DetailsComponent implements OnInit{
     productNote:0,
     productImages:[]
   }
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private productService: ProductService) { }
 
@@ -33,17 +31,24 @@ export class DetailsComponent implements OnInit{
      console.log(this.product)
   }
 
-  addToCart(productId:any) {
-
-  }
+ /*  addToCart(productId:number) {
+    this.productService.addToCart(productId).subscribe({
+      next:(response) => {
+        console.log(response);
+      },
+      error:(error)=> {
+        console.log(error);
+      }
+  });
+  } */
 
   changeIndex(index:number) {
     this.selectedProductIndex = index;
   }
 
-  buyProduct(productId:any) {
-    this.router.navigate(['/buyProduct', {
-      isSingleProductCheckout: true, id: productId
+  buyProduct(productId:number) {
+     this.router.navigate(['/buyProduct', {
+      single: true, productId: productId
     }]);
   }
 }

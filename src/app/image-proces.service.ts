@@ -29,20 +29,13 @@ export class ImageProcesService {
 
       productImagesToFileHandle.push(finalFileHandle);
     }
-
     product.productImages = productImagesToFileHandle;
     return product;
 
   }
 
-
-
-
-
-
-
-
-  public DataUriToBlob(picBytes:any,imageType:any){
+//converts a data URI (base64-encoded image data) to a blob
+   public DataUriToBlob(picBytes:any,imageType:any){
 const byteString = window.atob(picBytes);
 const arrayBuffer = new ArrayBuffer(byteString.length)
 const intarray = new Uint8Array(arrayBuffer);
@@ -52,5 +45,7 @@ for (var i = 0; i < byteString.length; i++) {
   const blob = new Blob ([intarray],{type:imageType})
   return blob;
   }
+
+
 
 }

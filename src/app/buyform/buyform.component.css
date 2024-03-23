@@ -1,0 +1,33 @@
+.card {
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control:focus {
+      box-shadow: none;
+    }
+
+    .buttonaddprod {
+      margin-right: 3px;
+    }
+
+    .table {
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .thead {
+      background-color: #f8f9fa;
+    }
+
+    .tbody tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    .tbody td {
+      vertical-align: middle;
+    }
+
+    .total-row {
+      font-weight: bold;
+    }

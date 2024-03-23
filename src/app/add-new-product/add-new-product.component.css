@@ -1,3 +1,4 @@
+/*
 .buttonaddprod{
   margin: 10px;
 }
@@ -25,7 +26,7 @@ mat-grid-tile {
   min-width: 100px;
   display: table;
   background-color: #eee;
-  width: 100%; /* Changed from 250px to 100% */
+  width: 100%;
   border: dashed 1px #aaa;
   border-radius: 10px;
   margin-left:auto;
@@ -46,16 +47,79 @@ mat-grid-tile {
    cursor: pointer;
 }
 
-/* Added media query for screens smaller than 768px */
+
 @media screen and (max-width: 768px) {
   .dropzone{
-    height: auto; /* Changed from 150px to auto */
-    min-width: 50px; /* Changed from 100px to 50px */
+    height: auto;
+    min-width: 50px;
+  }
+}
+*/
+/* styles.css */
+
+.buttonaddprod {
+  margin: 10px;
+}
+
+.mat-grid-tile {
+  border: 1px solid #eee;
+  padding: 5px;
+}
+
+.btn-remove-image {
+  position: absolute;
+  cursor: pointer;
+  top: 1px;
+  right: 1px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: auto;
+  text-align: center;
+}
+
+.dropzone {
+  height: 150px;
+  min-width: 100px;
+  display: table;
+  background-color: #eee;
+  width: 100%; /* Changed from 250px to 100% */
+  border: dashed 1px #aaa;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-wrap {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.centered {
+  text-align: center;
+}
+
+.broswse {
+  color: blue;
+  cursor: pointer;
+}
+
+/* Added media query for screens smaller than 768px */
+@media screen and (max-width: 768px) {
+  .img-thumbnail {
+    width: 100%;
+    height: auto;
   }
 }
 
+.btn{
+  margin: 10px;
+
+}
 
 
+/*
 
 /*
 .buttonaddprod{
