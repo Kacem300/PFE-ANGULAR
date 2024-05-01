@@ -25,7 +25,6 @@
             <h5 class="card-title text-primary">SHOW PRODUCTS</h5>
             <div class="input-group mb-3">
               <input type="text" class="form-control" placeholder="Search any product" aria-label="Search any product" aria-describedby="button-addon2" #searchkeyword (keyup)="searchByKeyword(searchkeyword.value)">
-              <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="searchByKeyword(searchkeyword.value)">Search</button>
             </div>
           </div>
           <div class="col-sm-6 text-end">
@@ -43,23 +42,53 @@
                 <th>Description</th>
                 <th>Actual Price</th>
                 <th>Discount Price</th>
+                <th>Quntity</th>
+                <th>Sizes</th>
+
                 <th>Actions</th>
+
               </tr>
             </thead>
             <tbody>
+              <ng-container *ngFor="let product of productDetails">
+                <tr *ngFor="let size of product.productSizes">
+                  <td>{{product.productId}}</td>
+                  <td>{{product.productName}}</td>
+                  <td>{{product.productDescription}}</td>
+                  <td>{{product.productActualprice}}</td>
+                  <td>{{product.productDiscountprice}}</td>
+                  <td>{{size.quantity}}</td>
+                  <td>{{size.size}}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary me-2" (click)="showImages(product)"><i class="far fa-eye"></i> </button>
+                    <button type="button" class="btn btn-success me-2" (click)="editProductDetails(product.productId)"><i class="fas fa-pen"></i></button>
+                    <!-- <button type="button" class="btn btn-danger" (click)="deleteProduct(product.productId)"><i class="fas fa-trash"></i> </button> -->
+                    <button type="button" class="btn btn-danger" (click)="deleteProduct(product.productId)"><i class="fas fa-trash"></i> </button>
+                      <p-toast></p-toast>
+                      <p-confirmDialog></p-confirmDialog>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+
+
+           <!--  <tbody>
               <tr *ngFor="let product of productDetails">
                 <td>{{product.productId}}</td>
                 <td>{{product.productName}}</td>
                 <td>{{product.productDescription}}</td>
                 <td>{{product.productActualprice}}</td>
                 <td>{{product.productDiscountprice}}</td>
+                <td>{{product.productSizes[0].quantity}}</td>
+                <td>{{product.productSizes[0].size}}</td>
+
                 <td>
                   <button type="button" class="btn btn-primary me-2" (click)="showImages(product)"><i class="far fa-eye"></i> </button>
                   <button type="button" class="btn btn-success me-2" (click)="editProductDetails(product.productId)"><i class="fas fa-pen"></i></button>
                   <button type="button" class="btn btn-danger" (click)="deleteProduct(product.productId)"><i class="fas fa-trash"></i> </button>
                 </td>
               </tr>
-            </tbody>
+            </tbody> -->
           </table>
         </div>
         <div class="card-footer text-center p-5" *ngIf="showLoadMoreProductButton">

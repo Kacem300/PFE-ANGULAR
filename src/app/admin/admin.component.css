@@ -1,0 +1,42 @@
+
+.container {
+  width: 100%;
+  max-width: 1200px; /* You can adjust this value to set the maximum width of the container */
+  margin: 0 auto; /* This will center the container */
+  padding:20px 0 20px 0; /* This will add some space on the sides of the container */
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* this will create responsive columns */
+  grid-gap: 20px; /* adjust this to change the gap between the grid items */
+}
+
+.card, p-chart {
+  width: 100%;  /* adjust this to change the width */
+  height: auto; /* adjust this to change the height */
+}
+
+.surface-card {
+  margin: 20px;  /* adjust this to change the margin */
+}
+.surface-ground {
+  padding: 20px; /* Default padding for mobile devices */
+}
+
+/* Medium devices (tablets, less than 992px) */
+@media only screen and (min-width: 768px) {
+  .surface-ground {
+    padding: 24px;
+  }
+}
+
+/* Large devices (desktops, less than 1200px) */
+@media only screen and (min-width: 992px) {
+  .surface-ground {
+    padding: 32px;
+  }
+}
+
+
+
+

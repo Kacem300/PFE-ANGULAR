@@ -4,5 +4,5 @@ export interface orderDetails{
     fullName: string;
     fullAddress: string;
     contactNumber: string;
-    alternateContactNumber: string;
+
      orderQuantities : orderquantity[];}

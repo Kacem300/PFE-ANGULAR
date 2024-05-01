@@ -19,6 +19,8 @@ import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { MyordersadminComponent } from './myordersadmin/myordersadmin.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { EmailVerificationComponent } from './email-verification/email-verification.component';
 
 const routes: Routes = [
 {path:'',component:GalleryComponent},
@@ -28,6 +30,7 @@ resolve:{
 }},
 {path:'admin',component:AdminComponent,canActivate:[AuthGuard],data:{roles:['Admin']}},
 {path:'user',component:UserComponent,canActivate:[AuthGuard],data:{roles:['User']}},
+{path:'userProfile',component:UserProfileComponent,canActivate:[AuthGuard],data:{roles:['User']}},
 {path:'home',component:HomeComponent},
 {path:'login',component:LoginComponent},
 {path:'forbidden',component:ForbiddenComponent},
@@ -40,7 +43,7 @@ resolve:{
 {path:'orderConfirm',component:OrderConfirmComponent,canActivate:[AuthGuard],data:{roles:['User']}},
 {path:'myOrders',component:MyOrdersComponent,canActivate:[AuthGuard],data:{roles:['User']}},
 {path:'Myordersadmin',component:MyordersadminComponent,canActivate:[AuthGuard],data:{roles:['Admin']}},
-
+{path: 'emailVerification', component: EmailVerificationComponent},
 {path:'register',component:RegisterComponent},
 {path:'fortests',component:FortestsComponent},
 {path:'cart',component:CartComponent}

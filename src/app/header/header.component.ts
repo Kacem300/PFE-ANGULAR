@@ -17,11 +17,11 @@ quantity: number = 3;
 
   cartDetails:any []= [1,2,3];
   ngOnInit(): void {
-    if (!localStorage.getItem('Cart')) {
+    if (!localStorage.getItem('chariot')) {
 
-          localStorage.setItem('Cart', JSON.stringify(this.cartDetails));}
+          localStorage.setItem('chariot', JSON.stringify(this.cartDetails));}
           else {
-            this.cartDetails = JSON.parse(localStorage.getItem('Cart') || '[]');
+            this.cartDetails = JSON.parse(localStorage.getItem('chariot') || '[]');
 
           }
           console.log(this.cartDetails);

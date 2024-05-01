@@ -1,36 +1,4 @@
-  .menu-desktop {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .main-menu {
-    display: flex;
-    flex-direction: row;
-    list-style-type: none;
-  }
-
-  .main-menu li {
-    margin: 0 10px;
-  }
-
-  .sub-menu {
-    display: none;
-  }
-
-  .main-menu li:hover .sub-menu {
-    display: block;
-  }
-
-  @media screen and (max-width: 768px) {
-    .menu-desktop {
-      flex-direction: column;
-    }
-
-    .main-menu {
-      flex-direction: column;
-    }
-
-    .main-menu li {
-      margin: 10px 0;
-    }
-  }
+.product-image{
+  max-width: 100px;
+  max-height: 100px;
+}

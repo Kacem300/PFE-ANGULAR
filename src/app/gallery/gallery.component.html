@@ -1,5 +1,55 @@
 
+<body style="background-color: rgba(248,249,255,255);">
+<div class="container">
+  <input pInputText  name="searchKey" placeholder="Search any product" (keyup)="searchByKeyword($event)" [(ngModel)]="searchKey" style="width: 160px;height: 45px; ;">
 
+    <h3 align="center">Newest Trends</h3>
+  <div class="row">
+      <div class="col-md-3 col-sm-6" style="padding-bottom: 40px;" *ngFor="let item of productDetails">
+          <div class="product-grid7">
+              <div class="product-image7">
+                  <img [class]="getClass(i)" [src]="fileHandle.url" *ngFor="let fileHandle of item.productImages; let i = index">
+                  <span class="product-new-label">New</span>
+              </div>
+              <div class="product-content">
+                  <h3 class="title">{{item.productName}}</h3>
+                  <div>
+                      {{item.productDescription}}
+                  </div>
+                  <div class="price" *ngIf="item.productDiscountprice !== item.productActualprice">{{item.productDiscountprice}} TND
+                    <span>{{item.productActualprice}} TND</span>
+                </div>
+                <div class="price" *ngIf="item.productDiscountprice === item.productActualprice">{{item.productActualprice}} TND</div>
+
+                <div class="d-flex justify-content-center w-60">
+                  <button pButton type="button" label="Details" class="custom-button" (click)="showprodcut(item.productId,true)"></button>
+                  <button pButton type="button" label="ADD" class="custom-button" (click)="item.show=true" *ngIf="!item.show"></button>
+                  <select [(ngModel)]="selectedSize" *ngIf="item.show">
+                    <option *ngFor="let size of item.productSizes" [value]="size.size">{{size.size}}</option>
+                  </select>
+
+
+                  <input type="number" pInputText [(ngModel)]="amount" min="1"  *ngIf="item.show">
+
+                  <button pButton type="button" label="ADD" class="custom-button" (click)="addtocart(item,selectedSize);item.show=false" *ngIf="item.show"></button>
+                </div>
+
+
+              </div>
+          </div>
+      </div>
+  </div>
+  <p-paginator [rows]="productsPerPage" [totalRecords]="totalPages" (onPageChange)="goToPage($event.page ?? 0)" *ngIf="showLoadButton"></p-paginator>
+  <div class="text-center mt-5 d-flex justify-content-center" style="padding-bottom: 100px;" *ngIf="showLoadButton">
+      <button pButton type="button" label="Load more" (click)="loadMoreProduct()"></button>
+  </div>
+  <div class="mt-5">
+  </div>
+</div>
+</body>
+
+
+<!--
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -66,7 +116,7 @@
         </div>
     </div>
 
-     <!--  <nav *ngIf="showLoadButton" aria-label="Page navigation example">
+      <nav *ngIf="showLoadButton" aria-label="Page navigation example">
         <ul class="pagination" align="center">
           <li class="page-item" (click)="goToPage(0)"><a class="page-link" href="#">First</a></li>
           <li class="page-item" *ngFor="let page of getPageNumbers()" [class.active]="page === pageNumber">
@@ -74,18 +124,12 @@
           </li>
           <li class="page-item" (click)="goToPage(totalPages - 1)"><a class="page-link" href="#">Last</a></li>
         </ul>
-      </nav> -->
+      </nav>
     <div class="text-center mt-5 d-flex justify-content-center" style="padding-bottom: 100px;" *ngIf="showLoadButton">
 
       <button type="button" mat-raised-button color="primary" (click)="loadMoreProduct()">Load more</button>
     </div>
-
-
-
     <div class="mt-5" >
-
-
-
     </div>
 
 </div>
@@ -107,3 +151,4 @@
 
 
 
+ -->

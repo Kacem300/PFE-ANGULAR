@@ -7,6 +7,7 @@ import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
 import { ImageProcesService } from '../image-proces.service';
 import { map } from 'rxjs';
 import { Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-product-details',
@@ -23,12 +24,15 @@ export class ProductDetailsComponent implements OnInit {
 constructor(private productService:ProductService,
    public dialog:MatDialog,
    private imageService:ImageProcesService,
-   private router:Router
+   private router:Router,
+   private confirmationService: ConfirmationService, private messageService: MessageService
    ){}
 
 ngOnInit():void{
   this.getAllProduct();
 }
+
+
 add(){
   this.router.navigate(['/addNewProduct'])
   }
@@ -82,7 +86,7 @@ editProductDetails(productId:number){
 this.router.navigate(['/addNewProduct',{productId}]);
 }
 
-deleteProduct(productId:any){
+/* deleteProduct(productId:any){
 this.productService.deleteproduct(productId).subscribe({
   next:(response)=>{
     console.log(response)
@@ -91,6 +95,33 @@ this.productService.deleteproduct(productId).subscribe({
 error:(Error: HttpErrorResponse)=>{
   console.log("Delete Failed");
 }
-})}
+})} */
+deleteProduct(productId: any) {
+  this.confirmationService.confirm({
+    message: 'Are you sure you want to delete this product?',
+    header: 'Delete Confirmation',
+    icon: 'pi pi-exclamation-triangle',
+    accept: () => {
+      this.productService.deleteproduct(productId).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.getAllProduct();
+          this.messageService.add({severity:'success', summary:'Successful', detail:'Product Deleted', life: 3000});
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log("Delete Failed");
+          this.messageService.add({severity:'error', summary:'Failed', detail:'Delete Failed', life: 3000});
+        }
+      });
+    },
+    reject: () => {
+      this.messageService.add({severity:'info', summary:'Cancelled', detail:'You have cancelled the deletion', life: 3000});
+    }
+  });
+}
+
+
+
+
 
 }

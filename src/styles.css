@@ -1,16 +1,36 @@
-
+/*
 @import "primeicons/primeicons.css";
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
-@import "primeflex/primeflex.css";
+@import "primeflex/primeflex.css"; */
+body ol,
+body ul {
+    padding-left: 0 !important;
+}
+:root { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  :root { font-family: 'Inter var', sans-serif; }
+}
 
 body {
+  background-color:  rgba(248,249,255,255) !important;
+}
+
+
+
+/*     background-color: linear-gradient(135deg, #f8faff, #fef7fd);
+ */
+
+
+/* body {
   font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-}
+} */
 
 
+/*               "@angular/material/prebuilt-themes/indigo-pink.css"
+ */
 
 

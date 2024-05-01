@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { UserService } from '../_Services/user.service';
 import { UserAuthService } from '../_Services/user-auth.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   showPassword: boolean = false; // Initially password is hidden
+  errorMessage: string="";
 
 
 constructor(private userService: UserService, private  userAuthService:UserAuthService,private router:Router){
@@ -31,10 +33,15 @@ constructor(private userService: UserService, private  userAuthService:UserAuthS
           this.router.navigate(['/admin']);
         }
         else{
-          this.router.navigate(['/user']);
+          this.router.navigate(['/']);
         }
       },
       error: (error) => {
+        if (error.status === 401) {
+          this.errorMessage = 'Invalid Password/Username';
+        } else if (error.status === 423) {
+          this.errorMessage = 'User is disabled';
+        }
         console.log(error+ "Error in Logging In");
       }
     });

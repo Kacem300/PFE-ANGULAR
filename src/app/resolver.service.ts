@@ -37,7 +37,10 @@ export class ResolverService {
         productDiscountprice:0,
         productActualprice:0,
         productNote:0,
-        productImages:[]
+        productImages:[],
+        productSizes:[],
+        productCategoryId:0,
+
 
   }
 

@@ -1,4 +1,5 @@
 <body>
+  <p-toast></p-toast>
   <div class="container" style="position:absolute; left:0; right:0; top: 50%; transform: translateY(-50%); -ms-transform: translateY(-50%); -moz-transform: translateY(-50%); -webkit-transform: translateY(-50%); -o-transform: translateY(-50%);">
       <div class="row d-flex d-xl-flex justify-content-center justify-content-xl-center">
           <div class="col-sm-12 col-lg-10 col-xl-9 col-xxl-7 bg-white shadow-lg" style="border-radius: 5px;">
@@ -10,6 +11,10 @@
                   #registerForm="ngForm" (ngSubmit)="register(registerForm)">
                       <div class="mb-3">
                         <input class="form-control form-control-user" type="text" placeholder="Username" required="" name="userName" ngModel></div>
+                      <div class="mb-3">
+                        <input class="form-control form-control-user" type="email" placeholder="Email" required="" name="userEmail" ngModel #email>
+                        <p id="emailErrorMsg" class="text-danger" style="display:none;" #emailErrorMsg></p>
+                      </div>
                       <div class="row mb-3">
                           <div class="col-sm-6 mb-3 mb-sm-0">
                               <input class="form-control form-control-user" type="password" id="password" placeholder="Password" required="" name="userPassword" ngModel #password>
@@ -17,7 +22,6 @@
                           </div>
                           <div class="col-sm-6">
                               <input class="form-control form-control-user" type="password" id="verifyPassword" placeholder="Repeat Password" required="" name="verifyUserPassword" ngModel #verifyPassword>
-
                           </div>
                       </div>
                       <div class="row mb-3">
@@ -28,10 +32,10 @@
                               <input class="form-control form-control-user" type="text" placeholder="Last Name" required="" name="userLastname" ngModel>
                           </div>
                       </div>
-                      <button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit" #submitBtn>Register Account</button>
+                      <button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit"  #submitBtn >Register Account</button>
                       <hr>
                   </form>
-                  <div class="text-center"><a class="small" style="cursor: pointer;" >Forgot Password?</a></div>
+
                   <div class="text-center" ><a class="small"style="cursor: pointer;" (click)="login()">Already have an account? Login!</a></div>
               </div>
           </div>

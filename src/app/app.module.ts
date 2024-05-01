@@ -37,11 +37,13 @@ import { RegisterComponent } from './register/register.component';
 import { FortestsComponent } from './fortests/fortests.component';
 import { CartComponent } from './cart/cart.component';
 import {MatTableModule} from '@angular/material/table';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { EmailVerificationComponent } from './email-verification/email-verification.component';
+import { UsersComponent } from './users/users.component';
 
 
 
 import { CheckboxModule } from 'primeng/checkbox';
-import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import {StyleClassModule} from 'primeng/styleclass';
 import { DataViewModule } from 'primeng/dataview';
@@ -62,6 +64,15 @@ import { MenubarModule } from 'primeng/menubar';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { TagModule } from 'primeng/tag';
 import { MyordersadminComponent } from './myordersadmin/myordersadmin.component';
+import { ButtonModule } from 'primeng/button';
+import { CarouselModule } from 'primeng/carousel';
+import { ChartModule } from 'primeng/chart';
+import { PaginatorModule } from 'primeng/paginator';
+import { MessagesModule } from 'primeng/messages';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 
 @NgModule({
@@ -87,6 +98,9 @@ import { MyordersadminComponent } from './myordersadmin/myordersadmin.component'
     FooterComponent,
     MyOrdersComponent,
     MyordersadminComponent,
+    UserProfileComponent,
+    EmailVerificationComponent,
+    UsersComponent,
 
 
   ],
@@ -98,7 +112,6 @@ import { MyordersadminComponent } from './myordersadmin/myordersadmin.component'
     RouterModule,
     MatToolbarModule,
     MatButtonModule,
-    ButtonModule,
     MatSidenavModule,
     MatListModule,
     MatIconModule,
@@ -129,6 +142,14 @@ import { MyordersadminComponent } from './myordersadmin/myordersadmin.component'
     MenubarModule,
     MatTableModule,
     TagModule,
+    ButtonModule,
+    CarouselModule,
+    ChartModule,
+    PaginatorModule,
+    MessagesModule,
+    ToastModule,
+    ConfirmDialogModule,
+
   ],
   providers: [
     AuthGuard,
@@ -138,7 +159,9 @@ import { MyordersadminComponent } from './myordersadmin/myordersadmin.component'
       multi:true,
     },
     UserService,
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    MessageService,
+    ConfirmationService,
   ],
   bootstrap: [AppComponent]
 })

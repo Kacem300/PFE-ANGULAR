@@ -27,6 +27,7 @@ constructor(
      /*  this.cartDetails = JSON.parse(localStorage.getItem('Cart') || '[]'); // get existing cart from local storage or initialize as empty array
       console.log(this.cartDetails); */
     this.getCart();
+    this.checkout();
   }
 
 
@@ -103,12 +104,13 @@ checkout() {
           console.log(error);
       }
   });
+}
+
+navigate(){
   this.router.navigate(['/buyProduct', {
     single: false, productId:0
   }]);
 }
-
-
 /* checkout() {
   this.router.navigate(['/buyProduct', {
     single: false, productId:0

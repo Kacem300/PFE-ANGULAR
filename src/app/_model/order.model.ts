@@ -6,8 +6,8 @@ export interface MyorderDetails {
   orderFullName:String;
   orderContactNumber:String;
   orderAmount:String;
-  orderAlternateContactNumber:String;
   orderStatus:String;
   product:product;
   user:any;
+  placedAt : Date;
 }

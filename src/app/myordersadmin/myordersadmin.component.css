@@ -1,4 +1,10 @@
-.p-button-smaller {
-  font-size: 12px; /* Adjust the font size as needed */
-  padding: 0.25rem 0.5rem; /* Adjust padding for a smaller button */
+.small-button .p-button {
+  padding: 0.2em 0.5em !important;
+  font-size: 0.8rem !important;
+  height: auto !important;
+}
+
+body .p-dropdown-items .p-dropdown-item ol,
+body .p-dropdown-items .p-dropdown-item ul {
+    padding-left: 0 !important;
 }

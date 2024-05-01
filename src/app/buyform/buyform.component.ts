@@ -18,8 +18,7 @@ export class BuyformComponent implements OnInit{
     fullName: '',
     fullAddress: '',
     contactNumber: "",
-    alternateContactNumber: "",
-    orderQuantities: []
+    orderQuantities: [],
   }
   productDetails: any[] = [];
   single: string = '';
@@ -32,8 +31,37 @@ export class BuyformComponent implements OnInit{
 
 
 
+     ngOnInit(): void {
 
+      let cart = localStorage.getItem('Cart');
 
+      if (cart) {
+        this.cartDetails = JSON.parse(cart);
+      }
+      console.log(this.cartDetails);
+
+      this.productDetails = this.activatedRoute.snapshot.data['productDetails'];
+      this.single = this.activatedRoute.snapshot.paramMap.get('single') || '';
+      this.cartDetails.forEach(
+        x => {
+          console.log('chosen size:', x.size);
+    console.log('available sizes:', x.product.productSizes.map((size: { size: any; }) => size.size));
+    let chosenSize = x.product.productSizes.find((size: {size: number}) => Number(size.size) === Number(x.size));
+
+    console.log('chosenSize:', chosenSize);
+          if (chosenSize) {
+            this.orderDetails.orderQuantities.push(
+              {productId: x.product.productId, productSizeId: chosenSize.productSizeId, quantity: x.quantity}
+            );
+          }
+        }
+      );
+
+      console.log(this.orderDetails.orderQuantities);
+      console.log(this.orderDetails);
+    }
+
+/*
   ngOnInit(): void {
 
     let cart = localStorage.getItem('Cart');
@@ -41,21 +69,21 @@ export class BuyformComponent implements OnInit{
     if (cart) {
       this.cartDetails = JSON.parse(cart);
     }
-    console.log(JSON.stringify(this.cartDetails));
-
+    console.log(this.cartDetails);
 
 
    this.productDetails = this.activatedRoute.snapshot.data['productDetails'];
 console.log(this.productDetails);
    this.single = this.activatedRoute.snapshot.paramMap.get('single') || '';
-      this.productDetails.forEach(
-      x => this.orderDetails.orderQuantities.push(
-      {productId: x.productId, quantity: 1}
-      )
-    );
+   this.cartDetails.forEach(
+    x => this.orderDetails.orderQuantities.push(
+      {productId: x.product.productId, productSizeId: x.product.productSizes[0].productSizeId,quantity: x.quantity }
+    )
+  );
 
+    console.log(this.orderDetails.orderQuantities);
     console.log(this.orderDetails);
-   }
+   } */
 
 
   public placeOrder(orderForm:NgForm){

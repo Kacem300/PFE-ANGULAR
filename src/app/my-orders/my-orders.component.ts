@@ -18,8 +18,9 @@ constructor(private productService:ProductService) { }
 getOrderDetails(){
   this.productService.getOrderDetails().subscribe({
     next:(Response:MyorderDetails[])=>{
-      console.log(Response);
+
       this.myOrderDetails =Response;
+      console.log(this.myOrderDetails);
     },
     error:(error)=>{
       console.log(error);

@@ -1,7 +1,4 @@
-
-
-
-<!-- Custom styles for this template -->
+<!-- ADMIN SIDE -->
 <header>
   <div class="px-3 py-2 text-white" *ngIf="UserService.roleMatch(['Admin'])" style="background-color: #222;">
     <div class="container">
@@ -10,19 +7,23 @@
           <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
         </a>
 
-        <ul class="nav col-12 col-md-auto my-2 justify-content-center my-md-0 text-small">
-          <li class="nav-item">
-            <a  class="nav-link text-white" aria-current="page"  routerLink="/Myordersadmin">
-              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
-              MyOrders
-            </a>
-          </li>
+
+
+        <ul class="nav col-12 col-md-auto my-2 justify-content-center my-md-0 text-small" >
+
            <li class="nav-item">
             <a  class="nav-link text-white" aria-current="page"  routerLink="/home">
               <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
               Home
             </a>
           </li>
+          <li class="nav-item">
+            <a  class="nav-link text-white" aria-current="page"  routerLink="/Myordersadmin">
+              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#Orders"/></svg>
+              Orders
+            </a>
+          </li>
+
            <li class="nav-item">
             <a  class="nav-link text-white" routerLink="/admin">
               <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
@@ -43,8 +44,20 @@
           </li>
           <li class="nav-item">
             <a  class="nav-link text-white" routerLink="">
-              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
+              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#Gallery"/></svg>
               Gallery
+            </a>
+          </li>
+          <li class="nav-item">
+            <a  class="nav-link text-white" routerLink="">
+              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#users"/></svg>
+              Users
+            </a>
+          </li>
+          <li class="nav-item">
+            <a  class="nav-link text-white" routerLink="">
+              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
+              MyAccount
             </a>
           </li>
 
@@ -58,21 +71,144 @@
 
           <button type="button" class="btn btn-warning me-2"  routerLink="/register" *ngIf="!isloggedIn()" style="border-radius: 10px;border-style: solid;border-color: rgba(0,0,0,0.9);font-size: 16px;padding: 5px 8px;">Sign-up</button>
           <button type="button" class="btn btn-warning me-2"  *ngIf="isloggedIn()" (click)='islogout()'style="border-radius: 10px;border-style: solid;border-color: rgba(0,0,0,0.9);font-size: 16px;padding: 5px 8px;" ><i class="bi bi-box-arrow-right"></i> Logout</button>
-
         </div>
       </div>
     </div>
   </div>
 
 
+<!-- Users Side -->
 
-<body>
- <nav class="navbar navbar-expand-lg navbar-dark" *ngIf="!UserService.roleMatch(['Admin'])">
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+
+
+
+ <!-- <nav class="navbar navbar-expand-md sticky-top navbar-shrink py-3 navbar-light" id="mainNav" *ngIf="!UserService.roleMatch(['Admin'])">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <span class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bezier">
+                    <path fill-rule="evenodd" d="M0 10.5A1.5 1.5 0 0 1 1.5 9h1A1.5 1.5 0 0 1 4 10.5v1A1.5 1.5 0 0 1 2.5 13h-1A1.5 1.5 0 0 1 0 11.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm10.5.5A1.5 1.5 0 0 1 13.5 9h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM6 4.5A1.5 1.5 0 0 1 7.5 3h1A1.5 1.5 0 0 1 10 4.5v1A1.5 1.5 0 0 1 8.5 7h-1A1.5 1.5 0 0 1 6 5.5zM7.5 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"></path>
+                    <path d="M6 4.5H1.866a1 1 0 1 0 0 1h2.668A6.517 6.517 0 0 0 1.814 9H2.5c.123 0 .244.015.358.043a5.517 5.517 0 0 1 3.185-3.185A1.503 1.503 0 0 1 6 5.5zm3.957 1.358A1.5 1.5 0 0 0 10 5.5v-1h4.134a1 1 0 1 1 0 1h-2.668a6.517 6.517 0 0 1 2.72 3.5H13.5c-.123 0-.243.015-.358.043a5.517 5.517 0 0 0-3.185-3.185z"></path>
+                </svg></span>
+                <span>Brand</span></a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+                  <span class="visually-hidden">Toggle navigation</span>
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav mx-auto"  *ngIf="isloggedIn()">
+
+                <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
+                <li class="nav-item"><a class="nav-link " routerLink="">Gallery </a></li>
+                <li class="nav-item"><a class="nav-link " routerLink="/cart">Cart </a></li>
+                <li class="nav-item"><a class="nav-link " routerLink="/myOrders">My Orders </a></li>
+                <li class="nav-item"><a class="nav-link " routerLink="/userProfile">My Profile </a></li>
+
+
+            </ul>
+            <a class="btn btn-primary shadow" role="button" routerLink="/login" *ngIf="!isloggedIn()" style="margin-left: auto;">Sign up</a>
+            <a class="btn btn-primary shadow" role="button" *ngIf="isloggedIn()" (click)="islogout()">Log Out</a>
+
+
+        </div>
+    </div>
+</nav> -->
+
+<!-- Desktop Navbar -->
+<div class="d-none d-lg-block">
+  <nav class="navbar navbar-expand-lg sticky-top navbar-shrink py-3 navbar-light" id="mainNav" *ngIf="!UserService.roleMatch(['Admin'])">
+    <div class="container d-flex justify-content-between">
+      <ul class="navbar-nav">
+        <!-- Left side navigation links -->
+        <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
+        <li class="nav-item"><a class="nav-link " routerLink="">Gallery </a></li>
+        <li class="nav-item"><a class="nav-link " routerLink="">Categories </a></li>
+
+      </ul>
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <span class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bezier">
+                    <path fill-rule="evenodd" d="M0 10.5A1.5 1.5 0 0 1 1.5 9h1A1.5 1.5 0 0 1 4 10.5v1A1.5 1.5 0 0 1 2.5 13h-1A1.5 1.5 0 0 1 0 11.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm10.5.5A1.5 1.5 0 0 1 13.5 9h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM6 4.5A1.5 1.5 0 0 1 7.5 3h1A1.5 1.5 0 0 1 10 4.5v1A1.5 1.5 0 0 1 8.5 7h-1A1.5 1.5 0 0 1 6 5.5zM7.5 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"></path>
+                    <path d="M6 4.5H1.866a1 1 0 1 0 0 1h2.668A6.517 6.517 0 0 0 1.814 9H2.5c.123 0 .244.015.358.043a5.517 5.517 0 0 1 3.185-3.185A1.503 1.503 0 0 1 6 5.5zm3.957 1.358A1.5 1.5 0 0 0 10 5.5v-1h4.134a1 1 0 1 1 0 1h-2.668a6.517 6.517 0 0 1 2.72 3.5H13.5c-.123 0-.243.015-.358.043a5.517 5.517 0 0 0-3.185-3.185z"></path>
+                </svg></span>
+                <span>Brand</span>
+      </a>
+      <div class="d-flex align-items-center">
+        <ul class="navbar-nav">
+          <!-- Right side navigation links -->
+          <li class="nav-item"><a class="nav-link " routerLink="/cart">Cart </a></li>
+          <li class="nav-item"><a class="nav-link " routerLink="/myOrders">My Orders </a></li>
+          <li class="nav-item"><a class="nav-link " routerLink="/userProfile">My Profile </a></li>
+        </ul>
+        <a class="btn btn-primary shadow" role="button" routerLink="/login" *ngIf="!isloggedIn()" style="margin-left: auto;">Sign up</a>
+        <a class="btn btn-primary shadow" role="button" *ngIf="isloggedIn()" (click)="islogout()">Log Out</a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- Mobile Navbar -->
+<div class="d-block d-lg-none">
+  <nav class="navbar navbar-expand-lg sticky-top navbar-shrink py-3 navbar-light" id="mainNav" *ngIf="!UserService.roleMatch(['Admin'])">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <span class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-bezier">
+                    <path fill-rule="evenodd" d="M0 10.5A1.5 1.5 0 0 1 1.5 9h1A1.5 1.5 0 0 1 4 10.5v1A1.5 1.5 0 0 1 2.5 13h-1A1.5 1.5 0 0 1 0 11.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm10.5.5A1.5 1.5 0 0 1 13.5 9h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM6 4.5A1.5 1.5 0 0 1 7.5 3h1A1.5 1.5 0 0 1 10 4.5v1A1.5 1.5 0 0 1 8.5 7h-1A1.5 1.5 0 0 1 6 5.5zM7.5 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"></path>
+                    <path d="M6 4.5H1.866a1 1 0 1 0 0 1h2.668A6.517 6.517 0 0 0 1.814 9H2.5c.123 0 .244.015.358.043a5.517 5.517 0 0 1 3.185-3.185A1.503 1.503 0 0 1 6 5.5zm3.957 1.358A1.5 1.5 0 0 0 10 5.5v-1h4.134a1 1 0 1 1 0 1h-2.668a6.517 6.517 0 0 1 2.72 3.5H13.5c-.123 0-.243.015-.358.043a5.517 5.517 0 0 0-3.185-3.185z"></path>
+                </svg></span>
+                <span>Brand</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto"  *ngIf="isloggedIn()">
+          <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
+          <li class="nav-item"><a class="nav-link " routerLink="">Gallery </a></li>
+          <li class="nav-item"><a class="nav-link " routerLink="">Categories </a></li>
+          <li class="nav-item"><a class="nav-link " routerLink="/cart">Cart </a></li>
+          <li class="nav-item"><a class="nav-link " routerLink="/myOrders">My Orders </a></li>
+          <li class="nav-item"><a class="nav-link " routerLink="/userProfile">My Profile </a></li>
+        </ul>
+        <div class="d-flex justify-content-center">
+          <a class="btn btn-primary shadow" role="button" routerLink="/login" *ngIf="!isloggedIn()" style="margin-left: auto;">Sign up</a>
+          <a class="btn btn-primary shadow" role="button" *ngIf="isloggedIn()" (click)="islogout()">Log Out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <nav class="navbar navbar-expand-lg navbar-dark" *ngIf="false">
  <div class="container-fluid">
     <a class="navbar-brand" routerLink="" style="color: rgba(224,217,217,0.9);"><i class="bi bi-landscape"></i> THE VALLEY</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <br>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isloggedIn()">
         <li class="nav-item">
@@ -89,7 +225,7 @@
           <a class="nav-link" aria-current="page" routerLink="/admin"><i class="bi bi-gear"></i>Dashboard</a>
         </li>
         <li class="nav-item" *ngIf="UserService.roleMatch(['User'])">
-          <a class="nav-link" aria-current="page" routerLink="/user"><i class="bi bi-person"></i>Dashboard</a>
+          <a class="nav-link" aria-current="page" routerLink="/home"><i class="bi bi-person"></i>Home</a>
         </li>
         <li class="nav-item" *ngIf="UserService.roleMatch(['User'])">
           <a class="nav-link" aria-current="page" routerLink="/cart"><i class="bi bi-person"></i>Cart</a>
@@ -97,7 +233,9 @@
         <li class="nav-item" *ngIf="UserService.roleMatch(['User'])">
           <a class="nav-link" aria-current="page" routerLink="/myOrders"><i class="bi bi-person"></i>My Orders</a>
         </li>
-
+        <li class="nav-item" *ngIf="UserService.roleMatch(['User'])">
+          <a class="nav-link" aria-current="page" routerLink="/userProfile"><i class="bi bi-person"></i>My Profile</a>
+        </li>
 
         <li class="nav-item" *ngIf="UserService.roleMatch(['User'])">
           <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-0 p-r-0 icon-header-noti js-show-cart"  [attr.data-notify]="quantity">
@@ -107,12 +245,7 @@
           </div>
         </li>
 
-
       </ul>
-
-
-
-
       <div style="margin-left: auto;">
       <button type="button" class="btn btn-success" routerLink="/login" *ngIf="!isloggedIn()" style="color: rgba(0,0,0,0.9);background: var(--bs-gray-200);border-radius: 10px;border-style: solid;border-color: rgba(0,0,0,0.9);font-size: 16px;padding: 5px 8px;"> <i class="bi bi-box-arrow-in-right"></i> Login</button>
       <button type="button" class="btn btn-danger" *ngIf="isloggedIn()" (click)='islogout()' style="color: rgba(0,0,0,0.9);background: var(--bs-gray-200);border-radius: 10px;border-style: solid;border-color: rgba(0,0,0,0.9);font-size: 16px;padding: 5px 8px;"><i class="bi bi-box-arrow-right"></i> Logout</button>
@@ -121,13 +254,13 @@
     </div>
   </div>
 </nav>
-</body>
 
 
 
 
 
 
+<!-- Icons and symbols  -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="bootstrap" viewBox="0 0 118 94">
     <title>Bootstrap</title>
@@ -150,4 +283,15 @@
   <symbol id="grid" viewBox="0 0 16 16">
     <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
   </symbol>
+  <symbol id="Orders" viewBox="0 0 16 16">
+      <path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0z"/>
+      </symbol>
+      <symbol id="Gallery" viewBox="0 0 16 16">
+      <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+      <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1z"/>
+    </symbol>
+    <symbol id="users" viewBox="0 0 16 16">
+      <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+
+    </symbol>
 </svg>

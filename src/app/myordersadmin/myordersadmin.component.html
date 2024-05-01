@@ -4,38 +4,55 @@
     <ng-template pTemplate="caption" >
       <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
         <h5 class="m-0">Manage Products</h5>
+
+
         <span class="block mt-2 md:mt-0 p-input-icon-left">
           <i class="pi pi-search"></i>
           <input pInputText type="text" class="w-full sm:w-auto" />
         </span>
+
       </div>
+      <p-dropdown [options]="filterOptions" [(ngModel)]="selectedFilter" (onChange)="getAllOrderDetailsForAdmin(selectedFilter)" [ngStyle]="{'text-align': 'left'}"></p-dropdown>
+
+
     </ng-template>
     <ng-template pTemplate="header" style="border-width: 1px;">
       <tr>
         <th class="border">ID</th>
+        <th class="border">User</th>
         <th class="border">Name</th>
         <th class="border">Address</th>
         <th class="border">Contact No.</th>
         <th class="border">Amount</th>
+        <th class="border">Product</th>
+        <th class="border">Date</th>
         <th class="border">Status</th>
         <th class="border">Action</th>
+
 
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-order>
       <tr>
         <td class="border">{{order.orderId}}</td>
+        <td class="border">{{order.user.userName}}</td>
         <td class="border">{{order.orderFullName}}</td>
         <td class="border">{{order.orderFullOrder}}</td>
         <td class="border">{{order.orderContactNumber}}</td>
         <td class="border">{{order.orderAmount}}</td>
+        <td class="border">{{order.product.productName}}</td>
+        <td class="border">{{order.orderDate | date:'dd, MMMM, yyyy'}}</td>
         <td class="border">
           <p-tag [severity]="orderTagSeverities[order.orderId]" value="{{order.orderStatus}}" [class]="'p-tag-' + orderTagSeverities[order.orderId]"></p-tag>
       </td>
 
-        <td>
-          <button *ngIf="order.orderStatus == 'Placed'" pButton type="button" label="Mark as Delivered" class="p-button-primary p-button-smaller" (click)="markAsDelivered(order.orderId)"></button>
-      </td>
+      <td class="border">
+        <p-button *ngIf="order.orderStatus == 'Placed'" label="Mark As Delivered" (click)="markAsDelivered(order.orderId)"
+         [style]="{'font-size': '0.8rem', 'padding': '0.3em 0.6em', 'border-radius': '6px'}"></p-button>
+        <p-button *ngIf="order.orderStatus == 'Delivered'" label="Mark As Placed" (click)="markOrderAsPlaced(order.orderId)"
+        [style]="{'font-size': '0.8rem', 'padding': '0.3em 0.6em', 'border-radius': '6px'}"></p-button>
+    </td>
+
         </tr>
     </ng-template>
   </p-table>

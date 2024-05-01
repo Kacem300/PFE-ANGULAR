@@ -1,4 +1,5 @@
 
+<link rel="stylesheet" href="https://cdn.reflowhq.com/v2/toolkit.min.css">
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6 col-sm-12">
@@ -22,17 +23,86 @@
            Description: <br>
           {{product.productDescription}}
         </div>
+
         <div class="mt-3">
-          <b>TND. {{product.productDiscountprice}}</b>&nbsp;&nbsp;<b style="text-decoration: line-through;">{{product.productActualprice}}</b>
+          <b style="color: #198754;;"> {{product.productDiscountprice}}</b> <b> TND</b>&nbsp;&nbsp;<b style="text-decoration: line-through;">{{product.productActualprice}}</b>
         </div>
-        <div class="mt-5 text-center">
-          <button mat-raised-button color="warn" style="width: 200px;" (click)="buyProduct(product.productId)"> Buy Now</button>
-          &nbsp;
-          <button mat-raised-button style="width: 200px;" >Add to Cart</button>
-      </div>
-      </div>
+
+        <div class="ref-variant"><label><span>Size : </span>
+          <select [(ngModel)]="selectedSize" class="ref-form-control ref-field-variants" name="variant-state" required>
+          <option *ngFor="let size of product.productSizes" [value]="size.size">{{size.size}}</option>
+      </select></label>
     </div>
-<!--     (click)="addToCart(product.productId)"
- -->
+    <span>Quantity : </span>
+      <span data-reflow-variant="199976733_s" data-reflow-product="717978921" data-reflow-max-qty="999" data-reflow-quantity="1">
+        <div class="ref-quantity-widget">
+            <div class="ref-decrease" (click)="decreaseAmount()"><span></span></div>
+            <input type="text"  pInputText [(ngModel)]="amount" min="1" />
+            <div class="ref-increase" (click)="increaseAmount()"><span></span></div>
+        </div>
+    </span>
+
+        <div class="mt-5 text-center">
+          <button  mat-raised-button color="warn" style="width: 200px;" (click)="buyProduct(product.productId)"> Buy Now</button>
+          &nbsp;
+          <button  mat-raised-button  style="width: 200px;" (click)="addtocart(product,selectedSize)"  >Add to Cart</button>
+      </div>
+      </div>
+      <div>
+          <h2>Users Rating:<h4>{{averageRate}}/5</h4> </h2>
+        </div>
+<div class="mt-3">
+  <label for="rating">Your rating:</label>
+  <p-rating [(ngModel)]="userRating" (onRate)="rateProduct()" [cancel]="false"></p-rating>
+</div>
+    </div>
+</div>
+
+
+
+<div class="row mt-5">
+  <div class="col-12">
+    <h2>Add a Comment</h2>
+    <form (ngSubmit)="saveComment()">
+      <div class="form-group">
+        <label for="commentText">Comment</label>
+        <textarea id="commentText" [(ngModel)]="commentText" name="commentText" class="form-control"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+  </div>
+      <div class="card">
+        <div style="margin-bottom: 5vh;" *ngFor="let comment of comments; let i = index">
+          <div class="d-flex comment-box" style="padding-right: 30px;padding-left: 100px;padding-top: 0px;padding-bottom: 18px;"><img class="rounded-circle" src="../assets/default.png" width="72" height="72">
+              <div>
+                  <div class="row text-end d-flex">
+                      <div class="col-xl-12 d-flex align-items-center comment-user" style="padding-left: 23px;">
+                          <h4 style="padding-bottom: 0px;margin-bottom: 4px;"> {{comment.user.userName}} </h4><span class="font-monospace comment-date" style="padding-left: 12px;color: #697077;"> {{comment.commentDate | date:'dd/MM/yyyy'}} </span>
+                      </div>
+                      <div class="col-xl-11 col-xxl-12 text-break text-start d-flex align-items-xxl-center comment-text" style="padding-left: 24px;">
+                          <p class="text-break text-start">{{comment.commentText}}</p>
+                      </div>
+                      <div class="col-xl-12 d-flex d-xl-flex justify-content-stretch align-items-stretch comment-reply">
+                        <div><a data-bs-toggle="collapse" aria-expanded="false" [attr.aria-controls]="'collapse-' + i" [attr.href]="'#collapse-' + i" role="button"><i class="fas fa-reply"></i> Reply</a>
+                          <div [attr.id]="'collapse-' + i" class="collapse">
+                                  <div class="d-flex flex-shrink-1 card-header reply-box">
+                                      <div class="col">
+                                          <form (ngSubmit)="saveComment()">
+                                              <div class="d-flex comment-form" style="padding-bottom: 17px;"><label class="form-label" for="comment" style="padding-right: 19px;">Comment</label><textarea class="form-control form-control-lg" [(ngModel)]="commentText" name="comment" rows="3" cols="20"></textarea></div>
+                                              <div class="text-center d-flex comment-buttons" style="padding-bottom: 13px;margin-left: 5vw;"><button class="btn btn-success" type="submit" style="margin-right: 22px;">Submit</button><button class="btn btn-danger" type="button">Cancel</button></div>
+                                          </form>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div>
 </div>
 </div>
+
+
+<app-footer></app-footer>

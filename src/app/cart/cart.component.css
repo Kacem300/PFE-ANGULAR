@@ -80,3 +80,7 @@ button{
   margin:15px;
 }
 
+.product-image {
+  max-width: 100px;
+  max-height: 100px;
+}

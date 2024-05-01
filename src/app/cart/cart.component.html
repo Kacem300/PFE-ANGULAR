@@ -1,70 +1,4 @@
-<!-- <div class="container">
-  <div class="cartBox">
-    <h1 class="fw-normal mb-0 text-black">Shopping Cart</h1>
-  <div class="headCart">
-    <p class="lead">You have <label class="text-danger ">{{cartDetails.length}}</label> item in your cart</p>
-    <span class="fw-normal mb-0 text-black card-header" (click)="clearCart()">Clear Shopping Cart</span>
-  </div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-
-                <th>ID</th>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th style="width: 25%;">Quantity</th>
-                <th>Total</th>
-
-            </tr>
-        </thead>
-        <tbody>
-
-            <tr *ngFor="let item of cartDetails;let index = index">
-
-               <td>{{item.product.productId}}</td>
-               <td>
-                <div *ngFor="let image of item.product.productImages">
-                  <img [src]="sanitizer.bypassSecurityTrustResourceUrl(image.url)" alt="Product Image">
-                </div>  image
-              </td>
-
-                   <td>{{item.product.productName}}</td>
-                <td>{{item.product.productDiscountprice}}</td>
-                <td>
-                    <div class="quantity">
-                      <button class="btn btn-dark" (click)="addAmount(index)" >+</button>
-                         <input class="form-control" type="number" (change)="detectChange()" [(ngModel)]="item.quantity"  min="1">
-                         <button class="btn btn-dark" (click)="minsAmount(index)" >-</button>
-
-                  </div>
-                </td>
-                <td>{{item.product.productDiscountprice * item.quantity}}</td>
-
-               <td>
-                    <button class="btn btn-danger" (click)="deleteProduct(item.cartId)">Delete</button>
-                </td>
-
-            </tr>
-
-
-        </tbody>
-        <tfoot>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>Total : {{total}} TND</th>
-                <th><button class="btn btn-success" (click)="checkout()">Order Now</button></th>
-            </tr>
-        </tfoot>
-    </table>
-
-  </div>
-  <div class="alert alert-success" role="alert" *ngIf="orderSuccess"><strong>Well done!</strong> Your Order is Successfully Send</div>
-</div>
- -->
+ <body >
  <div class="container">
   <div class="p-grid cartBox">
     <div class="p-col">
@@ -80,7 +14,8 @@
             <th>Image</th>
             <th>Name</th>
             <th>Price</th>
-            <th style="width: 25%;">Quantity</th>
+            <th>Size</th>
+            <th style="width:20%;">Quantity</th>
             <th>Total</th>
             <th>Action</th>
           </tr>
@@ -88,13 +23,20 @@
         <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
           <tr>
             <td>{{item.product.productId}}</td>
-            <td>image</td>
+            <td>
+              <img [src]="item.product.productImages[0].url.changingThisBreaksApplicationSecurity" class="product-image">
+              <!-- <img *ngFor="let image of item.product.productImages[1]"
+                   [src]="image.url.changingThisBreaksApplicationSecurity"
+                   class="product-image"> -->
+            </td>
+
             <td>{{item.product.productName}}</td>
             <td>{{item.product.productDiscountprice}}</td>
+            <td>{{item.size}}</td>
             <td>
               <div class="quantity">
                 <button pButton type="button" class="btn btn-dark" (click)="addAmount(rowIndex)">+</button>
-                <input class="form-control" type="number" [(ngModel)]="item.quantity" (change)="detectChange()" min="1">
+                <input class="form-control" type="number" [(ngModel)]="item.quantity" (change)="detectChange()" min="1" style="text-align: center;" >
                 <button pButton type="button" class="btn btn-dark" (click)="minsAmount(rowIndex)">-</button>
               </div>
             </td>
@@ -108,8 +50,12 @@
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
+            <th></th>
+
             <th>Total : {{total}} TND</th>
-            <th><button pButton type="button" class="btn btn-success" (click)="checkout()">Order Now</button></th>
+            <th><button pButton type="button" class="btn btn-success" (click)="navigate()">Order Now</button></th>
+           <!--  <th> <p-button label="Submit" [loading]="loading" (onClick)="load()"></p-button></th> -->
             <th></th>
           </tr>
         </ng-template>
@@ -120,3 +66,4 @@
     <strong>Well done!</strong> Your Order is Successfully Send
   </div>
 </div>
+</body>

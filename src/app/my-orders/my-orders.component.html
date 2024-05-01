@@ -65,7 +65,10 @@
         <th class="border">Address</th>
         <th class="border">Contact No.</th>
         <th class="border">Amount</th>
+        <th class="border">Product</th>
+        <th class="border">Date</th>
         <th class="border">Status</th>
+
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-order>
@@ -74,6 +77,9 @@
         <td class="border">{{order.orderFullOrder}}</td>
         <td class="border">{{order.orderContactNumber}}</td>
         <td class="border">{{order.orderAmount}}</td>
+        <td class="border">{{order.product.productName}}</td>
+
+        <td class="border">{{order.orderDate | date:'dd, MMMM, yyyy'}}</td>
         <td class="border">
           <p-tag>{{order.orderStatus}}</p-tag>
         </td>      </tr>

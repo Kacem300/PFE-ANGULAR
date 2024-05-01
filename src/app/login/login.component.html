@@ -11,6 +11,7 @@
 </head>
 
 <body>
+
   <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
     <div class="d-flex flex-column justify-content-center" id="login-box">
         <div class="login-box-header">
@@ -28,6 +29,7 @@
             <div class="login-box-seperator"></div>
         </div>
         <div class="email-login" style="background-color:#ffffff;">
+
           <!-- <input type="email" class="email-imput form-control" style="margin-top:10px;" required="" placeholder="Email" minlength="6"> -->
           <!-- <input type="password" class="password-input form-control" style="margin-top:10px;" required="" placeholder="Password" minlength="6"> -->
 
@@ -61,7 +63,9 @@
 
 
 
-
+          <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+            </div>
         </div>
           <div class="submit-row" style="margin-bottom:8px;padding-top:0px;"><button class="btn btn-primary btn-block box-shadow" id="submit-id-submit" type="submit">Login</button>
             <div class="d-flex justify-content-between">
