@@ -8,3 +8,15 @@
   width: 35% !important;
   text-align: left;
  }
+
+
+ input,
+ button,
+ select,
+ optgroup,
+ textarea {
+   margin: 0px 0.5rem 0px 0px !important;
+   font-family: inherit;
+   font-size: inherit;
+   line-height: normal !important;
+ }

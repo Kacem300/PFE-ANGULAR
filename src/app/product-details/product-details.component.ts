@@ -30,6 +30,7 @@ constructor(private productService:ProductService,
 
 ngOnInit():void{
   this.getAllProduct();
+  console.log(this.productDetails)
 }
 
 
@@ -75,7 +76,9 @@ console.log(product);
 this.dialog.open(ImageDialogComponent,{
 
   data:{
-    images:product.productImages
+    images:product.productImages,
+    sizes:product.productSizes
+
   },
   height:'500px',
   width:'800px'
@@ -104,9 +107,11 @@ deleteProduct(productId: any) {
     accept: () => {
       this.productService.deleteproduct(productId).subscribe({
         next: (response) => {
-          console.log(response);
-          this.getAllProduct();
           this.messageService.add({severity:'success', summary:'Successful', detail:'Product Deleted', life: 3000});
+
+          setTimeout(() => {
+            this.getAllProduct();
+          }, 2000);
         },
         error: (error: HttpErrorResponse) => {
           console.log("Delete Failed");
@@ -118,6 +123,7 @@ deleteProduct(productId: any) {
       this.messageService.add({severity:'info', summary:'Cancelled', detail:'You have cancelled the deletion', life: 3000});
     }
   });
+
 }
 
 

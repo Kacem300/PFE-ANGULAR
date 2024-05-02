@@ -40,6 +40,8 @@ export class ResolverService {
         productImages:[],
         productSizes:[],
         productCategoryId:0,
+        groupIds: [],
+
 
 
   }

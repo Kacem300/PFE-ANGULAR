@@ -1,0 +1,26 @@
+.text-wrap {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.centered {
+  text-align: center;
+}
+
+.broswse {
+  color: blue;
+  cursor: pointer;
+}
+
+/* Added media query for screens smaller than 768px */
+@media screen and (max-width: 768px) {
+  .img-thumbnail {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.btn{
+  margin: 10px;
+
+}

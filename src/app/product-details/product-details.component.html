@@ -42,8 +42,8 @@
                 <th>Description</th>
                 <th>Actual Price</th>
                 <th>Discount Price</th>
-                <th>Quntity</th>
-                <th>Sizes</th>
+                <!-- <th>Category</th> -->
+
 
                 <th>Actions</th>
 
@@ -55,14 +55,13 @@
                   <td>{{product.productId}}</td>
                   <td>{{product.productName}}</td>
                   <td>{{product.productDescription}}</td>
+                  <!-- <td>{{product.product}}</td> -->
                   <td>{{product.productActualprice}}</td>
                   <td>{{product.productDiscountprice}}</td>
-                  <td>{{size.quantity}}</td>
-                  <td>{{size.size}}</td>
+
                   <td>
                     <button type="button" class="btn btn-primary me-2" (click)="showImages(product)"><i class="far fa-eye"></i> </button>
                     <button type="button" class="btn btn-success me-2" (click)="editProductDetails(product.productId)"><i class="fas fa-pen"></i></button>
-                    <!-- <button type="button" class="btn btn-danger" (click)="deleteProduct(product.productId)"><i class="fas fa-trash"></i> </button> -->
                     <button type="button" class="btn btn-danger" (click)="deleteProduct(product.productId)"><i class="fas fa-trash"></i> </button>
                       <p-toast></p-toast>
                       <p-confirmDialog></p-confirmDialog>
@@ -70,25 +69,6 @@
                 </tr>
               </ng-container>
             </tbody>
-
-
-           <!--  <tbody>
-              <tr *ngFor="let product of productDetails">
-                <td>{{product.productId}}</td>
-                <td>{{product.productName}}</td>
-                <td>{{product.productDescription}}</td>
-                <td>{{product.productActualprice}}</td>
-                <td>{{product.productDiscountprice}}</td>
-                <td>{{product.productSizes[0].quantity}}</td>
-                <td>{{product.productSizes[0].size}}</td>
-
-                <td>
-                  <button type="button" class="btn btn-primary me-2" (click)="showImages(product)"><i class="far fa-eye"></i> </button>
-                  <button type="button" class="btn btn-success me-2" (click)="editProductDetails(product.productId)"><i class="fas fa-pen"></i></button>
-                  <button type="button" class="btn btn-danger" (click)="deleteProduct(product.productId)"><i class="fas fa-trash"></i> </button>
-                </td>
-              </tr>
-            </tbody> -->
           </table>
         </div>
         <div class="card-footer text-center p-5" *ngIf="showLoadMoreProductButton">

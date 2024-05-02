@@ -13,6 +13,10 @@ import { ProductCategory } from '../_model/productCategory.model';
   styleUrl: './add-new-product.component.css'
 })
 export class AddNewProductComponent implements OnInit {
+
+  groups: any[] = [];
+  selectedGroups: any[] = [];
+
 show:boolean=false;
 newbutton :boolean = true ;
 categories: ProductCategory[] = []; // Add this line
@@ -28,6 +32,7 @@ product:product = {
   productImages:[],
   productSizes:[],
   productCategoryId:0,
+  groupIds:[],
   sizeType:false,
 }
 
@@ -38,6 +43,9 @@ ngOnInit(): void {
   this.productService.getCategories().subscribe(categories => {
     this.categories = categories;
     console.log(categories)
+  });
+  this.productService.getGroups().subscribe(groups => {
+    this.groups = groups.map(group => ({label: group.groupName, value: group.groupId}));
   });
 
   if (this.product = this.activatedroute.snapshot.data['product']) {
@@ -60,6 +68,7 @@ addProduct(productForm: NgForm) {
       this.product.productImages = [];
       this.product.productSizes = [];
       this.product.productCategoryId = 0;
+      this.product.groupIds=[];
       console.log(Response);
 
     },
@@ -92,7 +101,12 @@ prepareFromData(product: product): FormData {
     'productCategoryId',
     new Blob([JSON.stringify(product.productCategoryId)], { type: 'application/json' })
   );
+  formData.append(
+    'groupIds',
+    new Blob([JSON.stringify(product.groupIds)], { type: 'application/json' })
+  );
   return formData;
+
 }
 
 

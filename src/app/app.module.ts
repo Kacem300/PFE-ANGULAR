@@ -73,7 +73,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-
+import { AddcategoryComponent } from './addcategory/addcategory.component';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { ConfirmationService } from 'primeng/api';
     UserProfileComponent,
     EmailVerificationComponent,
     UsersComponent,
+    AddcategoryComponent,
 
 
   ],
@@ -149,6 +151,7 @@ import { ConfirmationService } from 'primeng/api';
     MessagesModule,
     ToastModule,
     ConfirmDialogModule,
+    MultiSelectModule,
 
   ],
   providers: [

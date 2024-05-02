@@ -29,6 +29,7 @@ export class DetailsComponent implements OnInit{
     productImages:[],
     productSizes:[],
     productCategoryId:0,
+    groupIds: [],
   }
 
 

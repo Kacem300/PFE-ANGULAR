@@ -1,5 +1,8 @@
 <mat-grid-list cols="4" rowHeight="1:1">
   <mat-grid-tile *ngFor="let x of data.images">
-      <img [src]="x.url" width="150px" height="150px">
+    <img [src]="x.url" width="150px" height="150px">
+    <div *ngFor="let size of data.sizes">
+      <p>Size: {{size.size}}, Quantity: {{size.quantity}}</p>
+    </div>
   </mat-grid-tile>
 </mat-grid-list>

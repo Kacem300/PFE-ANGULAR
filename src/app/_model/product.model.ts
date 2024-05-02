@@ -11,6 +11,8 @@ export interface product {
   productImages:FileHandle[],
   productSizes: ProductSize[],
   productCategoryId:number,
+  productCategory?:ProductCategory[],
+  groupIds: number[],
   show?: boolean;
   sizeType?: boolean,
   sizesList?: ["XS", "S", "M", "L", "XL", "XXL"],

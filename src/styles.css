@@ -1,8 +1,7 @@
-/*
 @import "primeicons/primeicons.css";
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
-@import "primeflex/primeflex.css"; */
+@import "primeflex/primeflex.css";
 body ol,
 body ul {
     padding-left: 0 !important;
@@ -33,4 +32,15 @@ body {
 /*               "@angular/material/prebuilt-themes/indigo-pink.css"
  */
 
+
+
+ button,
+ select
+ {
+   margin: 0.5rem 0.5rem 0.5rem 0.5rem !important;
+   font-family: inherit;
+   font-size: inherit;
+   line-height: normal !important;
+   border-radius: 8px !important;
+ }
 

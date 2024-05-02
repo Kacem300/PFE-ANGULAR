@@ -21,6 +21,7 @@
             <label for="productActualPrice">Product Actual Price</label>
             <input type="number" class="form-control" id="productActualPrice" [(ngModel)]="product.productActualprice" name="productActualPrice" required>
           </div>
+
           <div class="form-group">
             <label for="productCategory">Product Category</label>
             <select class="form-control" id="productCategory" [(ngModel)]="product.productCategoryId" name="productCategory"  required (change)="updateSizeType()">
@@ -48,7 +49,16 @@
             <button type="button" class="btn btn-danger" (click)="removeSize(i)">Remove Size</button>
           </div>
 
+
+
+
           <button type="button" class="btn btn-secondary" (click)="addSize()">Add Size</button>
+          <div class="form-group">
+            <label for="productGroups">  </label>
+            <p-multiSelect id="productGroups" [options]="groups" [(ngModel)]="selectedGroups" name="productGroups" placeholder="Select a Category" [filter]="false"></p-multiSelect>
+          </div>
+
+
 
           <div class="form-group text-right">
             <button type="reset" class="btn btn-secondary mr-2">Clear</button>
