@@ -3,8 +3,9 @@ import { product } from '../_model/product.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../_Services/product.service';
 import { Comment } from '../_model/comment.model';
-import { map } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { map } from 'rxjs';
+import { ImageProcesService } from '../image-proces.service';
 
 @Component({
   selector: 'app-details',
@@ -28,8 +29,10 @@ export class DetailsComponent implements OnInit{
     productActualprice:0,
     productImages:[],
     productSizes:[],
+    productCategory:{productCategoryId: 0, categoryName: '', sizeType: false},
+    ProductGroups:[],
     productCategoryId:0,
-    groupIds: [],
+
   }
 
 
@@ -38,7 +41,8 @@ export class DetailsComponent implements OnInit{
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private productService: ProductService) { }
+    private productService: ProductService
+    ,private ImageProcess: ImageProcesService) { }
 
 
 
@@ -50,18 +54,40 @@ export class DetailsComponent implements OnInit{
     this.getUserRating();
 
   }
-  public showComments() {
+ /*   public showComments() {
     this.productService.getCommentsForProduct(this.product.productId)
       .subscribe({
         next: (resp: any[]) => {
           console.log(resp);
+
           this.comments = resp;
         },
         error: (error: HttpErrorResponse) => {
           console.log(error);
         }
       });
-  }
+  } */
+  public showComments() {
+  this.productService.getCommentsForProduct(this.product.productId)
+    .pipe(
+       map((comments: any[]) => comments.map(comment => {
+        comment.user = this.ImageProcess.createUserImage(comment.user);
+        return comment;
+      }))
+    )
+    .subscribe({
+      next: (resp: Comment[]) => {
+        console.log(resp);
+        this.comments = resp;
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    });
+}
+
+
+
 
 
 
@@ -70,6 +96,8 @@ export class DetailsComponent implements OnInit{
     this.productService.saveComment(this.product.productId, this.commentText).subscribe({
       next: (response) => {
         console.log(response);
+        this.commentText = "";
+        this.showComments();
       },
       error: (error) => {
         console.log("Save comment failed");

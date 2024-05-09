@@ -75,7 +75,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { AddcategoryComponent } from './addcategory/addcategory.component';
 import { MultiSelectModule } from 'primeng/multiselect';
-
 @NgModule({
   declarations: [
     AppComponent,

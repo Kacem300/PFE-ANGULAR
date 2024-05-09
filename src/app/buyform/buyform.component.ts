@@ -46,7 +46,7 @@ export class BuyformComponent implements OnInit{
         x => {
           console.log('chosen size:', x.size);
     console.log('available sizes:', x.product.productSizes.map((size: { size: any; }) => size.size));
-    let chosenSize = x.product.productSizes.find((size: {size: number}) => Number(size.size) === Number(x.size));
+    let chosenSize = x.product.productSizes.find((size: {size: String}) => String(size.size) === String(x.size));
 
     console.log('chosenSize:', chosenSize);
           if (chosenSize) {
@@ -57,33 +57,10 @@ export class BuyformComponent implements OnInit{
         }
       );
 
-      console.log(this.orderDetails.orderQuantities);
-      console.log(this.orderDetails);
+      console.log(JSON.stringify(this.orderDetails.orderQuantities+"orderquantity"));
+      console.log(JSON.stringify(this.orderDetails+"orderdetails"));
+      console.log(JSON.stringify(this.cartDetails+"cart details"))
     }
-
-/*
-  ngOnInit(): void {
-
-    let cart = localStorage.getItem('Cart');
-
-    if (cart) {
-      this.cartDetails = JSON.parse(cart);
-    }
-    console.log(this.cartDetails);
-
-
-   this.productDetails = this.activatedRoute.snapshot.data['productDetails'];
-console.log(this.productDetails);
-   this.single = this.activatedRoute.snapshot.paramMap.get('single') || '';
-   this.cartDetails.forEach(
-    x => this.orderDetails.orderQuantities.push(
-      {productId: x.product.productId, productSizeId: x.product.productSizes[0].productSizeId,quantity: x.quantity }
-    )
-  );
-
-    console.log(this.orderDetails.orderQuantities);
-    console.log(this.orderDetails);
-   } */
 
 
   public placeOrder(orderForm:NgForm){

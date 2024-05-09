@@ -22,6 +22,7 @@ import { MyordersadminComponent } from './myordersadmin/myordersadmin.component'
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { AddcategoryComponent } from './addcategory/addcategory.component';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
 {path:'',component:GalleryComponent},
@@ -48,8 +49,8 @@ resolve:{
 {path:'register',component:RegisterComponent},
 {path:'fortests',component:FortestsComponent},
 {path:'cart',component:CartComponent},
-{path:'addCategory',component:AddcategoryComponent,canActivate:[AuthGuard],data:{roles:['Admin']}}
-
+{path:'addCategory',component:AddcategoryComponent,canActivate:[AuthGuard],data:{roles:['Admin']}},
+{path:'users',component:UsersComponent,canActivate:[AuthGuard],data:{roles:['Admin']}}
 ];
 
 @NgModule({

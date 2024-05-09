@@ -45,6 +45,9 @@ public deletepProductGroups(productCategoryId:number){
 public getProductbyid(productId:number){
 return this.httpCLient.get<product>("http://localhost:9090/getProductDetailsbyId/"+productId)
 }
+public getCategoryById(productId:number){
+  return this.httpCLient.get<ProductCategory>("http://localhost:9090/getCategoryById/"+productId)
+  }
 public getProductDetails(single:boolean,productId:number){
   return this.httpCLient.get<product[]>("http://localhost:9090/details/"+single+"/"+productId);
 
@@ -111,6 +114,20 @@ getTotalUserCount(): Observable<number> {
 getUserCountsPerMonth(): Observable<OrderCount[]> {
   return this.httpCLient.get<OrderCount[]>('http://localhost:9090/getUserCountsPerMonth');
 }
+
+public getTotalRevenue(): Observable<Number> {
+  return this.httpCLient.get<Number>("http://localhost:9090/getTotalRevenue");
+}
+
+public getRevenuePerMonth(): Observable<OrderCount[]> {
+  return this.httpCLient.get<OrderCount[]>("http://localhost:9090/getRevenuePerMonth");
+}
+
+
+public getNewRevenue(): Observable<Number> {
+  return this.httpCLient.get<Number>("http://localhost:9090/getNewRevenue");
+}
+
 
 /*ADMIN DASHBOARD*/
 

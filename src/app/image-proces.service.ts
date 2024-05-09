@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { product } from './_model/product.model';
 import { FileHandle } from './_model/file-handle.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { User } from './_model/user.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -34,6 +35,23 @@ export class ImageProcesService {
 
   }
 
+  public createUserImage(user: User) {
+    const userImageData :any = user.userImage;
+
+    const imageBlob = this.DataUriToBlob(userImageData.picByte, userImageData.type);
+
+    const imageFile = new File([imageBlob], userImageData.name, { type: userImageData.type });
+
+    const finalFileHandle :FileHandle = {
+      file: imageFile,
+      url: this.domsanitzer.bypassSecurityTrustUrl(window.URL.createObjectURL(imageFile))
+    };
+
+    user.userImage = finalFileHandle;
+    return user;
+  }
+
+
 //converts a data URI (base64-encoded image data) to a blob
    public DataUriToBlob(picBytes:any,imageType:any){
 const byteString = window.atob(picBytes);
@@ -45,6 +63,9 @@ for (var i = 0; i < byteString.length; i++) {
   const blob = new Blob ([intarray],{type:imageType})
   return blob;
   }
+
+
+
 
 
 

@@ -8,6 +8,7 @@ import { ImageProcesService } from '../image-proces.service';
 import { map } from 'rxjs';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ProductCategory } from '../_model/productCategory.model';
 
 @Component({
   selector: 'app-product-details',
@@ -31,6 +32,7 @@ constructor(private productService:ProductService,
 ngOnInit():void{
   this.getAllProduct();
   console.log(this.productDetails)
+
 }
 
 
@@ -111,7 +113,7 @@ deleteProduct(productId: any) {
 
           setTimeout(() => {
             this.getAllProduct();
-          }, 2000);
+          }, 1000);
         },
         error: (error: HttpErrorResponse) => {
           console.log("Delete Failed");

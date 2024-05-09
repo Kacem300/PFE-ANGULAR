@@ -6,5 +6,8 @@ export interface User {
     userLastname:string,
     userName:string,
     userPassword:string,
-    userImage: FileHandle[],
+    userImage: FileHandle,
+    userEmail:string,
+    enabled:string,
+    registrationDate:Date |null,
 }

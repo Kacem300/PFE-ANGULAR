@@ -7,6 +7,7 @@ import { FileHandle } from '../_model/file-handle.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCategory } from '../_model/productCategory.model';
+import { ProductGroups } from '../_model/ProductGroups.model';
 @Component({
   selector: 'app-add-new-product',
   templateUrl: './add-new-product.component.html',
@@ -14,14 +15,14 @@ import { ProductCategory } from '../_model/productCategory.model';
 })
 export class AddNewProductComponent implements OnInit {
 
-  groups: any[] = [];
+
   selectedGroups: any[] = [];
 
 show:boolean=false;
 newbutton :boolean = true ;
 categories: ProductCategory[] = []; // Add this line
-newCategory: ProductCategory = {productCategoryId: 0, categoryName: "", sizeType: false};
-
+groups:ProductGroups[]=[];
+sizeType:boolean=false;
 
 product:product = {
   productId:0,
@@ -31,35 +32,49 @@ product:product = {
   productActualprice:0,
   productImages:[],
   productSizes:[],
+  productCategory:{productCategoryId: 0, categoryName: '', sizeType: false},
   productCategoryId:0,
-  groupIds:[],
-  sizeType:false,
+  ProductGroups:[{productGroupsId:0,productGroupsName:'',}],
+
 }
 
 constructor(private productService:ProductService,private sanitizer:DomSanitizer,private router:Router,private activatedroute:ActivatedRoute) {}
 
 
 ngOnInit(): void {
+  this.onProductCategoryChange();
   this.productService.getCategories().subscribe(categories => {
     this.categories = categories;
-    console.log(categories)
-  });
-  this.productService.getGroups().subscribe(groups => {
-    this.groups = groups.map(group => ({label: group.groupName, value: group.groupId}));
+
+
+    // Load the product data inside the getCategories() subscription
+    if (this.product = this.activatedroute.snapshot.data['product']) {
+      console.log("resolver working");
+      console.log(this.product.productCategory.categoryName + " resolver");
+    } else {
+      console.log("resolver is not working");
+    }
+    if (this.product && this.product.productId) {
+      this.newbutton = false;
+    }
   });
 
-  if (this.product = this.activatedroute.snapshot.data['product']) {
-    console.log("resolver wokring")
-  } else {
-    console.log("resolver is not working")
-  }
-  if (this.product && this.product.productId) {
-    this.newbutton = false;
-  }
+
+    this.productService.getGroups().subscribe({
+      next: (groups: ProductGroups[]) => {
+        this.groups = groups;
+        console.log(groups)
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    });
 
 }
 
+
 addProduct(productForm: NgForm) {
+  this.product.ProductGroups = this.selectedGroups;
   const productFormData = this.prepareFromData(this.product);
   console.log(productFormData);
   this.productService.addProduct(productFormData).subscribe({
@@ -67,8 +82,7 @@ addProduct(productForm: NgForm) {
       productForm.reset();
       this.product.productImages = [];
       this.product.productSizes = [];
-      this.product.productCategoryId = 0;
-      this.product.groupIds=[];
+      this.product.productCategoryId =0;
       console.log(Response);
 
     },
@@ -79,7 +93,8 @@ addProduct(productForm: NgForm) {
 }
 
 
-prepareFromData(product: product): FormData {
+
+ prepareFromData(product: product): FormData {
   const formData = new FormData();
   formData.append(
     'product',
@@ -97,13 +112,17 @@ prepareFromData(product: product): FormData {
     'sizes',
     new Blob([JSON.stringify(product.productSizes)], { type: 'application/json' })
   );
-  formData.append(
+
+
+   formData.append(
     'productCategoryId',
-    new Blob([JSON.stringify(product.productCategoryId)], { type: 'application/json' })
+    new Blob([JSON.stringify(product.productCategory.productCategoryId)], { type: 'application/json' })
   );
+
+  const productGroupIds = product.ProductGroups.map(group => group.productGroupsId);
   formData.append(
-    'groupIds',
-    new Blob([JSON.stringify(product.groupIds)], { type: 'application/json' })
+    'productGroupIds',
+    new Blob([JSON.stringify(productGroupIds)], { type: 'application/json' })
   );
   return formData;
 
@@ -135,10 +154,10 @@ fileDropped(fileHandle:FileHandle){
 
 addSize() {
   if (this.product.sizeType) {
-    // If sizeType is true, add a size from the sizesList
+
     this.product.productSizes.push({ size: "S", quantity: 0, product: this.product.productId });
   } else {
-    // If sizeType is false, add a size as a number
+
     this.product.productSizes.push({ size: 0, quantity: 0, product: this.product.productId });
   }
 }
@@ -150,15 +169,23 @@ removeSize(index: number) {
   this.product.productSizes.splice(index, 1);
 }
 
-updateSizeType() {
-  console.log(this.product.productCategoryId); // Log the productCategoryId
-  console.log(this.categories); // Log the categories array
-  this.product.sizeType = this.categories.find(category => category.productCategoryId === this.product.productCategoryId)?.sizeType;
-  console.log(this.product.sizeType);
-}
+
+
+onProductCategoryChange() {
+
+  // Get the selected category
+  const selectedCategory = this.categories.find(category => Number(category.productCategoryId) === Number(this.product.productCategory.productCategoryId));
+
+  // If a matching category is found, update this.sizeType
+  if (selectedCategory) {
+    this.sizeType = selectedCategory.sizeType;
+  }
 
 
 }
 
 
 
+
+
+}

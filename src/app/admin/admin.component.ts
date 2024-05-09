@@ -9,11 +9,20 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+  revenueData: any;
+
+
   status: string = 'All';
+
   ordernumber: Number = 0;
-  totalUserCount:number=0;
   newOrdersCount: Number = 0;
+
+
+  totalUserCount:number=0;
   newUserCount: Number = 0;
+
+  revenue:Number=0;
+  newRevenue:Number=0;
 
   data: any;
   options: any;
@@ -21,87 +30,54 @@ export class AdminComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-   /*  this.getOrderCountsPerMonth();
-    this.getUserCountsPerMonth(); */
+
+
     this.getNewNumberOrder();
     this.getNumberOrder();
     this.getNewUserCount();
     this.getTotalUserCount();
     this.getCountsPerMonth();
+    this.getRevenue();
+    this.getNewRevenue();
 }
+
+
 
 
 getCountsPerMonth() {
   forkJoin({
     orderCounts: this.productService.getOrderCountsPerMonth(),
-    userCounts: this.productService.getUserCountsPerMonth()
-  }).subscribe(({ orderCounts, userCounts }) => {
+    userCounts: this.productService.getUserCountsPerMonth(),
+    revenueCounts: this.productService.getRevenuePerMonth()
+  }).subscribe(({ orderCounts, userCounts, revenueCounts }) => {
     this.data = {
-      labels: orderCounts.map(orderCount => orderCount.yearMonth),
+      labels: revenueCounts.map(revenueCount => revenueCount.yearMonth),
       datasets: [
         {
           label: 'Number of Orders',
           data: orderCounts.map(orderCount => orderCount.count),
           fill: false,
           borderColor: '#4bc0c0',
-
         },
         {
           label: 'Number of Users',
           data: userCounts.map(userCount => userCount.count),
           fill: false,
           borderColor: '#4b00c0',
-
-        }
-      ]
-    };
-  });
-}
-
-
-/* getOrderCountsPerMonth(){
-this.productService.getOrderCountsPerMonth().subscribe(orderCounts => {
-  this.data = {
-    labels: orderCounts.map(orderCount => orderCount.yearMonth),
-    datasets: [
-      {
-        label: 'Number of Orders',
-        data: orderCounts.map(orderCount => orderCount.count),
-        fill: false,
-        borderColor: '#4bc0c0'
-      }
-    ]
-  };
-  console.log(this.data.datasets[0].data,"ngonit");
-});
-}
-
-getUserCountsPerMonth() {
-  this.productService.getUserCountsPerMonth().subscribe(userCounts => {
-    this.data.datasets.push({
-      label: 'Number of Users',
-      data: userCounts.map(userCount => userCount.count),
-      fill: false,
-      borderColor: '#4b00c0' // Change color to distinguish from orders
-    });
-  });
-} */
-/* getUserCountsPerMonth() {
-  this.productService.getUserCountsPerMonth().subscribe(userCounts => {
-    this.data = {
-      labels: userCounts.map(userCount => userCount.yearMonth),
-      datasets: [
+        },
         {
-          label: 'Number of Users',
-          data: userCounts.map(userCount => userCount.count),
+          label: 'Revenue',
+          data: revenueCounts.map(revenueCount => revenueCount.count),
           fill: false,
-          borderColor: '#4bc0c0'
+          borderColor: '#c04b00',
         }
       ]
     };
-    console.log(this.data.datasets[0].data,"ngonit");
   });
-} */
+}
+
+
+
 
 getNumberOrder() {
   this.productService.getTotalOrderCount().subscribe(totalOrderCount => {
@@ -124,6 +100,20 @@ getTotalUserCount() {
   this.productService.getTotalUserCount().subscribe(totalUserCount => {
     this.totalUserCount = totalUserCount;
   });
+}
+
+getRevenue() {
+  this.productService.getTotalRevenue().subscribe(totalRevenue => {
+    this.revenue = totalRevenue;
+  });
+  console.log(this.revenue)
+}
+
+getNewRevenue() {
+  this.productService.getNewRevenue().subscribe(newRevenue => {
+    this.newRevenue = newRevenue;
+  });
+  console.log(this.newRevenue)
 }
 
 }

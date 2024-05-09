@@ -73,7 +73,7 @@
   </div>
       <div class="card">
         <div style="margin-bottom: 5vh;" *ngFor="let comment of comments; let i = index">
-          <div class="d-flex comment-box" style="padding-right: 30px;padding-left: 100px;padding-top: 0px;padding-bottom: 18px;"><img class="rounded-circle" src="../assets/default.png" width="72" height="72">
+          <div class="d-flex comment-box" style="padding-right: 30px;padding-left: 100px;padding-top: 0px;padding-bottom: 18px;"><img class="rounded-circle" [src]="comment.user.userImage.url"  width="72" height="72">
               <div>
                   <div class="row text-end d-flex">
                       <div class="col-xl-12 d-flex align-items-center comment-user" style="padding-left: 23px;">

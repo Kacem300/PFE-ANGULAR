@@ -1,8 +1,58 @@
+<!-- <div>
 <mat-grid-list cols="4" rowHeight="1:1">
   <mat-grid-tile *ngFor="let x of data.images">
     <img [src]="x.url" width="150px" height="150px">
-    <div *ngFor="let size of data.sizes">
-      <p>Size: {{size.size}}, Quantity: {{size.quantity}}</p>
-    </div>
+
   </mat-grid-tile>
 </mat-grid-list>
+</div>
+<div>
+  <mat-grid-list cols="4" rowHeight="1:1">
+  <mat-grid-tile>
+    <p-table [value]="data.sizes" >
+      <ng-template pTemplate="header">
+          <tr>
+              <th>Size</th>
+              <th>Quantity</th>
+          </tr>
+        </ng-template>
+          <ng-template pTemplate="body" let-size>
+          <tr>
+
+              <td>{{size.size}}</td>
+              <td>{{size.quantity}}</td>
+          </tr>
+        </ng-template>
+  </p-table>
+</mat-grid-tile>
+</mat-grid-list>
+</div>
+ -->
+ <div class="container">
+  <div class="row">
+    <div class="col-sm" *ngFor="let x of data.images">
+      <img [src]="x.url" width="150px" height="150px">
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <p-table [value]="data.sizes">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Size</th>
+            <th>Quantity</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-size>
+          <tr>
+            <td>{{size.size}}</td>
+            <td>{{size.quantity}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

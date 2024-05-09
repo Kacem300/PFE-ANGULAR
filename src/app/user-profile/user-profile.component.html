@@ -1,46 +1,44 @@
 <body>
-  <div class="container-fluid">
+  <div class="container mt-5">
       <div class="card shadow mb-3">
           <div class="card-header py-3">
               <p class="text-primary m-0 fw-bold">User Settings</p>
           </div>
           <div class="card-body">
               <form>
-                  <div class="row" style="margin-bottom: 25px;text-align: left;">
-                      <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2" style="display: inline;text-align: center;margin-bottom: 25px;">
-                        <!-- <input type="file" (change)="SelectFile($event)"> -->
+                  <div class="row">
+                      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
                         <input type="file" style="display: none;" #fileInput (change)="SelectFile($event)">
-                        <img *ngFor="let img of CurrentUser.userImage" class="rounded-circle mb-3 mt-4 img-fluid" [src]="img.url" style="display: inline;max-height: 110px;"><br>
-                        <!-- <button (change)="SelectFile($event)" class="btn btn-primary btn-sm" id="photoBtn" type="button">Change Photo</button> -->
+                        <img class="rounded-circle mb-3 mt-4 img-fluid" [src]="CurrentUser.userImage.url" style="display: inline;max-height: 110px;"><br>
                         <button class="btn btn-primary btn-sm" id="photoBtn" type="button" (click)="fileInput.click()">Change Photo</button>
                       </div>
-                      <div class="col-sm-8 col-md-8 col-lg-9 col-xl-10 col-xxl-10 align-self-center">
+                      <div class="col-sm-12 col-md-6 col-lg-8 col-xl-9">
                           <div class="row">
-                              <div class="col-md-12 text-start">
-                                  <div class="mb-3"><label class="form-label" for="email"><strong>Email Address</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email"  required="" [readonly]="!isEditable"></div>
+                              <div class="col-12">
+                                  <div class="mb-3"><label class="form-label" for="email"><strong>Email Address</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email"  [(ngModel)]="CurrentUser.userEmail" required="" [readonly]="!isEditable"></div>
                               </div>
-                              <div class="col-md-12 text-start">
+                              <div class="col-12">
                                   <div class="mb-3"><label class="form-label" for="username"><strong>Username</strong></label><input class="form-control" type="text" placeholder="Username" name="username" [(ngModel)]="CurrentUser.userName" required="" [readonly]="!isEditable"></div>
                               </div>
                           </div>
                       </div>
-                      <div class="col-md-6 text-start">
+                      <div class="col-sm-12 col-md-6">
                           <div class="mb-3"><label class="form-label" for="username"><strong> New Password</strong></label><input class="form-control" type="password" id="password" placeholder="Password" [(ngModel)]="CurrentUser.userPassword" [ngModelOptions]="{standalone: true}" [readonly]="!isEditable"></div>
                       </div>
-                      <div class="col-md-6 text-start">
+                      <div class="col-sm-12 col-md-6">
                           <div class="mb-3"><label class="form-label" for="username"><strong>Confirm Password</strong></label><input class="form-control" type="password" id="verifyPassword" placeholder="Password"></div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-sm-12 col-md-6">
                           <div class="mb-3"><label class="form-label" for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" placeholder="John" name="first_name" [(ngModel)]="CurrentUser.userFirstName" required="" [ngModelOptions]="{standalone: true}"[readonly]="!isEditable"></div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-sm-12 col-md-6">
                           <div class="mb-3"><label class="form-label" for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" placeholder="Doe" name="last_name" [(ngModel)]="CurrentUser.userLastname" required="" [readonly]="!isEditable"></div>
                       </div>
-                      <div class="col">
+                      <div class="col-12">
                           <p id="emailErrorMsg" class="text-danger" style="display:none;"></p>
                           <p id="passwordErrorMsg" class="text-danger" style="display:none;"></p>
                       </div>
-                      <div class="col-md-12" style="text-align: right;margin-top: 5px;">
+                      <div class="col-12 text-end">
                         <button class="btn btn-primary btn-sm" id="editBtn" type="button" (click)="toggleEdit()">Edit</button>
                           <button class="btn btn-primary btn-sm" id="cancelBtn" type="button" (click)="CancelToggleEdit()">Cancel</button>
                           <button class="btn btn-primary btn-sm" id="submitBtn" type="submit"  (click)="updateUser()">Save Settings</button>

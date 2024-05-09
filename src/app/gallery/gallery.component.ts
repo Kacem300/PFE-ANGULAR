@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ProductSize } from '../_model/productSize.model';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
@@ -34,14 +35,10 @@ export class GalleryComponent implements OnInit {
 
 
   constructor(private productService: ProductService,
-     private ImageProcess: ImageProcesService, private router: Router) { }
+     private ImageProcess: ImageProcesService, private router: Router,private messageService: MessageService) { }
 
-   /*   ngOnInit(): void {
-      this.getAllProduct();
-     } */
+
   ngOnInit(): void {
-
-
     this.getAllProduct();
 
 
@@ -53,20 +50,10 @@ export class GalleryComponent implements OnInit {
   }
 
 
-
-
-
-
-  /* searchByKeyword(searchByKeyword: string) {
-    console.log(searchByKeyword);
-    this.pageNumber = 0 ;
-    this.productDetails = [];
-    this.getAllProduct(searchByKeyword);
-    }
- */
     searchByKeyword($event: any) {
       this.searchKeyControl.setValue($event.target.value);
     }
+
 
 
   public getAllProduct(searchKey: string = "") {
@@ -92,9 +79,12 @@ export class GalleryComponent implements OnInit {
 
 
 
-  getClass(index: number): string {
+   getClass(index: number): string {
     return `pic-${index + 1}`;
   }
+
+
+
 
 
 
@@ -109,14 +99,14 @@ export class GalleryComponent implements OnInit {
 
   getPageNumbers(): number[] {
     return Array.from({ length: this.totalPages }, (_, index) => index);
+    console.log(this.totalPages)
+
   }
 
   goToPage(page: number): void {
     this.pageNumber = page;
     this.getAllProduct();
   }
-
-
 
   addtocart(product: product, selectedSize: string) {
     if (product && selectedSize) {
@@ -140,35 +130,31 @@ export class GalleryComponent implements OnInit {
       localStorage.setItem('Cart', JSON.stringify(this.cartproducts)); // store updated cart in local storage
       this.amount = 0;
     } else {
-      console.error('Error: product or selected size is null');
+      this.messageService.add({severity:'error', summary:'Error', detail:'Please select a size and quantity before adding to cart'});
     }
   }
 
+  onPageChange(event:any) {
+    this.pageNumber = event.page;
+    this.getAllProduct();
+  }
 
-/*
-   addtocart(product: product) {
+  getQuantityForSelectedSize(product: product, selectedSize: string): number {
+    let size = product.productSizes.find(size => size.size === selectedSize);
+    return size ? size.quantity : 0;
+  }
+  getStockStatus(product: product): {status: string, color: string} {
+    let totalQuantity = product.productSizes.reduce((total, size) => total + size.quantity, 0);
 
-    this.cartproducts = JSON.parse(localStorage.getItem('Cart') || '[]'); // get existing cart from local storage or initialize as empty array
-
-    let productExists = this.cartproducts.some(item => item.product.productId === product.productId); // check if product already exists in cart
-
-    if (!productExists) {
-      this.cartproducts.push({ // add new product to cart
-        product: product,
-        quantity: this.amount
-      });
+    if (totalQuantity === 0) {
+      return {status: 'Out of stock', color: 'red'};
+    } else if (totalQuantity < 5) {
+      return {status: 'Low stock', color: 'orange'};
     } else {
-      let productIndex = this.cartproducts.findIndex(item => item.product.productId === product.productId); // get index of existing product in cart
-      let productInCart = this.cartproducts[productIndex]; // get the existing product in cart
-      productInCart.quantity += this.amount; // update quantity of existing product
-      this.cartproducts[productIndex] = productInCart; // update the cart array with the updated product
+      return {status: 'In stock', color: 'green'};
     }
+  }
 
-    localStorage.setItem('Cart', JSON.stringify(this.cartproducts)); // store updated cart in local storage
-    this.amount = 0;
-
-}
- */
 
 
 }

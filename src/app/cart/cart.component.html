@@ -25,9 +25,6 @@
             <td>{{item.product.productId}}</td>
             <td>
               <img [src]="item.product.productImages[0].url.changingThisBreaksApplicationSecurity" class="product-image">
-              <!-- <img *ngFor="let image of item.product.productImages[1]"
-                   [src]="image.url.changingThisBreaksApplicationSecurity"
-                   class="product-image"> -->
             </td>
 
             <td>{{item.product.productName}}</td>
@@ -36,7 +33,7 @@
             <td>
               <div class="quantity">
                 <button pButton type="button" class="btn btn-dark" (click)="addAmount(rowIndex)">+</button>
-                <input class="form-control" type="number" [(ngModel)]="item.quantity" (change)="detectChange()" min="1" style="text-align: center;" >
+                <input class="form-control" type="number" [(ngModel)]="item.quantity" (change)="detectChange()" [max]="getQuantityForSelectedSize(item)" min="1" style="text-align: center;" >
                 <button pButton type="button" class="btn btn-dark" (click)="minsAmount(rowIndex)">-</button>
               </div>
             </td>

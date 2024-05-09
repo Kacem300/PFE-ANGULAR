@@ -1,0 +1,13 @@
+/* Styles for screens that are 600px or wider */
+@media (min-width: 200px) {
+  div {
+    margin: 20px;
+  }
+}
+
+/* Styles for screens that are less than 600px wide */
+@media (max-width: 400px) {
+  div {
+    margin: 10px;
+  }
+}

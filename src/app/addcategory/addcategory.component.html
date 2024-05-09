@@ -47,7 +47,7 @@
   <form  #groupForm="ngForm"  (ngSubmit)="addGroup(groupForm)">
     <div class="form-group">
       <label for="groupName">Group Name</label>
-      <input type="text" class="form-control" id="groupName" name="groupName" [(ngModel)]="productGroup.groupName" required>
+      <input type="text" class="form-control" id="groupName" name="groupName" [(ngModel)]="productGroup.productGroupsName" required>
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Add group</button>
@@ -63,8 +63,8 @@
     </ng-template>
     <ng-template pTemplate="body" let-groups>
       <tr>
-        <td>{{groups.groupId}}</td>
-        <td>{{groups.groupName}}</td>
+        <td>{{groups.productGroupsId}}</td>
+        <td>{{groups.productGroupsName}}</td>
         <td>
           <button (click)="deleteCategory(groups.groupId)" class="btn btn-danger">Delete</button>
         </td>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { product } from '../_model/product.model';
 import { User } from '../_model/user.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ProductSize } from '../_model/productSize.model';
 
 @Component({
   selector: 'app-cart',
@@ -38,18 +39,22 @@ constructor(
       this.getCartTotal()
     }
 
-  addAmount(index:number) {
-    this.cartDetails[index].quantity++
+    addAmount(index:number) {
+      if (this.cartDetails[index].quantity < this.getQuantityForSelectedSize(this.cartDetails[index])) {
+        this.cartDetails[index].quantity++
+        localStorage.setItem("Cart" , JSON.stringify(this.cartDetails))
+        this.getCartTotal();
+      }
+    }
 
-    localStorage.setItem("Cart" , JSON.stringify(this.cartDetails))
-    this.getCartTotal();
-  }
-  minsAmount(index:number) {
-    this.cartDetails[index].quantity--
+    minsAmount(index:number) {
+      if (this.cartDetails[index].quantity > 1) {
+        this.cartDetails[index].quantity--
+        localStorage.setItem("Cart" , JSON.stringify(this.cartDetails))
+        this.getCartTotal();
+      }
+    }
 
-    localStorage.setItem("Cart" , JSON.stringify(this.cartDetails))
-    this.getCartTotal();
-  }
   detectChange() {
     localStorage.setItem("Cart" , JSON.stringify(this.cartDetails))
     this.getCartTotal();  }
@@ -111,24 +116,11 @@ navigate(){
     single: false, productId:0
   }]);
 }
-/* checkout() {
-  this.router.navigate(['/buyProduct', {
-    single: false, productId:0
-  }]);
+getQuantityForSelectedSize(item: any): number {
+  let size = item.product.productSizes.find((size: { size: any; }) => size.size === item.size);
+  return size ? size.quantity : 0;
+}
 
-} */
-
-
-/* addToCart(productId:number) {
-  this.productService.addToCart(productId).subscribe({
-    next:(response) => {
-      console.log(response);
-    },
-    error:(error)=> {
-      console.log(error);
-    }
-});
-} */
 
 
 

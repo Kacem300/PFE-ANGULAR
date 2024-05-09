@@ -1,5 +1,5 @@
 
 export interface ProductGroups{
-  groupId:number,
-  groupName:string,
+  productGroupsId:number,
+  productGroupsName:string,
 }

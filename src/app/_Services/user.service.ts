@@ -16,12 +16,12 @@ export class UserService {
 
   public registerNewUser(registerData :any){
     return this.httpclient.post(this.PATH+"/registerNewUser",registerData);
-      }
+  }
 
-      public confirmRegistration(token: string){
+  public confirmRegistration(token: string){
         return this.httpclient.get(this.PATH+"/registrationConfirm?token=" + token);
-      }
-      //headers content json/bearer
+  }
+
   public login(loginData: any){
     return this.httpclient.post(this.PATH + "/authenticate",loginData,{headers:this.requestHeaders})
   }
@@ -63,6 +63,9 @@ export class UserService {
 }
 
 
+public getAllUsers(){
+  return this.httpclient.get<User[]>(this.PATH + "/getAllUsers");
+}
 
 
 

@@ -22,8 +22,8 @@ export class AddcategoryComponent implements OnInit {
     sizeType:false
   }
   productGroup: ProductGroups = {
-    groupId: 0,
-    groupName: "",}
+    productGroupsId: 0,
+    productGroupsName: "",}
 
 
   constructor(
@@ -82,8 +82,8 @@ export class AddcategoryComponent implements OnInit {
 
 addGroup(groupForm: NgForm) {
     const formData = new FormData();
-    formData.append('productGroupId', this.productGroup.groupId.toString());
-    formData.append('groupName', this.productGroup.groupName);
+    formData.append('productGroupId', this.productGroup.productGroupsId.toString());
+    formData.append('productGroupsName', this.productGroup.productGroupsName);
 
 
     this.ProductService.addGroup(formData).subscribe({
@@ -91,8 +91,8 @@ addGroup(groupForm: NgForm) {
         console.log(response);
 
         this.productGroup = {
-          groupId: 0,
-          groupName: "",
+          productGroupsId: 0,
+          productGroupsName: "",
 
         };
         this.getCategories()

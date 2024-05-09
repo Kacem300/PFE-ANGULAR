@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { User } from '../_model/user.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FileHandle } from '../_model/file-handle.model';
+import { ImageProcesService } from '../image-proces.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,7 +14,7 @@ import { FileHandle } from '../_model/file-handle.model';
 export class UserProfileComponent implements OnInit{
 
 isEditable:Boolean=false;
-  constructor(private UserService:UserService,private sanitizer:DomSanitizer){}
+  constructor(private UserService:UserService,private sanitizer:DomSanitizer,private ImageProcess: ImageProcesService){}
 
   CurrentUser:User={
   Role:[],
@@ -21,47 +22,51 @@ isEditable:Boolean=false;
   userLastname:"",
   userName:"",
   userPassword:"",
-  /* userImage:{ file: new File([''], ''), url: '' } */
-  userImage:[],
+  userEmail:"",
+  enabled:"",
+  registrationDate: null,
+  userImage: { file: new File([''], ''), url: '' }
+
   }
   ngOnInit(): void {
     this.getCurrentUser();}
 
-  public getCurrentUser(){
-    this.UserService.getCurrentUser().subscribe({
-      next: (resp: any) => {
-        this.CurrentUser = resp;
-        console.log(this.CurrentUser);
 
-      },
-      error: (error: HttpErrorResponse) => {
-        console.log(error);
-      }
-    });
-  }
+    public getCurrentUser(){
+      this.UserService.getCurrentUser().subscribe({
+        next: (resp: any) => {
+          this.CurrentUser = this.ImageProcess.createUserImage(resp);
+          console.log(this.CurrentUser)
+          if (this.CurrentUser.userImage === null) {
+            // Set default image from assets
+            this.CurrentUser.userImage = {  file: new File([''], ''),url: 'assets/default.png' };
+        }
+
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      });
+    }
+
 
   prepareFormData(user: User): FormData {
     const formData = new FormData();
     formData.append('user', new Blob([JSON.stringify(user)], {type: 'application/json'}));
-    for (let i = 0; i < user.userImage.length; i++) {
-      formData.append('imageFile', user.userImage[i].file, user.userImage[i].file.name);
-    }
+    formData.append('imageFile', user.userImage.file, user.userImage.file.name);
     return formData;
   }
 
   public SelectFile(event: any) {
-    if (event.target.files) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        const file = event.target.files[i];
+    if (event.target.files && event.target.files.length > 0) {
+        const file = event.target.files[0];
         const fileHandle: FileHandle = {
           file: file,
           url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file))
         }
-        this.CurrentUser.userImage.push(fileHandle);
-      }
+        this.CurrentUser.userImage = fileHandle;
     }
   }
-
 
 
   public updateUser() {

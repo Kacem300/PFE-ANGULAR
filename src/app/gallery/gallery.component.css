@@ -103,7 +103,9 @@ input.p-inputtext {
   object-fit: cover; /* This will ensure that your images cover the entire space without distortion */
 }
 
-.product-grid7 .pic-1 {
+
+
+ .product-grid7 .pic-1 {
   opacity: 1;
   transition: all .5s ease-out 0s;
 }
@@ -118,6 +120,33 @@ input.p-inputtext {
 }
 
 .product-image7:hover .pic-2 {
+  opacity: 1;
+  transform: rotateY(0);
+}
+
+.product-grid7 .pic-3 {
+  opacity: 0;
+  transform: rotateY(-90deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all .5s ease-out 0s;
+}
+
+.product-image7:hover .pic-3 {
+  opacity: 1;
+  transform: rotateY(0);
+}
+.product-grid7 .pic-4 {
+  opacity: 0;
+  transform: rotateY(-90deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all .5s ease-out 0s;
+}
+
+.product-image7:hover .pic-4 {
   opacity: 1;
   transform: rotateY(0);
 }

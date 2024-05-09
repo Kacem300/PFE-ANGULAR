@@ -1,1 +1,50 @@
-<p>users works!</p>
+<div class="container mt-lg-3 mb-lg-3 pb-lg-3 pt-lg-3">
+
+  <p-table responsiveLayout="scroll" [value]="users" class="responsive-table">
+    <ng-template pTemplate="caption" >
+      <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+        <h5 class="m-0">Manage Products</h5>
+
+
+        <span class="block mt-2 md:mt-0 p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" class="w-full sm:w-auto" />
+        </span>
+
+      </div>
+<!--       <p-dropdown [options]="filterOptions" [(ngModel)]="selectedFilter" (onChange)="getAllOrderDetailsForAdmin(selectedFilter)" [ngStyle]="{'text-align': 'left'}"></p-dropdown>
+ -->
+
+    </ng-template>
+    <ng-template pTemplate="header" style="border-width: 1px;">
+      <tr>
+
+        <th class="border">FirstName</th>
+        <th class="border">LastName</th>
+        <th class="border">UserName</th>
+        <th class="border">Email</th>
+        <th class="border">Status</th>
+        <th class="border">Registration Date</th>
+
+
+
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+
+
+        <td class="border">{{user.userFirstName}}</td>
+        <td class="border">{{user.userLastname}}</td>
+        <td class="border">{{user.userName}}</td>
+        <td class="border">{{user.userEmail}}</td>
+        <td class="border">{{user.enabled ? 'Verified' : 'Not Verified'}}</td>
+        <td class="border">{{user.registrationDate | date:'dd, MMMM, yyyy'}}</td>
+
+
+        </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+

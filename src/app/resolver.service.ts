@@ -13,6 +13,7 @@ export class ResolverService {
     private productService:ProductService,
     private imageprocess:ImageProcesService) { }
 
+
   resolve: ResolveFn<Observable<product>> = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -21,14 +22,16 @@ export class ResolverService {
     const id = Number(route.paramMap.get("productId"));
     if(id){
      return this.productService.getProductbyid(id)
-     .pipe(map(x=>this.imageprocess.createimage(x)))
-    }else{
+     .pipe(map(x=>
+      this.imageprocess.createimage(x)))}
+     else{
       return of(this.getProducts())
       console.log("error else resolver")
-
     }
   }
+
   getProducts(){
+
     {
       return{
         productId:0,
@@ -39,10 +42,8 @@ export class ResolverService {
         productNote:0,
         productImages:[],
         productSizes:[],
-        productCategoryId:0,
-        groupIds: [],
-
-
+        productCategory:{productCategoryId: 0, categoryName: '', sizeType: false},
+        ProductGroups:[],
 
   }
 

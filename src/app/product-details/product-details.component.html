@@ -40,9 +40,10 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Category</th>
                 <th>Actual Price</th>
                 <th>Discount Price</th>
-                <!-- <th>Category</th> -->
+
 
 
                 <th>Actions</th>
@@ -51,13 +52,14 @@
             </thead>
             <tbody>
               <ng-container *ngFor="let product of productDetails">
-                <tr *ngFor="let size of product.productSizes">
+                <tr >
                   <td>{{product.productId}}</td>
                   <td>{{product.productName}}</td>
                   <td>{{product.productDescription}}</td>
-                  <!-- <td>{{product.product}}</td> -->
+                  <td>{{product.productCategory.categoryName}}</td>
                   <td>{{product.productActualprice}}</td>
                   <td>{{product.productDiscountprice}}</td>
+
 
                   <td>
                     <button type="button" class="btn btn-primary me-2" (click)="showImages(product)"><i class="far fa-eye"></i> </button>
