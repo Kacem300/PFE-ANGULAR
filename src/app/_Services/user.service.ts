@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { retry } from 'rxjs';
+import { Observable, retry } from 'rxjs';
 import { UserAuthService } from './user-auth.service';
 import { User } from '../_model/user.model';
 
@@ -63,10 +63,41 @@ export class UserService {
 }
 
 
-public getAllUsers(){
-  return this.httpclient.get<User[]>(this.PATH + "/getAllUsers");
+
+/* public getAllUsers(searchKeyword: string = '') {
+  return this.httpclient.get<User[]>(`${this.PATH}/getAllUsers`, {
+    params: { searchKeyword: searchKeyword }
+  });
+} */
+public getAllUsers(searchKeyword: string = '', statusFilter: string = 'all') {
+  return this.httpclient.get<User[]>(`${this.PATH}/getAllUsers`, {
+    params: {
+      searchKeyword: searchKeyword,
+      statusFilter: statusFilter
+    }
+  });
 }
 
+
+
+public forgotPassword(email: string): Observable<any> {
+  const params = new HttpParams().set('email', email);
+  return this.httpclient.post(this.PATH + "/forgotPassword", null, {
+    headers: this.requestHeaders,
+    params: params
+  });
+}
+
+
+public verifyToken(token: string): Observable<any> {
+  const params = new HttpParams().set('token', token);
+  return this.httpclient.post(this.PATH + "/verifyToken", params.toString(), { headers: this.requestHeaders });
+}
+
+public resetPassword(token: string, newPassword: string): Observable<any> {
+  const params = new HttpParams().set('token', token).set('newPassword', newPassword);
+  return this.httpclient.post(this.PATH + "/resetPassword", params.toString(), { headers: this.requestHeaders });
+}
 
 
 }

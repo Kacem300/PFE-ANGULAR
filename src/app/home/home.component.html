@@ -14,20 +14,20 @@
           font-size: 3.5rem;
         }
       }
+
+
     </style>
 
 
-    <!-- Custom styles for this template -->
     <link href="carousel.css" rel="stylesheet">
-
 
   <body>
 
 
-
 <main>
 
-  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+
+  <div class="carousel-container" id="myCarousel" class="carousel slide" data-bs-ride="carousel" style="width: 100%;">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -35,39 +35,39 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <svg   class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-           <rect width="100%" height="140%" fill="#777"/>
-         <image href="assets/girl.jpg" width="100%" height="140%" preserveAspectRatio="none" style="object-fit: cover;"/>
-
-        </svg>
-
+        <div class="image-container">
+          <img src="assets/girl.jpg" class="featurette-image img-fluid mx-auto">
+<!-- <img [src]="topProduct.productImages[0].url" alt="{{ topProduct.productName }}"  style="object-fit: cover;" class="featurette-image img-fluid mx-auto" >-->
+      </div>
         <div class="container">
           <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
-            <p>Some representative placeholder content for the first slide of the carousel.</p>
+            <h1 >Women.</h1>
+            <p>Discover More.</p>
             <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
           </div>
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-          <rect width="100%" height="140%" fill="#777"/>
-          <image href="assets/unsplash.jpg" width="100%" height="140%" preserveAspectRatio="none" style="object-fit: cover;"/>
-        </svg>
+        <div class="image-container">
+          <img src="assets/men.jpg" class="featurette-image img-fluid mx-auto">
 
-        <div class="container">
+<!--           <img [src]="topProduct.productImages[0].url" alt="{{ topProduct.productName }}" class="featurette-image img-fluid mx-auto" >
+ -->      </div>
+      <div class="container">
           <div class="carousel-caption">
-            <h1>Another example headline.</h1>
-            <p>Some representative placeholder content for the second slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+            <h1 >Men</h1>
+            <p>Discover More.</p>
+            <p><a class="btn btn-lg btn-primary" routerLink="/">Learn more</a></p>
           </div>
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-          <rect width="100%" height="140%" fill="#777"/>
-          <image href="assets/h.jpg" width="100%" height="140%" preserveAspectRatio="none" style="object-fit: cover;"/>
-        </svg>
+
+        <div class="image-container">
+
+        <img  [src]="topRatedProduct.productImages[0].url" alt="{{ topRatedProduct.productName }}" class="featurette-image img-fluid mx-auto" >
+        </div>
+
 
         <div class="container">
           <div class="carousel-caption text-end">
@@ -89,16 +89,16 @@
   </div>
 
 
-  <!-- Marketing messaging and featurettes
-  ================================================== -->
-  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+
+
 
   <div class="container marketing">
     <div class="row">
       <div class="col-lg-4" *ngFor="let product of products">
  <img [src]="product.productImages[0].url" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="{{product.productName}}"/>
         <h2>{{product.productName}}</h2>
-        <p>{{product.productDescription}}</p>
+
         <button pButton type="button" label="View Details" class="custom-button" (click)="showprodcut(product.productId,true)"></button>
       </div>
     </div>
@@ -108,52 +108,33 @@
 
 
 
-    <!-- START THE FEATURETTES -->
 
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
+    <div class="row featurette" style="margin-bottom: 4rem; margin-top: 4rem;">
       <div class="col-md-7">
-        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
-        <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+        <h4 class="featurette-heading">Best Seller</h4>
+        <h2 class="featurette-heading">{{ topProduct.productName }}</h2>
+        <p class="lead">{{ topProduct.productDescription }}</p>
       </div>
       <div class="col-md-5">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
+        <img [src]="topProduct.productImages[0].url" alt="{{ topProduct.productName }}" class="featurette-image img-fluid mx-auto">
 
       </div>
     </div>
 
-    <hr class="featurette-divider">
 
-    <div class="row featurette">
-      <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
-        <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
-      </div>
-      <div class="col-md-5 order-md-1">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
-
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
+    <div class="row featurette" style="margin-bottom: 4rem;">
       <div class="col-md-7">
-        <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-        <p class="lead">And yes, this is the last block of representative placeholder content. Again, not really intended to be actually read, simply here to give you a better view of what this would look like with some actual content. Your content.</p>
+        <h4 class="featurette-heading">Top Rated</h4>
+        <h2 class="featurette-heading">{{ topRatedProduct.productName }}</h2>
+        <p class="lead">{{ topRatedProduct.productDescription }}</p>
       </div>
       <div class="col-md-5">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
-
+        <img [src]="topRatedProduct.productImages[0].url" alt="{{ topRatedProduct.productName }}" class="featurette-image img-fluid mx-auto">
       </div>
     </div>
 
-    <hr class="featurette-divider">
 
-    <!-- /END THE FEATURETTES -->
-
-  </div><!-- /.container -->
+  </div>
 
 
   <!-- FOOTER -->

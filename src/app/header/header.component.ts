@@ -1,8 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UserAuthService } from '../_Services/user-auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../_Services/user.service';
-import { MenuItem } from 'primeng/api'; // Import PrimeNG MenuItem
+import { MenuItem } from 'primeng/api';
+import { ProductCategory } from '../_model/productCategory.model';
+import { ProductService } from '../_Services/product.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ProductGroups } from '../_model/ProductGroups.model';
+import { product } from '../_model/product.model';
+import { CategoryServiceService } from '../_Services/category-service.service';
+import { GroupServiceService } from '../_Services/group-service.service';
 
 @Component({
   selector: 'app-header',
@@ -10,41 +17,20 @@ import { MenuItem } from 'primeng/api'; // Import PrimeNG MenuItem
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit{
-  items: MenuItem[] = []; // Define items array for PrimeNG Menubar
+  categories: ProductCategory[]=[];
+  groups:ProductGroups[]=[];
 
-quantity: number = 3;
-  constructor(private userauthservice:UserAuthService,private router:Router,public UserService:UserService){}
 
-  cartDetails:any []= [1,2,3];
+  @Output() categorySelected: EventEmitter<string> = new EventEmitter<string>();
+  @Output() groupSelected: EventEmitter<string> = new EventEmitter<string>();
+
+  constructor(private userauthservice:UserAuthService,private router:Router,public UserService:UserService,private productService:ProductService,private categoryService: CategoryServiceService,private groupService:GroupServiceService){}
+
+
   ngOnInit(): void {
-    if (!localStorage.getItem('chariot')) {
-
-          localStorage.setItem('chariot', JSON.stringify(this.cartDetails));}
-          else {
-            this.cartDetails = JSON.parse(localStorage.getItem('chariot') || '[]');
-
-          }
-          console.log(this.cartDetails);
-          this.updateQuantity();
-
-          this.items = [
-            {label: 'Gallery', icon: 'pi pi-fw pi-home', routerLink: '/'},
-            {label: 'Add Product', icon: 'pi pi-fw pi-plus', routerLink: '/addNewProduct', visible: this.isAdmin()},
-            {label: 'Products', icon: 'pi pi-fw pi-list', routerLink: '/productDetails', visible: this.isAdmin()},
-            {label: 'Dashboard', icon: 'pi pi-fw pi-cog', routerLink: '/admin', visible: this.isAdmin()},
-            {label: 'Dashboard', icon: 'pi pi-fw pi-user', routerLink: '/user', visible: this.isUser()},
-            {label: 'Cart', icon: 'pi pi-fw pi-shopping-cart', routerLink: '/cart', visible: this.isUser()},
-            // Add more menu items here...
-          ];
-
+    this.getCategories();
+    this.getGroups();
   }
-
-  updateQuantity() {
-
-    this.quantity= this.cartDetails.length
-  }
-
-
 
   public isloggedIn(){
     return this.userauthservice.isLoggedIn();
@@ -60,7 +46,41 @@ quantity: number = 3;
   }
   public isUser(){
     return this.userauthservice.isUser();
+  }
 
+  getCategories() {
+    this.productService.getCategories().subscribe({
+      next: (categories: ProductCategory[]) => {
+        this.categories = categories;
+        console.log(this.categories)
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    });
+  }
+
+  getGroups() {
+    this.productService.getGroups().subscribe({
+      next: (groups: ProductGroups[]) => {
+        this.groups = groups;
+        console.log(groups)
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    });
+  }
+
+
+  onCategorySelected(categoryName: string) {
+    console.log('Category selected in HeaderComponent:', categoryName);
+    this.categoryService.selectCategory(categoryName);
+  }
+
+  onGroupSelected(groupName: string) {
+    console.log('Group selected in HeaderComponent:', groupName);
+    this.groupService.selectGroups(groupName);
   }
 
 }

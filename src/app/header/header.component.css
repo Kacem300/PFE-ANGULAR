@@ -91,5 +91,22 @@ z-index: 1000;
 }
 
 
+.fontuser{
+  font-family: 'Roboto Slab', serif;
+  font-size: 30px !important;
+}
+
+/* Add this to your existing styles */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Optional: Style the dropdown items */
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  color: #333; /* Customize the color as needed */
+}
+
 
 

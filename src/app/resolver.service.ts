@@ -25,8 +25,9 @@ export class ResolverService {
      .pipe(map(x=>
       this.imageprocess.createimage(x)))}
      else{
-      return of(this.getProducts())
       console.log("error else resolver")
+      return of(this.getProducts())
+
     }
   }
 
@@ -43,7 +44,7 @@ export class ResolverService {
         productImages:[],
         productSizes:[],
         productCategory:{productCategoryId: 0, categoryName: '', sizeType: false},
-        ProductGroups:[],
+        productGroups:[],
 
   }
 

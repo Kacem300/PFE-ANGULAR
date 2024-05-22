@@ -6,6 +6,7 @@ import { Comment } from '../_model/comment.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { map } from 'rxjs';
 import { ImageProcesService } from '../image-proces.service';
+import { UserService } from '../_Services/user.service';
 
 @Component({
   selector: 'app-details',
@@ -20,6 +21,7 @@ export class DetailsComponent implements OnInit{
   show: boolean = false;
   selectedSize: string = "";
   cartproducts:any[]=[];
+  role: string="";
 
   product:product = {
     productId:0,
@@ -30,7 +32,7 @@ export class DetailsComponent implements OnInit{
     productImages:[],
     productSizes:[],
     productCategory:{productCategoryId: 0, categoryName: '', sizeType: false},
-    ProductGroups:[],
+    productGroups:[],
     productCategoryId:0,
 
   }
@@ -41,32 +43,30 @@ export class DetailsComponent implements OnInit{
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private productService: ProductService
-    ,private ImageProcess: ImageProcesService) { }
+    private productService: ProductService,
+    private ImageProcess: ImageProcesService,
+    public userService:UserService,
+
+  ) { }
 
 
 
 
   ngOnInit(): void {
+    this.userService.getCurrentUser().subscribe((user: any) => {
+      this.role = user.role;
+      console.log(this.role)
+    });
+
     this.product = this.activatedRoute.snapshot.data['product'];
     this.showComments();
     this.averageRating();
     this.getUserRating();
 
   }
- /*   public showComments() {
-    this.productService.getCommentsForProduct(this.product.productId)
-      .subscribe({
-        next: (resp: any[]) => {
-          console.log(resp);
-
-          this.comments = resp;
-        },
-        error: (error: HttpErrorResponse) => {
-          console.log(error);
-        }
-      });
-  } */
+  isUserRole(): boolean {
+    return this.role === 'User';
+  }
   public showComments() {
   this.productService.getCommentsForProduct(this.product.productId)
     .pipe(

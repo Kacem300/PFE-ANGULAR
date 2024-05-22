@@ -8,6 +8,7 @@ import { OrderCount } from '../_model/OrderCount.model';
 import { Rating } from '../_model/rating.model';
 import { ProductCategory } from '../_model/productCategory.model';
 import { ProductGroups } from '../_model/ProductGroups.model';
+import { FileHandle } from '../_model/file-handle.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,42 @@ export class ProductService {
 public addProduct(product:FormData){
   return this.httpCLient.post<product>("http://localhost:9090/addNewProduct",product);
 }
+public deleteproduct(productId:number){
+  return this.httpCLient.delete("http://localhost:9090/deleteProductDetails/"+productId);
+  }
+
+public getAllProduct(page: number, keySearch: string = "", categoryName: string = "",groupName:string="") {
+  return this.httpCLient.get<Array<product>>(
+    "http://localhost:9090/getAllProduct?pageNumber=" + page + "&keySearch=" + keySearch + "&categoryName=" + categoryName+"&groupName"+groupName
+  );
+}
+
+/* public uploadImages(images: File[]): Observable<Set<FileHandle>> {
+  const formData = new FormData();
+  for (let file of images) {
+    formData.append('multipartFiles', file, file.name);
+  }
+  return this.httpCLient.post<Set<FileHandle>>("http://localhost:9090/addImage", formData);
+}
+ */
+public saveImage(imageFile: File[]): Observable<FileHandle> {
+  const formData: FormData = new FormData();
+
+  for (let file of imageFile) {
+    formData.append('imageFile', file, file.name);
+  }
+
+  return this.httpCLient.post<FileHandle>("http://localhost:9090/uploadImage", formData);
+}
+
+
+
+
+/* public getAllProduct(page:number,keySearch: string = ""){
+  return this.httpCLient.get<Array<product>>("http://localhost:9090/getAllProduct?pageNumber="+page+"&keySearch="+keySearch);
+} */
+
+/*Category & Groups*/
 public addCategory(category: FormData): Observable<ProductCategory> {
   return this.httpCLient.post<ProductCategory>("http://localhost:9090/addCategory", category);
 }
@@ -30,16 +67,11 @@ public addGroup(groups: FormData): Observable<ProductGroups> {
 
 
 
-
-public getAllProduct(page:number,keySearch: string = ""){
-  return this.httpCLient.get<Array<product>>("http://localhost:9090/getAllProduct?pageNumber="+page+"&keySearch="+keySearch);
-}
-
-public deleteproduct(productId:number){
-return this.httpCLient.delete("http://localhost:9090/deleteProductDetails/"+productId);
-}
-public deletepProductGroups(productCategoryId:number){
+public deletepProductCategory(productCategoryId:number){
   return this.httpCLient.delete("http://localhost:9090/deleteProductCategory/"+productCategoryId);
+  }
+  public deleteProductGroups(productGroupsId:number){
+  return this.httpCLient.delete("http://localhost:9090/deleteProductGroup/"+productGroupsId);
   }
 
 public getProductbyid(productId:number){
@@ -48,6 +80,15 @@ return this.httpCLient.get<product>("http://localhost:9090/getProductDetailsbyId
 public getCategoryById(productId:number){
   return this.httpCLient.get<ProductCategory>("http://localhost:9090/getCategoryById/"+productId)
   }
+  public getCategories(): Observable<ProductCategory[]> {
+    return this.httpCLient.get<ProductCategory[]>("http://localhost:9090/getCategories");
+  }
+  public getGroups(): Observable<ProductGroups[]> {
+    return this.httpCLient.get<ProductGroups[]>("http://localhost:9090/getGroups");
+  }
+  /*Category & Groups*/
+
+
 public getProductDetails(single:boolean,productId:number){
   return this.httpCLient.get<product[]>("http://localhost:9090/details/"+single+"/"+productId);
 
@@ -71,9 +112,10 @@ public getCart(){
 public getOrderDetails():Observable<MyorderDetails[]>{
   return this.httpCLient.get<MyorderDetails[]>("http://localhost:9090/getOrderDetails");
 }
- public getAllOrderDetailsForAdmin(status: string): Observable<MyorderDetails[]> {
+  public getAllOrderDetailsForAdmin(status: string): Observable<MyorderDetails[]> {
   return this.httpCLient.get<MyorderDetails[]>("http://localhost:9090/getAllOrderDetails/"+status);
 }
+
 
 
 
@@ -85,9 +127,7 @@ public markOrderAsPlaced(orderId:Number) {
   return this.httpCLient.get("http://localhost:9090/markOrderAsPlaced/"+orderId)
 }
 
-public getRandomProducts(): Observable<product[]> {
-  return this.httpCLient.get<product[]>("http://localhost:9090/getRandomProducts");
-}
+
 
 /*ADMIN DASHBOARD*/
 
@@ -153,10 +193,18 @@ public getProductAverageRating(productId: number): Observable<number> {
 public getUserRatingForProduct(productId: number): Observable<number> {
   return this.httpCLient.get<number>(`http://localhost:9090/userRating/${productId}`);
 }
-public getCategories(): Observable<ProductCategory[]> {
-  return this.httpCLient.get<ProductCategory[]>("http://localhost:9090/getCategories");
+
+
+public getRandomProducts(): Observable<product[]> {
+  return this.httpCLient.get<product[]>("http://localhost:9090/getRandomProducts");
 }
-public getGroups(): Observable<ProductGroups[]> {
-  return this.httpCLient.get<ProductGroups[]>("http://localhost:9090/getGroups");
+public getTopOrderedProducts(limit: number = 10): Observable<product[]> {
+  return this.httpCLient.get<product[]>(`http://localhost:9090/getTopOrderedProducts?limit=${limit}`);
 }
+public getTopRatedProducts(limit: number = 10): Observable<product[]> {
+  return this.httpCLient.get<product[]>(`http://localhost:9090/getTopRatedProducts?limit=${limit}`);
+}
+
+
+// Home //
 }

@@ -8,6 +8,8 @@ import { MyorderDetails } from '../_model/order.model';
   styleUrl: './myordersadmin.component.css'
 })
 export class MyordersadminComponent implements OnInit{
+  searchKeyword: string = '';
+
   dataSource: MyorderDetails[] = [];
   status: string = 'All';
   orderTagSeverities: { [key: number]: string } = {}; // Object to store tag severities for each order
@@ -25,6 +27,7 @@ export class MyordersadminComponent implements OnInit{
     this.getAllOrderDetailsForAdmin(this.status);
 
   }
+
 
   getAllOrderDetailsForAdmin(statusParameter: string) {
     this.productService.getAllOrderDetailsForAdmin(statusParameter).subscribe({

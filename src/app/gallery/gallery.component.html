@@ -1,10 +1,13 @@
 
 <body style="background-color: rgba(248,249,255,255);">
 <div class="container">
-  <input pInputText  name="searchKey" placeholder="Search any product" (keyup)="searchByKeyword($event)" [(ngModel)]="searchKey" style="width: 160px;height: 45px; ;">
 
+  <input pInputText  name="searchKey" placeholder="Search any product" (keyup)="searchByKeyword($event)" [(ngModel)]="searchKey" style="width: 160px;height: 45px; ;">
+<!--   <p-dropdown [options]="filterOptions" [(ngModel)]="this.selectedCategory" (onChange)="getAllProduct(this.searchKey, this.selectedCategory)" [ngStyle]="{'text-align': 'left'}"></p-dropdown>
+ -->
     <h3 align="center">Newest Trends</h3>
   <div class="row">
+
       <div class="col-md-3 col-sm-6" style="padding-bottom: 40px;" *ngFor="let item of productDetails">
           <div class="product-grid7">
               <div class="product-image7">
@@ -15,9 +18,9 @@
               </div>
               <div class="product-content">
                   <h3 class="title">{{item.productName}}</h3>
-                  <div>
+                  <!-- <div>
                       {{item.productDescription}}
-                  </div>
+                  </div> -->
                   <div class="price" *ngIf="item.productDiscountprice !== item.productActualprice">{{item.productDiscountprice}} TND
                     <span>{{item.productActualprice}} TND</span>
                 </div>
@@ -34,8 +37,8 @@
 
                   <input type="number" pInputText [(ngModel)]="amount" min="1" [max]="getQuantityForSelectedSize(item, selectedSize)" *ngIf="item.show" style="margin-top: 8px;margin-bottom: 8px;">
 
-
-                  <button pButton type="button" label="ADD" class="custom-button" (click)="addtocart(item,selectedSize);item.show=false" *ngIf="item.show"></button>
+                  <button pButton type="button" label="Cancel" class="custom-button" (click)="item.show=false" *ngIf="item.show"></button>
+                  <button pButton type="button" label="ADD" class="custom-button" (click)="addtocart(item,selectedSize);item.show=false" *ngIf="item.show" [disabled]="allSizesOutOfStock(item)" [disabled]="!UserService.roleMatch(['User'])"></button>
                 </div>
                 <p-toast position="bottom-right"></p-toast>
 
@@ -45,11 +48,12 @@
           </div>
       </div>
   </div>
+  <p-scrollTop />
 
 
-  <div class="text-center mt-5 d-flex justify-content-center" style="padding-bottom: 100px;" *ngIf="showLoadButton">
+  <!-- <div class="text-center mt-5 d-flex justify-content-center" style="padding-bottom: 100px;" *ngIf="showLoadButton">
       <button pButton type="button" label="Load more" (click)="loadMoreProduct()"></button>
-  </div>
+  </div> -->
   <div class="mt-5">
   </div>
 </div>

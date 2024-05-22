@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ProductService } from '../_Services/product.service';
 import { product } from '../_model/product.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -17,6 +17,7 @@ import { ProductCategory } from '../_model/productCategory.model';
 })
 export class ProductDetailsComponent implements OnInit {
 
+  showFullDescription: boolean = false;
 
   showLoadMoreProductButton = false;
 
@@ -29,20 +30,36 @@ constructor(private productService:ProductService,
    private confirmationService: ConfirmationService, private messageService: MessageService
    ){}
 
+
+    @HostListener("window:scroll", [])
+   onWindowScroll() {
+     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+       // you're at the bottom of the page
+       this.loadMoreProduct();
+     }
+   }
+
+
 ngOnInit():void{
   this.getAllProduct();
-  console.log(this.productDetails)
+
 
 }
 
 
-add(){
-  this.router.navigate(['/addNewProduct'])
+loadMoreProduct() {
+  if (this.productDetails.length === 0) {
+    console.log('No more products to load');
+    return;
   }
-  loadMoreProduct() {
-    this.pageNumber = this.pageNumber + 1;
-    this.getAllProduct();
-  }
+  this.pageNumber = this.pageNumber + 1;
+  this.getAllProduct();
+}
+
+ /*  loadMoreProduct() {
+    this.pageNumber = this.pageNumber +1;
+     this.getAllProduct();
+  } */
 
   searchByKeyword(searchkeyword:string) {
     console.log(searchkeyword);
@@ -59,13 +76,7 @@ this.productService.getAllProduct(this.pageNumber,searchKeyword)
 .subscribe({
   next:(response:product[])=>{
     console.log(response)
-    this.productDetails = response;
-    if(response.length == 8) {
-      this.showLoadMoreProductButton = true;
-    } else {
-      this.showLoadMoreProductButton = false;
-    }
-
+    response.forEach(p => this.productDetails.push(p));
   },
   error:(Error:HttpErrorResponse) =>{
     console.log(Error+ " Error product-details")
@@ -73,6 +84,9 @@ this.productService.getAllProduct(this.pageNumber,searchKeyword)
 
 })}
 
+add(){
+  this.router.navigate(['/addNewProduct'])
+  }
 showImages(product: product) {
 console.log(product);
 this.dialog.open(ImageDialogComponent,{
@@ -91,21 +105,14 @@ editProductDetails(productId:number){
 this.router.navigate(['/addNewProduct',{productId}]);
 }
 
-/* deleteProduct(productId:any){
-this.productService.deleteproduct(productId).subscribe({
-  next:(response)=>{
-    console.log(response)
-    this.getAllProduct();
-},
-error:(Error: HttpErrorResponse)=>{
-  console.log("Delete Failed");
-}
-})} */
+
+
 deleteProduct(productId: any) {
   this.confirmationService.confirm({
     message: 'Are you sure you want to delete this product?',
     header: 'Delete Confirmation',
     icon: 'pi pi-exclamation-triangle',
+    key:"uniqueDeleteProductDialog",
     accept: () => {
       this.productService.deleteproduct(productId).subscribe({
         next: (response) => {
@@ -127,7 +134,6 @@ deleteProduct(productId: any) {
   });
 
 }
-
 
 
 

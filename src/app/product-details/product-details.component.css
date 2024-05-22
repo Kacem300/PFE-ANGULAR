@@ -20,3 +20,8 @@
    font-size: inherit;
    line-height: normal !important;
  }
+ .toggle-description {
+  font-weight: bold; /* Makes the text bold */
+  cursor: pointer; /* Changes the cursor to a hand when hovering */
+  color:black;
+}

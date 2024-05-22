@@ -51,7 +51,7 @@
             <th></th>
 
             <th>Total : {{total}} TND</th>
-            <th><button pButton type="button" class="btn btn-success" (click)="navigate()">Order Now</button></th>
+            <th><button pButton type="button" class="btn btn-success" (click)="navigate()" [disabled]="!UserService.roleMatch(['User'])" >Order Now</button></th>
            <!--  <th> <p-button label="Submit" [loading]="loading" (onClick)="load()"></p-button></th> -->
             <th></th>
           </tr>

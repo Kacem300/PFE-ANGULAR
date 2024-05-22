@@ -41,7 +41,8 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Category</th>
-                <th>Actual Price</th>
+<!--                 <th>Group</th>
+ -->                <th>Actual Price</th>
                 <th>Discount Price</th>
 
 
@@ -51,12 +52,30 @@
               </tr>
             </thead>
             <tbody>
-              <ng-container *ngFor="let product of productDetails">
+              <ng-container *ngFor="let product of productDetails",let index =0>
                 <tr >
                   <td>{{product.productId}}</td>
                   <td>{{product.productName}}</td>
-                  <td>{{product.productDescription}}</td>
-                  <td>{{product.productCategory.categoryName}}</td>
+                  <td style="width: 35% !important;">
+                  <span  *ngIf="!product.showFullDescription">{{ product.productDescription | slice:0:100 }}...</span>
+                   <span *ngIf="product.showFullDescription">{{ product.productDescription }}</span>
+                     <a style="text-decoration: none;" class="toggle-description"  *ngIf="product.productDescription.length > 100" (click)="product.showFullDescription = !product.showFullDescription">
+                       {{ product.showFullDescription ? 'View Less' : 'View More' }}
+                    </a>
+                  </td>
+                  <td>
+                    <ng-container *ngIf="product.productCategory; else noCategory">
+                        {{ product.productCategory.categoryName }}
+                    </ng-container>
+                    <ng-template #noCategory>No Category</ng-template>
+                </td>
+                <!-- <td >
+                  <ng-container *ngIf="product.productGroups; else noGroup">
+                      {{ product.productGroups[index].productGroupsName }}
+                  </ng-container>
+                  <ng-template #noGroup>No Group</ng-template>
+              </td> -->
+
                   <td>{{product.productActualprice}}</td>
                   <td>{{product.productDiscountprice}}</td>
 
@@ -65,10 +84,10 @@
                     <button type="button" class="btn btn-primary me-2" (click)="showImages(product)"><i class="far fa-eye"></i> </button>
                     <button type="button" class="btn btn-success me-2" (click)="editProductDetails(product.productId)"><i class="fas fa-pen"></i></button>
                     <button type="button" class="btn btn-danger" (click)="deleteProduct(product.productId)"><i class="fas fa-trash"></i> </button>
-                      <p-toast></p-toast>
-                      <p-confirmDialog></p-confirmDialog>
+
                   </td>
                 </tr>
+
               </ng-container>
             </tbody>
           </table>
@@ -80,3 +99,5 @@
     </div>
   </div>
 </body>
+<p-toast></p-toast>
+<p-confirmDialog key="uniqueDeleteProductDialog"></p-confirmDialog>

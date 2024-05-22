@@ -16,8 +16,8 @@ import { ProductGroups } from '../_model/ProductGroups.model';
 export class AddNewProductComponent implements OnInit {
 
 
-  selectedGroups: any[] = [];
-
+  selectedGroups: ProductGroups[] =[];
+  groupresolver:ProductGroups[]=[];
 show:boolean=false;
 newbutton :boolean = true ;
 categories: ProductCategory[] = []; // Add this line
@@ -34,7 +34,8 @@ product:product = {
   productSizes:[],
   productCategory:{productCategoryId: 0, categoryName: '', sizeType: false},
   productCategoryId:0,
-  ProductGroups:[{productGroupsId:0,productGroupsName:'',}],
+  productGroups:[],
+   /* ProductGroups:[{productGroupsId:0,productGroupsName:'',}], */
 
 }
 
@@ -42,28 +43,40 @@ constructor(private productService:ProductService,private sanitizer:DomSanitizer
 
 
 ngOnInit(): void {
+  /* if (!Array.isArray(this.product.ProductGroups)) {
+    this.product.ProductGroups = [];
+  } */
+
   this.onProductCategoryChange();
   this.productService.getCategories().subscribe(categories => {
     this.categories = categories;
 
+    const resolvedProduct = this.activatedroute.snapshot.data['product'];
+    if (resolvedProduct) {
 
-    // Load the product data inside the getCategories() subscription
-    if (this.product = this.activatedroute.snapshot.data['product']) {
-      console.log("resolver working");
-      console.log(this.product.productCategory.categoryName + " resolver");
+      this.product = resolvedProduct;
+      console.log(this.product)
+      console.log(this.product.productGroups);
+      this.newbutton = false;
+      this.sizeType=this.product.productCategory.sizeType;
+
+      this.selectedGroups = this.product.productGroups;
+
+
+
+      console.log(this.selectedGroups);
+
     } else {
       console.log("resolver is not working");
-    }
-    if (this.product && this.product.productId) {
-      this.newbutton = false;
     }
   });
 
 
+  this.productService.getGroups
     this.productService.getGroups().subscribe({
       next: (groups: ProductGroups[]) => {
         this.groups = groups;
-        console.log(groups)
+
       },
       error: (error: HttpErrorResponse) => {
         console.log(error);
@@ -74,7 +87,7 @@ ngOnInit(): void {
 
 
 addProduct(productForm: NgForm) {
-  this.product.ProductGroups = this.selectedGroups;
+  this.product.productGroups = this.selectedGroups;
   const productFormData = this.prepareFromData(this.product);
   console.log(productFormData);
   this.productService.addProduct(productFormData).subscribe({
@@ -82,6 +95,7 @@ addProduct(productForm: NgForm) {
       productForm.reset();
       this.product.productImages = [];
       this.product.productSizes = [];
+      this.product.productGroups=[];
       this.product.productCategoryId =0;
       console.log(Response);
 
@@ -119,7 +133,7 @@ addProduct(productForm: NgForm) {
     new Blob([JSON.stringify(product.productCategory.productCategoryId)], { type: 'application/json' })
   );
 
-  const productGroupIds = product.ProductGroups.map(group => group.productGroupsId);
+  const productGroupIds = product.productGroups.map(group => group.productGroupsId);
   formData.append(
     'productGroupIds',
     new Blob([JSON.stringify(productGroupIds)], { type: 'application/json' })
@@ -179,10 +193,13 @@ onProductCategoryChange() {
   // If a matching category is found, update this.sizeType
   if (selectedCategory) {
     this.sizeType = selectedCategory.sizeType;
+
   }
 
 
+
 }
+
 
 
 

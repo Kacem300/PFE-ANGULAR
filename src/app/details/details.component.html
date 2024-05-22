@@ -24,8 +24,8 @@
           {{product.productDescription}}
         </div>
 
-        <div class="mt-3">
-          <b style="color: #198754;;"> {{product.productDiscountprice}}</b> <b> TND</b>&nbsp;&nbsp;<b style="text-decoration: line-through;">{{product.productActualprice}}</b>
+        <div class="mt-3" >
+          <b> {{product.productDiscountprice}}</b> <b> TND</b>&nbsp;&nbsp;<b *ngIf="product.productDiscountprice !== product.productActualprice" style="text-decoration: line-through;">{{product.productActualprice}}</b>
         </div>
 
         <div class="ref-variant"><label><span>Size : </span>
@@ -43,7 +43,7 @@
     </span>
 
         <div class="mt-5 text-center">
-          <button  mat-raised-button color="warn" style="width: 200px;" (click)="buyProduct(product.productId)"> Buy Now</button>
+          <button  mat-raised-button color="warn" style="width: 200px;" (click)="buyProduct(product.productId)" [disabled]="!userService.roleMatch(['User'])"> Buy Now</button>
           &nbsp;
           <button  mat-raised-button  style="width: 200px;" (click)="addtocart(product,selectedSize)"  >Add to Cart</button>
       </div>
@@ -53,7 +53,7 @@
         </div>
 <div class="mt-3">
   <label for="rating">Your rating:</label>
-  <p-rating [(ngModel)]="userRating" (onRate)="rateProduct()" [cancel]="false"></p-rating>
+  <p-rating [(ngModel)]="userRating" (onRate)="rateProduct()" [cancel]="false" [disabled]="!userService.roleMatch(['User'])"></p-rating>
 </div>
     </div>
 </div>
@@ -68,7 +68,7 @@
         <label for="commentText">Comment</label>
         <textarea id="commentText" [(ngModel)]="commentText" name="commentText" class="form-control"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary mt-3">Submit</button>
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="!userService.roleMatch(['User'])">Submit</button>
     </form>
   </div>
       <div class="card">

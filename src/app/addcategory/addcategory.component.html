@@ -2,11 +2,13 @@
   <div class="card p-2">
     <div class="row">
     <div class="col-lg-6 col-md-12">
-    <form  #categoryForm="ngForm"  (ngSubmit)="addCategory(categoryForm)">
+      <button *ngIf="!showForm" (click)="showForm = true" class="btn btn-primary">Add Category</button>
+    <form  *ngIf="showForm" #categoryForm="ngForm"  (ngSubmit)="addCategory(categoryForm)">
       <div class="form-group">
         <label for="categoryName">Category Name</label>
         <input type="text" class="form-control" id="categoryName" name="categoryName" [(ngModel)]="productCategory.categoryName" required>
       </div>
+      <button *ngIf="showForm" (click)="showForm = false" class="btn btn-primary">Cancel</button>
       <div class="form-group">
         <label for="sizeType">Size Type</label>
         <select class="form-control" id="sizeType" name="sizeType" [(ngModel)]="productCategory.sizeType" required>
@@ -15,7 +17,8 @@
         </select>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">Add Category</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!categoryForm.valid"
+        >Add Category</button>
       </div>
     </form>
     <p-table [value]="categories" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '20rem'}">
@@ -44,13 +47,19 @@
 
 
   <div class="col-lg-6 col-md-12">
-  <form  #groupForm="ngForm"  (ngSubmit)="addGroup(groupForm)">
+
+    <button *ngIf="!showGroupForm" (click)="showGroupForm = true" class="btn btn-primary">Add Group</button>
+
+
+  <form *ngIf="showGroupForm" #groupForm="ngForm"  (ngSubmit)="addGroup(groupForm)">
     <div class="form-group">
       <label for="groupName">Group Name</label>
       <input type="text" class="form-control" id="groupName" name="groupName" [(ngModel)]="productGroup.productGroupsName" required>
+
     </div>
+    <button *ngIf="showGroupForm" (click)="showGroupForm = false" class="btn btn-primary">Cancel</button>
     <div class="form-group">
-      <button type="submit" class="btn btn-primary">Add group</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!groupForm.valid" >Add group</button>
     </div>
   </form>
   <p-table [value]="groups" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '20rem'}">
@@ -66,7 +75,8 @@
         <td>{{groups.productGroupsId}}</td>
         <td>{{groups.productGroupsName}}</td>
         <td>
-          <button (click)="deleteCategory(groups.groupId)" class="btn btn-danger">Delete</button>
+          <button (click)="deleteGroup(groups.productGroupsId)" class="btn btn-danger">Delete</button>
+
         </td>
       </tr>
     </ng-template>

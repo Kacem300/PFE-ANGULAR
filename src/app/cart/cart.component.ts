@@ -5,6 +5,8 @@ import { product } from '../_model/product.model';
 import { User } from '../_model/user.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ProductSize } from '../_model/productSize.model';
+import { UserService } from '../_Services/user.service';
+import { UserAuthService } from '../_Services/user-auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +14,8 @@ import { ProductSize } from '../_model/productSize.model';
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements OnInit {
-
+  role: String="";
+/* role:[]=[]; */
 total:number = 0;
 
 orderSuccess: any;
@@ -21,16 +24,25 @@ orderSuccess: any;
 constructor(
   private productService:ProductService,
   private router:Router,
-  public sanitizer:DomSanitizer){}
+  public sanitizer:DomSanitizer,
+  public UserService:UserService,
+  private userauthservice:UserAuthService,
+){}
 
 
-  ngOnInit(): void {
-     /*  this.cartDetails = JSON.parse(localStorage.getItem('Cart') || '[]'); // get existing cart from local storage or initialize as empty array
-      console.log(this.cartDetails); */
+ngOnInit(): void {
     this.getCart();
     this.checkout();
+
   }
 
+  public isUser(){
+    return this.userauthservice.isUser();
+  }
+
+  isUserRole(): boolean {
+    return this.role === 'User';
+  }
 
 
     clearCart() {
@@ -122,6 +134,6 @@ getQuantityForSelectedSize(item: any): number {
 }
 
 
-
-
 }
+
+

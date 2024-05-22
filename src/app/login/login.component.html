@@ -1,15 +1,5 @@
-<!DOCTYPE html>
+<!--  <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Login Box [En]</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/Login-Box-En-login-box-en.css">
-</head>
-
 <body>
 
   <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
@@ -30,12 +20,6 @@
         </div>
         <div class="email-login" style="background-color:#ffffff;">
 
-          <!-- <input type="email" class="email-imput form-control" style="margin-top:10px;" required="" placeholder="Email" minlength="6"> -->
-          <!-- <input type="password" class="password-input form-control" style="margin-top:10px;" required="" placeholder="Password" minlength="6"> -->
-
-
-
-
            <input type="text"
           ngModel
            name="userName"
@@ -45,9 +29,6 @@
             minlength="6"
             class="email-imput form-control"
              required>
-
-
-
 
           <input type="password"
 
@@ -76,68 +57,56 @@
             <p style="margin-bottom:0px;cursor: pointer;" >Don't you have an account?<a id="register-link" (click)="register()" >Sign Up!</a></p>
         </div>
     </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
   </form>
+
 </body>
 
-</html>
+</html> -->
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
 
 
-<!--
- <div class="container mt-5">
-  <div class="card text-center p-4">
-    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-      <div class="mb-3">
-        <input type="text"
-               ngModel
-               name="userName"
-               id="userName"
-               placeholder="Enter Your UserName"
-               class="form-control"
-               required>
-      </div>
-      <div class="mb-3">
-        <input type="password"
-               ngModel
-               name="userPassword"
-               id="userPassword"
-               placeholder="Enter Your userPassword"
-               class="form-control"
-               required>
-      </div>
-
-      <button type="submit" class="btn btn-primary btn-block">Login</button>
-    </form>
-  </div>
-</div>
-
- -->
-
-<!--  <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
-  <div class="text-center mb-5">
-      <img src="assets\shoe1_1.webp" alt="Image" height="50" class="mb-3">
-      <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
-      <span class="text-600 font-medium line-height-3">Don't have an account?</span>
-      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
-  </div>
-
-  <div>
-      <label for="email1" class="block text-900 font-medium mb-2">Email</label>
-      <input id="email1" type="text" placeholder="Email address" pInputText class="w-full mb-3">
-
-      <label for="password1" class="block text-900 font-medium mb-2">Password</label>
-      <input id="password1" type="password" placeholder="Password" pInputText class="w-full mb-3">
-
-      <div class="flex align-items-center justify-content-between mb-6">
-          <div class="flex align-items-center">
-              <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
-              <label for="rememberme1" class="text-900">Remember me</label>
+<section class="py-5">
+  <div class="container py-5">
+      <div class="row mb-4 mb-lg-5">
+          <div class="col-md-8 col-xl-6 text-center mx-auto">
+              <p class="fw-bold text-success mb-2">Login</p>
+              <h2 class="fw-bold">Welcome back</h2>
           </div>
-          <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
       </div>
+      <div class="row d-flex justify-content-center">
+          <div class="col-md-6 col-xl-4">
 
-      <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button>
+              <div class="card">
+
+                  <div class="card-body text-center d-flex flex-column align-items-center">
+
+                      <div class="bs-icon-xl bs-icon-circle bs-icon-primary shadow bs-icon my-4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
+                              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
+                          </svg></div>
+                      <form method="post" data-bs-theme="light" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+                         <div class="mb-3">
+                            <input type="text" class="form-control" id="userName" type="userName" name="userName" placeholder="userName"  ngModel name="userName"  required>
+                          </div>
+                          <div class="mb-3">
+                            <input class="form-control" id="userPassword" type="password" name="userPassword" ngModel placeholder="Password" required>
+                          </div>
+
+
+                          <div class="mb-3"><button class="btn btn-primary shadow d-block w-100" type="submit">Log in</button></div>
+
+                          <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                            {{ errorMessage }}
+                            </div>
+
+                      </form>
+                      <p class="text-muted"  >Don't you have an account? <a class="fw-bold" style=" cursor: pointer;" id="register-link" (click)="register()" >Sign Up!</a></p>
+                      <a class="text-muted" class="fw-bold" style="cursor: pointer;" (click)="forgetPassword()">Forgot your password?</a>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
-</div>
- -->
+</section>
+

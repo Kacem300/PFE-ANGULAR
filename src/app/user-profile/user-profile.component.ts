@@ -17,6 +17,7 @@ isEditable:Boolean=false;
   constructor(private UserService:UserService,private sanitizer:DomSanitizer,private ImageProcess: ImageProcesService){}
 
   CurrentUser:User={
+  /* Role:{rolename: '', roledescription: '',}, */
   Role:[],
   userFirstName:"",
   userLastname:"",
@@ -29,6 +30,7 @@ isEditable:Boolean=false;
 
   }
   ngOnInit(): void {
+
     this.getCurrentUser();}
 
 
@@ -77,7 +79,7 @@ isEditable:Boolean=false;
           this.CurrentUser = resp;
           console.log('User updated successfully');
           this.isEditable = false; // Turn off edit mode after successful update
-
+          window.location.reload();
         },
         error: (error: HttpErrorResponse) => {
           console.log(error);
@@ -89,6 +91,7 @@ isEditable:Boolean=false;
 
   public toggleEdit() {
     this.isEditable = !this.isEditable;
+    console.log(this.isEditable)
   }
   public CancelToggleEdit() {
     this.isEditable = !this.isEditable;

@@ -1,4 +1,4 @@
- import { Component, OnInit } from '@angular/core';
+ import { Component, HostListener, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ProductService } from '../_Services/product.service';
 import { product } from '../_model/product.model';
 import { map } from 'rxjs/operators';
@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ProductSize } from '../_model/productSize.model';
 import { MessageService } from 'primeng/api';
+import { CategoryServiceService } from '../_Services/category-service.service';
+import { UserService } from '../_Services/user.service';
+import { ProductCategory } from '../_model/productCategory.model';
 
 
 @Component({
@@ -15,8 +18,12 @@ import { MessageService } from 'primeng/api';
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.css']
 })
-export class GalleryComponent implements OnInit {
+export class GalleryComponent implements OnInit,OnChanges  {
+  @Input() selectedCategory: string = '';
+  @Input() groupSelected: string = 'men';
 
+  selectedGroup:string=this.groupSelected;
+  selectedCategory2 :string = this.selectedCategory;
   cartproducts:any[]=[];
   showLoadButton = false;
   pageNumber: number = 0;
@@ -25,57 +32,118 @@ export class GalleryComponent implements OnInit {
   amount: number = 0;
   productsPerPage: number = 4; // Number of products to display per page
   totalPages: number = 0; // Total number of pages
- selectedSize: string = "";
+  selectedSize: string = "";
 
   maxQuantity: number = 0;
 
   searchKey: string = '';
   searchKeyControl = new FormControl('');
 
+ /*  filterOptions: any[] = [
+    {label: 'All', value: 'All'},
+  ]; */
+  categories: ProductCategory[]=[];
 
 
-  constructor(private productService: ProductService,
-     private ImageProcess: ImageProcesService, private router: Router,private messageService: MessageService) { }
+  constructor(
+    private productService: ProductService,
+    private ImageProcess: ImageProcesService,
+    private router: Router,
+    private messageService: MessageService,
+    public UserService:UserService,
+    private categoryService: CategoryServiceService
+    ) {
+      this.categoryService.categorySelected$.subscribe((categoryName: string) => {
+        this.selectedCategory2 = categoryName;
+        this.pageNumber = 0;
+        this.productDetails = [];
+        this.getAllProduct(this.searchKey, this.selectedCategory2);
+      });
+
+     }
+      @HostListener("window:scroll", [])
+     onWindowScroll() {
+       if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+         this.loadMoreProduct();
+       }
+     }
+
+
 
 
   ngOnInit(): void {
-    this.getAllProduct();
+/*     this.getCategories();
+ */    this.getAllProduct(this.searchKey, this.selectedCategory2);
 
 
     this.searchKeyControl.valueChanges.subscribe(searchKey => {
       this.pageNumber = 0;
       this.productDetails = [];
-      this.getAllProduct(searchKey ?? undefined);
+     this.getAllProduct(searchKey ?? undefined, this.selectedCategory2)
     });
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['selectedCategory'] && !changes['selectedCategory'].isFirstChange()) {
+      this.pageNumber = 0;
+      this.productDetails = [];
+      this.getAllProduct(this.searchKey, this.selectedCategory2);
+    }
+    if (changes['groupSelected'] && !changes['groupSelected'].isFirstChange()) {
+      this.pageNumber = 0;
+      this.productDetails = [];
+      this.getAllProduct(this.searchKey,this.selectedGroup);
+    }
+    console.log(this.selectedGroup)
+  }
+ /*  getCategories() {
+    this.productService.getCategories().subscribe({
+      next: (categories: ProductCategory[]) => {
+        this.categories = categories;
+        this.filterOptions = [
+          { label: 'All', value: '' },
+          ...categories.map(category => ({ label: category.categoryName, value: category.categoryName }))
+        ];
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    });
+  } */
+
+
+
 
 
     searchByKeyword($event: any) {
       this.searchKeyControl.setValue($event.target.value);
     }
+    public loadMoreProduct() {
+      this.pageNumber++;
+      this.getAllProduct(this.searchKey, this.selectedCategory2,this.groupSelected);
+    }
+    public getAllProduct(searchKey: string = "", categoryName: string = this.selectedCategory2,groupName:string =this.selectedGroup) {
+      this.productService.getAllProduct(this.pageNumber, searchKey, categoryName)
+        .pipe(
+          map((x: product[], i) => x.map((product: product) => this.ImageProcess.createimage(product)))
+        )
+        .subscribe({
+          next: (resp: product[]) => {
+            console.log(resp);
+            resp.forEach(p => this.productDetails.push(p));
 
 
+          },
+          error: (error: HttpErrorResponse) => {
+            console.log(error);
+          }
+        });
+    }
 
-  public getAllProduct(searchKey: string = "") {
-    this.productService.getAllProduct(this.pageNumber,searchKey)
-    .pipe(
-      map((x: product[], i) => x.map((product: product) => this.ImageProcess.createimage(product)))
-    )
-    .subscribe({
-      next:(resp: product[]) => {
-        console.log(resp);
-        if(resp.length == 4) {
-          this.showLoadButton = true;
-        } else {
-          this.showLoadButton = false;
-        }
-        resp.forEach(p => this.productDetails.push(p));
-      },
-      error:(error: HttpErrorResponse) => {
-        console.log(error);
-      }
-    });
-  }
+    allSizesOutOfStock(item: any): boolean {
+      return item.productSizes.every((size: { quantity: number; }) => size.quantity === 0);
+    }
+
 
 
 
@@ -84,29 +152,12 @@ export class GalleryComponent implements OnInit {
   }
 
 
-
-
-
-
   showprodcut(productId: number, single: boolean) {
     this.router.navigate(['/details', { productId: productId, single: single }]);
   }
 
-  public loadMoreProduct() {
-    this.pageNumber++;
-    this.getAllProduct();
-  }
 
-  getPageNumbers(): number[] {
-    return Array.from({ length: this.totalPages }, (_, index) => index);
-    console.log(this.totalPages)
 
-  }
-
-  goToPage(page: number): void {
-    this.pageNumber = page;
-    this.getAllProduct();
-  }
 
   addtocart(product: product, selectedSize: string) {
     if (product && selectedSize) {
@@ -134,10 +185,7 @@ export class GalleryComponent implements OnInit {
     }
   }
 
-  onPageChange(event:any) {
-    this.pageNumber = event.page;
-    this.getAllProduct();
-  }
+
 
   getQuantityForSelectedSize(product: product, selectedSize: string): number {
     let size = product.productSizes.find(size => size.size === selectedSize);

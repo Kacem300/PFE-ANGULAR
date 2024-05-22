@@ -12,7 +12,7 @@ import { MessageService } from 'primeng/api';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  showPassword: boolean = false; // Initially password is hidden
+  showPassword: boolean = false;
   errorMessage: string="";
 
 
@@ -51,6 +51,9 @@ constructor(private userService: UserService, private  userAuthService:UserAuthS
     this.router.navigate(['/register']);
   }
 
+  forgetPassword(){
+    this.router.navigate(['/forgot-password']);
+  }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;

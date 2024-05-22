@@ -9,24 +9,22 @@
                   <div class="row">
                       <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
                         <input type="file" style="display: none;" #fileInput (change)="SelectFile($event)">
-                        <img class="rounded-circle mb-3 mt-4 img-fluid" [src]="CurrentUser.userImage.url" style="display: inline;max-height: 110px;"><br>
-                        <button class="btn btn-primary btn-sm" id="photoBtn" type="button" (click)="fileInput.click()">Change Photo</button>
+                        <img class="rounded-circle mb-3 mt-4 img-fluid" [src]="CurrentUser.userImage.url || 'assets/default.jpg'"  style="display: inline;max-height: 110px;"><br>
+                        <button class="btn btn-primary btn-sm" id="photoBtn" type="button" (click)="fileInput.click()" [disabled]="!isEditable">Change Photo</button>
                       </div>
                       <div class="col-sm-12 col-md-6 col-lg-8 col-xl-9">
                           <div class="row">
                               <div class="col-12">
                                   <div class="mb-3"><label class="form-label" for="email"><strong>Email Address</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email"  [(ngModel)]="CurrentUser.userEmail" required="" [readonly]="!isEditable"></div>
                               </div>
-                              <div class="col-12">
-                                  <div class="mb-3"><label class="form-label" for="username"><strong>Username</strong></label><input class="form-control" type="text" placeholder="Username" name="username" [(ngModel)]="CurrentUser.userName" required="" [readonly]="!isEditable"></div>
-                              </div>
+
                           </div>
                       </div>
                       <div class="col-sm-12 col-md-6">
                           <div class="mb-3"><label class="form-label" for="username"><strong> New Password</strong></label><input class="form-control" type="password" id="password" placeholder="Password" [(ngModel)]="CurrentUser.userPassword" [ngModelOptions]="{standalone: true}" [readonly]="!isEditable"></div>
                       </div>
                       <div class="col-sm-12 col-md-6">
-                          <div class="mb-3"><label class="form-label" for="username"><strong>Confirm Password</strong></label><input class="form-control" type="password" id="verifyPassword" placeholder="Password"></div>
+                          <div class="mb-3"><label class="form-label" for="username"><strong>Confirm Password</strong></label><input class="form-control" type="password" id="verifyPassword" placeholder="Password" [readonly]="!isEditable"></div>
                       </div>
                       <div class="col-sm-12 col-md-6">
                           <div class="mb-3"><label class="form-label" for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" placeholder="John" name="first_name" [(ngModel)]="CurrentUser.userFirstName" required="" [ngModelOptions]="{standalone: true}"[readonly]="!isEditable"></div>

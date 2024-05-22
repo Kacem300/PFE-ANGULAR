@@ -8,6 +8,8 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
+  selectedCategory: string | null = null;
+
   showNavbar: boolean=true;
   constructor(public  authService: UserAuthService,private router:Router) {}
 
@@ -16,11 +18,14 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.showNavbar = !['/login', '/register'].includes(event.url);
+        this.showNavbar = !['/login', '/register','/forgetpassword'].includes(event.url);
       }
     });
   }
-
+  handleCategorySelection(categoryName: string) {
+    console.log('Category selected in AppComponent:', categoryName);
+    this.selectedCategory = categoryName;
+  }
 
 
   }

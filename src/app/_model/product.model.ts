@@ -12,12 +12,13 @@ export interface product {
   productActualprice:number,
   productImages:FileHandle[],
   productSizes: ProductSize[],
-  ProductGroups:ProductGroups[],
+  productGroups:ProductGroups[],
    productCategoryId?:number,
    productCategory:ProductCategory,
    size?:any,
   show?: boolean;
   sizeType?: boolean,
   sizesList?: ["XS", "S", "M", "L", "XL", "XXL"],
+  showFullDescription?:boolean,
 
 }

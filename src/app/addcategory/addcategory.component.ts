@@ -13,6 +13,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class AddcategoryComponent implements OnInit {
 
+  showForm = false;
+  showGroupForm = false;
 
   categories: ProductCategory[]=[];
   groups:ProductGroups[]=[];
@@ -104,35 +106,10 @@ addGroup(groupForm: NgForm) {
     });
   }
 
-  /* deleteCategory(productCategoryId: any) {
-    console.log(productCategoryId)
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete this category?',
-      header: 'Delete Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.ProductService.deletepProductGroups(productCategoryId).subscribe({
-          next: (response) => {
-            this.messageService.add({severity:'success', summary:'Successful', detail:'Category Deleted', life: 3000});
 
-            setTimeout(() => {
-              this.getCategories();
-            }, 2000);
-          },
-          error: (error: HttpErrorResponse) => {
-            console.log("Delete Failed");
-            this.messageService.add({severity:'error', summary:'Failed', detail:'Delete Failed', life: 3000});
-          }
-        });
-      },
-      reject: () => {
-        this.messageService.add({severity:'info', summary:'Cancelled', detail:'You have cancelled the deletion', life: 3000});
-      }
-    });
-  } */
   deleteCategory(productCategoryId: any) {
     console.log(productCategoryId);
-    this.ProductService.deletepProductGroups(productCategoryId).subscribe({
+    this.ProductService.deletepProductCategory(productCategoryId).subscribe({
       next: (response) => {
         setTimeout(() => {
           this.getCategories();
@@ -145,6 +122,22 @@ addGroup(groupForm: NgForm) {
       }
     });
   }
+  deleteGroup(productGroupId: any) {
+    console.log(productGroupId);
+    this.ProductService.deleteProductGroups(productGroupId).subscribe({
+      next: (response) => {
+        setTimeout(() => {
+          this.getGroups();
+        }, 2000);
+        this.getCategories()
+        this.getGroups()
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log("Delete Failed");
+      }
+    });
+  }
+
 
 
 

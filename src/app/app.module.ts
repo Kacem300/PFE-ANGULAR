@@ -75,6 +75,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { AddcategoryComponent } from './addcategory/addcategory.component';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ScrollTopModule } from 'primeng/scrolltop';
+import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,6 +106,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     EmailVerificationComponent,
     UsersComponent,
     AddcategoryComponent,
+    ForgetpasswordComponent,
+    ResetPasswordComponent,
 
 
   ],
@@ -151,6 +157,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     ToastModule,
     ConfirmDialogModule,
     MultiSelectModule,
+    ScrollTopModule,
 
   ],
   providers: [
