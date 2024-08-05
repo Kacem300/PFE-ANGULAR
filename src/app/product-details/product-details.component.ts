@@ -120,7 +120,7 @@ deleteProduct(productId: any) {
 
           setTimeout(() => {
             this.getAllProduct();
-          }, 1000);
+          }, 3000);
         },
         error: (error: HttpErrorResponse) => {
           console.log("Delete Failed");

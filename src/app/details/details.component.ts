@@ -87,7 +87,10 @@ export class DetailsComponent implements OnInit{
 }
 
 
-
+getQuantityForSelectedSize(product: product, selectedSize: string): number {
+  let size = product.productSizes.find(size => size.size === selectedSize);
+  return size ? size.quantity : 0;
+}
 
 
 
@@ -111,10 +114,8 @@ export class DetailsComponent implements OnInit{
     this.selectedProductIndex = index;
   }
 
-  buyProduct(productId:number) {
-     this.router.navigate(['/buyProduct', {
-      single: true, productId: productId
-    }]);
+  buyProduct() {
+     this.router.navigate(['/']);
   }
 
   rateProduct() {
@@ -129,7 +130,6 @@ export class DetailsComponent implements OnInit{
   }
 
   averageRating(){
-
     this.productService.getProductAverageRating(this.product.productId).subscribe(averageRating => {
       console.log('Average rating:', averageRating);
       this.averageRate = parseFloat(averageRating.toFixed(1));

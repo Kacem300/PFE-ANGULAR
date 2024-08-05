@@ -12,9 +12,11 @@ import { ImageProcesService } from '../image-proces.service';
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent implements OnInit{
-
+  confirmPassword:string="";
+  passwordMismatch: boolean = false;
 isEditable:Boolean=false;
   constructor(private UserService:UserService,private sanitizer:DomSanitizer,private ImageProcess: ImageProcesService){}
+  userPassword2:string="";
 
   CurrentUser:User={
   /* Role:{rolename: '', roledescription: '',}, */
@@ -72,13 +74,28 @@ isEditable:Boolean=false;
 
 
   public updateUser() {
+console.log(this.userPassword2);
+console.log(this.confirmPassword);
+
     if (this.isEditable) {
+      if (this.userPassword2 !== this.confirmPassword) {
+        this.passwordMismatch = true;
+        return;
+      }
+
+        this.passwordMismatch = false;
+        if(this.userPassword2 !==""){
+          this.ChangePassword();
+        }
+
+
+
       const userData = this.prepareFormData(this.CurrentUser);
       this.UserService.updateCurrentUser(userData).subscribe({
         next: (resp: any) => {
           this.CurrentUser = resp;
           console.log('User updated successfully');
-          this.isEditable = false; // Turn off edit mode after successful update
+          this.isEditable = false;
           window.location.reload();
         },
         error: (error: HttpErrorResponse) => {
@@ -89,6 +106,8 @@ isEditable:Boolean=false;
   }
 
 
+
+
   public toggleEdit() {
     this.isEditable = !this.isEditable;
     console.log(this.isEditable)
@@ -97,6 +116,12 @@ isEditable:Boolean=false;
     this.isEditable = !this.isEditable;
   }
 
+  public ChangePassword(){
+   this.CurrentUser.userPassword = this.userPassword2;
+  }
 
+/*   public ChangePassword2(){
+    this.userPassword2 = this.CurrentUser.userPassword
+   } */
 
 }

@@ -1,7 +1,7 @@
  import { Component, HostListener, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ProductService } from '../_Services/product.service';
 import { product } from '../_model/product.model';
-import { map } from 'rxjs/operators';
+import { map, skip } from 'rxjs/operators';
 import { ImageProcesService } from '../image-proces.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -11,6 +11,8 @@ import { MessageService } from 'primeng/api';
 import { CategoryServiceService } from '../_Services/category-service.service';
 import { UserService } from '../_Services/user.service';
 import { ProductCategory } from '../_model/productCategory.model';
+import { GroupServiceService } from '../_Services/group-service.service';
+import { Observable, combineLatest } from 'rxjs';
 
 
 @Component({
@@ -20,9 +22,9 @@ import { ProductCategory } from '../_model/productCategory.model';
 })
 export class GalleryComponent implements OnInit,OnChanges  {
   @Input() selectedCategory: string = '';
-  @Input() groupSelected: string = 'men';
+  @Input() selectedGroup: string = '';
 
-  selectedGroup:string=this.groupSelected;
+  selectedGroup2:string=this.selectedGroup;
   selectedCategory2 :string = this.selectedCategory;
   cartproducts:any[]=[];
   showLoadButton = false;
@@ -30,8 +32,8 @@ export class GalleryComponent implements OnInit,OnChanges  {
   productDetails: product[] = [];
   show: boolean = false;
   amount: number = 0;
-  productsPerPage: number = 4; // Number of products to display per page
-  totalPages: number = 0; // Total number of pages
+  productsPerPage: number = 4;
+  totalPages: number = 0;
   selectedSize: string = "";
 
   maxQuantity: number = 0;
@@ -39,9 +41,6 @@ export class GalleryComponent implements OnInit,OnChanges  {
   searchKey: string = '';
   searchKeyControl = new FormControl('');
 
- /*  filterOptions: any[] = [
-    {label: 'All', value: 'All'},
-  ]; */
   categories: ProductCategory[]=[];
 
 
@@ -51,16 +50,21 @@ export class GalleryComponent implements OnInit,OnChanges  {
     private router: Router,
     private messageService: MessageService,
     public UserService:UserService,
-    private categoryService: CategoryServiceService
+    private categoryService: CategoryServiceService,
+    private groupService:GroupServiceService
     ) {
-      this.categoryService.categorySelected$.subscribe((categoryName: string) => {
-        this.selectedCategory2 = categoryName;
+      this.categoryService.categorySelected$.subscribe(({category, group}) => {
+        this.selectedCategory2 = category;
+        this.selectedGroup2 = group;
         this.pageNumber = 0;
         this.productDetails = [];
-        this.getAllProduct(this.searchKey, this.selectedCategory2);
+        this.getAllProduct(this.searchKey, this.selectedCategory2, this.selectedGroup2);
       });
 
+
      }
+
+
       @HostListener("window:scroll", [])
      onWindowScroll() {
        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
@@ -72,44 +76,36 @@ export class GalleryComponent implements OnInit,OnChanges  {
 
 
   ngOnInit(): void {
-/*     this.getCategories();
- */    this.getAllProduct(this.searchKey, this.selectedCategory2);
+    this.getAllProduct(this.searchKey, this.selectedCategory2,this.selectedGroup2);
 
 
     this.searchKeyControl.valueChanges.subscribe(searchKey => {
       this.pageNumber = 0;
       this.productDetails = [];
-     this.getAllProduct(searchKey ?? undefined, this.selectedCategory2)
+     this.getAllProduct(searchKey ?? undefined, this.selectedCategory2,this.selectedGroup2)
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+
+   ngOnChanges(changes: SimpleChanges) {
     if (changes['selectedCategory'] && !changes['selectedCategory'].isFirstChange()) {
+      this.selectedCategory2 = changes['selectedCategory'].currentValue;
+      this.selectedGroup2 = changes['selectedGroup'].currentValue;
+
       this.pageNumber = 0;
       this.productDetails = [];
-      this.getAllProduct(this.searchKey, this.selectedCategory2);
+      this.getAllProduct(this.searchKey, this.selectedCategory2,this.selectedGroup2);
     }
-    if (changes['groupSelected'] && !changes['groupSelected'].isFirstChange()) {
+    if (changes['selectedGroup'] && !changes['selectedGroup'].isFirstChange()) {
+      this.selectedGroup2 = changes['selectedGroup'].currentValue;
+      this.selectedCategory2 = changes['selectedCategory'].currentValue;
       this.pageNumber = 0;
       this.productDetails = [];
-      this.getAllProduct(this.searchKey,this.selectedGroup);
+      this.getAllProduct(this.searchKey, this.selectedCategory2, this.selectedGroup2);
     }
-    console.log(this.selectedGroup)
+    console.log(this.selectedGroup2);
   }
- /*  getCategories() {
-    this.productService.getCategories().subscribe({
-      next: (categories: ProductCategory[]) => {
-        this.categories = categories;
-        this.filterOptions = [
-          { label: 'All', value: '' },
-          ...categories.map(category => ({ label: category.categoryName, value: category.categoryName }))
-        ];
-      },
-      error: (error: HttpErrorResponse) => {
-        console.log(error);
-      }
-    });
-  } */
+
 
 
 
@@ -120,10 +116,10 @@ export class GalleryComponent implements OnInit,OnChanges  {
     }
     public loadMoreProduct() {
       this.pageNumber++;
-      this.getAllProduct(this.searchKey, this.selectedCategory2,this.groupSelected);
+      this.getAllProduct(this.searchKey, this.selectedCategory2,this.selectedGroup2);
     }
-    public getAllProduct(searchKey: string = "", categoryName: string = this.selectedCategory2,groupName:string =this.selectedGroup) {
-      this.productService.getAllProduct(this.pageNumber, searchKey, categoryName)
+    public getAllProduct(searchKey: string = "", categoryName: string = this.selectedCategory2,groupName:string =this.selectedGroup2) {
+      this.productService.getAllProduct(this.pageNumber, searchKey, categoryName,groupName)
         .pipe(
           map((x: product[], i) => x.map((product: product) => this.ImageProcess.createimage(product)))
         )
@@ -131,8 +127,6 @@ export class GalleryComponent implements OnInit,OnChanges  {
           next: (resp: product[]) => {
             console.log(resp);
             resp.forEach(p => this.productDetails.push(p));
-
-
           },
           error: (error: HttpErrorResponse) => {
             console.log(error);

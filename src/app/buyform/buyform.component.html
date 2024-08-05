@@ -25,16 +25,23 @@
               <input type="text" class="form-control" id="fullAddress" name="fullAddress" [(ngModel)]="orderDetails.fullAddress" placeholder="Full Address">
             </div>
 
+            <!-- <div class="form-group">
+              <label for="contactNumber">Contact Number</label>
+              <input type="tel"  class="form-control" id="contactNumber" name="contactNumber" [(ngModel)]="orderDetails.contactNumber" placeholder="Contact Number">
+            </div> -->
             <div class="form-group">
               <label for="contactNumber">Contact Number</label>
-              <input type="tel" class="form-control" id="contactNumber" name="contactNumber" [(ngModel)]="orderDetails.contactNumber" placeholder="Contact Number">
-            </div>
+              <input type="tel" class="form-control" id="contactNumber" name="contactNumber"
+                     [(ngModel)]="orderDetails.contactNumber" placeholder="Contact Number"
+                     pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
+          </div>
+
 
 
 
             <div style="text-align: center;">
               <button class="btn btn-outline-primary buttonaddprod" type="reset" (click)="clear(orderForm)">Clear</button>
-              <button class="btn btn-primary buttonaddprod" type="submit">Place Order</button>
+              <button class="btn btn-primary buttonaddprod" type="submit" >Place Order</button>
             </div>
           </form>
         </div>

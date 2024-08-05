@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, retry } from 'rxjs';
 import { UserAuthService } from './user-auth.service';
 import { User } from '../_model/user.model';
+import { ContactForm } from '../_model/ContactForm.model';
 
 @Injectable({
   providedIn: 'root'
@@ -64,11 +65,7 @@ export class UserService {
 
 
 
-/* public getAllUsers(searchKeyword: string = '') {
-  return this.httpclient.get<User[]>(`${this.PATH}/getAllUsers`, {
-    params: { searchKeyword: searchKeyword }
-  });
-} */
+
 public getAllUsers(searchKeyword: string = '', statusFilter: string = 'all') {
   return this.httpclient.get<User[]>(`${this.PATH}/getAllUsers`, {
     params: {
@@ -97,6 +94,17 @@ public verifyToken(token: string): Observable<any> {
 public resetPassword(token: string, newPassword: string): Observable<any> {
   const params = new HttpParams().set('token', token).set('newPassword', newPassword);
   return this.httpclient.post(this.PATH + "/resetPassword", params.toString(), { headers: this.requestHeaders });
+}
+
+
+public submitForm(contactForm: FormData) {
+  return this.httpclient.post<ContactForm>(this.PATH+"/ContactForm", contactForm);
+}
+public getAllContactForms(): Observable<ContactForm[]> {
+  return this.httpclient.get<ContactForm[]>(this.PATH + "/getAllContactForms");
+}
+public deleteUser(username: string): Observable<any> {
+  return this.httpclient.delete(this.PATH + "/deleteUser/" + username);
 }
 
 

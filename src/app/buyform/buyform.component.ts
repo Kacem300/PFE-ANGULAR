@@ -61,7 +61,11 @@ export class BuyformComponent implements OnInit{
       console.log(JSON.stringify(this.orderDetails+"orderdetails"));
       console.log(JSON.stringify(this.cartDetails+"cart details"))
     }
+    clearCart() {
+      this.cartDetails = []
+      localStorage.setItem("Cart" , JSON.stringify(this.cartDetails))
 
+    }
 
   public placeOrder(orderForm:NgForm){
 console.log(this.orderDetails);
@@ -71,6 +75,7 @@ console.log(this.orderDetails);
       this.router.navigate(['/orderConfirm']);
       console.log(Response);
       console.log(Object.entries(this.orderDetails) + " success order detail");
+      this.clearCart();
 
     },
     error:(errorRes:HttpErrorResponse)=>{

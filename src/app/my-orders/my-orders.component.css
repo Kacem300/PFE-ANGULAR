@@ -29,3 +29,8 @@
   border-width: 1px; /* Change border width as needed */
 }
 
+body {
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+
+}

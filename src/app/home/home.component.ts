@@ -18,8 +18,8 @@ export class HomeComponent implements OnInit {
   topProduct: product = {} as product;
   topRatedProduct: product = {} as product;
   images: FileHandle[] = []; // This would be your array of image files
-
-
+  i : number =0;
+  k:number=10;
   products: product[] =[];
 
   responsiveOptions: any[] | undefined;
@@ -81,72 +81,19 @@ topFunction(): void {
 }
 
 topproducts(){
-this.productService.getTopOrderedProducts(10).subscribe(products => {
+this.productService.getTopOrderedProducts(this.k).subscribe(products => {
   if (products && products.length > 0){
   this.topProduct = this.ImageProcess.createimage(products[0]);
-  console.log(this.topProduct); // logs the top 5 ordered products
+  console.log(this.topProduct);
   }
 });
 }
 topRatedProducts(){
-this.productService.getTopRatedProducts(10).subscribe(products => {
+this.productService.getTopRatedProducts(this.k).subscribe(products => {
   if (products && products.length > 0){
   this.topRatedProduct = this.ImageProcess.createimage(products[0]);
-  console.log(this.topRatedProduct); // logs the top 5 rated products
 }
 });
 
 }
-
-/* public SelectFile(event: any){
-  if (event.target.files){
-    const file = event.target.files[0];
-
-    const fileHandle:FileHandle ={
-      file:file,
-      url: this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file))
-
-    }
-    this.images.push(fileHandle);
-  }
-}
-removeimage(i:number){
-  this.images.splice(i,1);
-
-}
-
-prepareFormData(images: FileHandle[]): FormData {
-  const formData = new FormData();
-  for (var i = 0; i < images.length; i++) {
-    formData.append(
-      'imageFile',
-      images[i].file,
-      images[i].file.name,
-    );
-
-}
-return formData;
-}
-
-
-upload(imagesForm: NgForm) {
-  if (this.images.length > 0) {
-    const formData = this.prepareFormData(this.images);
-
-    this.productService.saveImage(formData).subscribe({
-      next: (response: Set<FileHandle>) => {
-        console.log(response); // logs the uploaded images
-        imagesForm.reset();
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
-    });
-  } else {
-    console.log('No images to upload');
-  }
-}
- */
-
-
 }

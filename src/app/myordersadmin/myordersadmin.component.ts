@@ -30,7 +30,7 @@ export class MyordersadminComponent implements OnInit{
 
 
   getAllOrderDetailsForAdmin(statusParameter: string) {
-    this.productService.getAllOrderDetailsForAdmin(statusParameter).subscribe({
+    this.productService.getAllOrderDetailsForAdmin(statusParameter,this.searchKeyword).subscribe({
         next: (resp) => {
             this.dataSource = resp;
             console.log(resp);

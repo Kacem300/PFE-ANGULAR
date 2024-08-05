@@ -3,9 +3,7 @@
   <div class="px-3 py-2 text-white" *ngIf="UserService.roleMatch(['Admin'])" style="background-color: #222;">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start">
-        <!-- <a href="/" class="d-flex align-items-center my-2 my-md-0 me-md-auto text-white text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
-        </a> -->
+
         <span><img src="assets/Logo3.png" alt="Your Brand Name" width="150em" height="40em" class="navbar-brand d-flex align-items-center" style="margin-right: 250px;"></span>
 
 
@@ -47,7 +45,7 @@
 
           <li class="nav-item">
             <a  class="nav-link text-white" routerLink="/addCategory">
-              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
+              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#categories"/></svg>
              Add Category
             </a>
           </li>
@@ -64,11 +62,17 @@
             </a>
           </li>
           <li class="nav-item">
+            <a  class="nav-link text-white" routerLink="/contactAdmin">
+              <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#messages"/></svg>
+              Messages
+            </a>
+          </li>
+        <!--   <li class="nav-item">
             <a  class="nav-link text-white" routerLink="">
               <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
               MyAccount
             </a>
-          </li>
+          </li> -->
 
         </ul>
        <!--  <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -109,24 +113,26 @@
       <ul class="navbar-nav">
         <!-- Left side navigation links -->
         <li  class="nav-item"><a  class="nav-link" routerLink="/home" style="font-family: 'Roboto Slab', serif; font-size: 20px !important;">Home</a></li>
-        <li  class="nav-item"><a class="nav-link " routerLink="" style="font-family: 'Roboto Slab', serif; font-size: 20px !important;">Gallery </a></li>
-        <li class="nav-item dropdown" >
-          <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family: 'Roboto Slab', serif; font-size: 20px !important;">
-            Categories
+        <li  class="nav-item"><a class="nav-link " routerLink="" style="font-family: 'Roboto Slab', serif; font-size: 20px !important;" (click)="onCategorySelected('')" > Gallery </a></li>
+        <li class="nav-item dropdown" (mouseleave)="onGroupLeave()">
+          <a  routerLink="/" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family: 'Roboto Slab', serif; font-size: 20px !important;">
+            Category
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
-            <a class="dropdown-item" *ngFor="let category of categories" (click)="onCategorySelected(category.categoryName)" style="cursor: pointer;" routerLink="">{{category.categoryName }}</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ng-container *ngFor="let group of groups">
+               <div class="dropdown-submenu" (mouseenter)="onGroupHover(group.productGroupsName)" >
+                <a class="dropdown-item dropdown-toggle" (click)="ongroup(group.productGroupsName)" style="cursor: pointer;">{{group.productGroupsName}}</a>
+                <div class="dropdown-menu" *ngIf="hoveredGroup === group.productGroupsName">
+                  <a class="dropdown-item" *ngFor="let category of categories" (click)="onCategorySelected(category.categoryName)"  style="cursor: pointer;" >{{category.categoryName}}</a>
+                </div>
+              </div>
+            </ng-container>
           </div>
         </li>
+        <li  class="nav-item"><a class="nav-link "  style="font-family: 'Roboto Slab', serif; font-size: 20px !important;color: white;cursor: context-menu;" > Gallery </a></li>
 
-        <li class="nav-item dropdown" >
-          <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family: 'Roboto Slab', serif; font-size: 20px !important;">
-            Groups
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
-            <a class="dropdown-item" *ngFor="let group of groups" (click)="onGroupSelected(group.productGroupsName)"  style="cursor: pointer;" routerLink="">{{group.productGroupsName}}</a>
-          </div>
-        </li>
+
+
       </ul>
         <span><img src="assets/Logo2Clear.png" alt="Your Brand Name" width="230em" height="48em" class="navbar-brand d-flex align-items-center" style="margin: 0;"></span>
 
@@ -134,9 +140,13 @@
       <div class="d-flex align-items-center">
         <ul class="navbar-nav">
           <!-- Right side navigation links -->
+
           <li class="nav-item"><a class="nav-link " routerLink="/cart" style="font-family: 'Roboto Slab', serif; font-size: 20px !important;">Cart </a></li>
+
           <li class="nav-item"><a class="nav-link " routerLink="/myOrders" style="font-family: 'Roboto Slab', serif; font-size: 20px !important;"*ngIf="isloggedIn()">My Orders </a></li>
           <li class="nav-item"><a class="nav-link " routerLink="/userProfile" style="font-family: 'Roboto Slab', serif; font-size: 20px !important;" *ngIf="isloggedIn()">My Profile </a></li>
+          <li class="nav-item"><a class="nav-link " routerLink="/contact" style="font-family: 'Roboto Slab', serif; font-size: 20px !important;">Contact </a></li>
+
         </ul>
         <a class="btn btn-primary shadow" role="button" routerLink="/login" *ngIf="!isloggedIn()" style="margin-left: auto;">Sign up</a>
         <a class="btn btn-primary shadow" role="button" *ngIf="isloggedIn()" (click)="islogout()">Log Out</a>
@@ -146,7 +156,7 @@
 </div>
 
 <!-- Mobile Navbar -->
-<div class="d-block d-lg-none">
+ <div class="d-block d-lg-none">
   <nav class="navbar navbar-expand-lg sticky-top navbar-shrink py-3 navbar-light" id="mainNav" *ngIf="!UserService.roleMatch(['Admin'])">
     <div class="container">
 
@@ -158,7 +168,22 @@
         <ul class="navbar-nav mx-auto"  >
           <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
           <li class="nav-item"><a class="nav-link " routerLink="">Gallery </a></li>
-          <li class="nav-item"><a class="nav-link " routerLink="">Categories </a></li>
+
+          <li class="nav-item dropdown" (mouseleave)="onGroupLeave()">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+              Category
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <ng-container *ngFor="let group of groups">
+                 <div class="dropdown-submenu" (mouseenter)="onGroupHover(group.productGroupsName)">
+                  <a class="dropdown-item dropdown-toggle" (click)="ongroup(group.productGroupsName)" style="cursor: pointer;">{{group.productGroupsName}}</a>
+                  <div class="dropdown-menu" *ngIf="hoveredGroup === group.productGroupsName">
+                    <a class="dropdown-item" *ngFor="let category of categories" (click)="onCategorySelected(category.categoryName)"  style="cursor: pointer;">{{category.categoryName}}</a>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </li>
           <li class="nav-item"><a class="nav-link " routerLink="/cart">Cart </a></li>
           <li class="nav-item"><a class="nav-link " routerLink="/myOrders"*ngIf="isloggedIn()">My Orders </a></li>
           <li class="nav-item"><a class="nav-link " routerLink="/userProfile"*ngIf="isloggedIn()">My Profile </a></li>
@@ -206,4 +231,18 @@
       <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
 
     </symbol>
+    <symbol id="messages" viewBox="0 0 16 16">
+      <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+      <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2"/>
+
+    </symbol>
+    <symbol id="categories" viewBox="0 0 16 16">
+      <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z"/>
+      <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z"/>
+
+    </symbol>
+
+
+
+
 </svg>

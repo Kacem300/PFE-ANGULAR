@@ -1,0 +1,36 @@
+<div class="container mt-lg-3 mb-lg-3 pb-lg-3 pt-lg-3">
+
+  <p-table responsiveLayout="scroll" [value]="Contact" class="responsive-table">
+    <ng-template pTemplate="caption" >
+      <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+        <h5 class="m-0">Manage Contacts</h5>
+
+
+      </div>
+
+
+    </ng-template>
+    <ng-template pTemplate="header" style="border-width: 1px;">
+      <tr>
+        <th class="border">Id</th>
+        <th class="border">Name</th>
+        <th class="border">Email</th>
+        <th class="border">Message</th>
+        <th class="border">Date</th>
+
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-contacts>
+      <tr>
+        <td class="border">{{contacts.id}}</td>
+        <td class="border">{{contacts.name}}</td>
+        <td class="border">{{contacts.email}}</td>
+        <td class="border">{{contacts.message}}</td>
+        <td class="border">{{contacts.createdAt | date:'dd, MMMM, yyyy'}}</td>
+
+        </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+

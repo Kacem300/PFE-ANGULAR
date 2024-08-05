@@ -37,6 +37,10 @@
   }
 }
 
-
-
-
+.product-image {
+  max-width: 100px;
+  max-height: 100px;
+}
+.table-margin {
+  margin-bottom: 20px; /* Adjust the value as needed */
+}

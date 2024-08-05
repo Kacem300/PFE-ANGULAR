@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserAuthService } from '../_Services/user-auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../_Services/user.service';
@@ -17,20 +17,30 @@ import { GroupServiceService } from '../_Services/group-service.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit{
+  @Input() cartLength: number = 0;
+
   categories: ProductCategory[]=[];
   groups:ProductGroups[]=[];
+  hoveredGroup: string = '';
 
 
   @Output() categorySelected: EventEmitter<string> = new EventEmitter<string>();
-  @Output() groupSelected: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private userauthservice:UserAuthService,private router:Router,public UserService:UserService,private productService:ProductService,private categoryService: CategoryServiceService,private groupService:GroupServiceService){}
+@Output() groupSelected: EventEmitter<string> = new EventEmitter<string>();
+
+  constructor(
+    private userauthservice:UserAuthService,
+    private router:Router,
+    public UserService:UserService,
+    private productService:ProductService,
+    private categoryService: CategoryServiceService,
+    private groupService:GroupServiceService){}
 
 
   ngOnInit(): void {
     this.getCategories();
     this.getGroups();
-  }
+     }
 
   public isloggedIn(){
     return this.userauthservice.isLoggedIn();
@@ -52,7 +62,6 @@ export class HeaderComponent implements OnInit{
     this.productService.getCategories().subscribe({
       next: (categories: ProductCategory[]) => {
         this.categories = categories;
-        console.log(this.categories)
       },
       error: (error: HttpErrorResponse) => {
         console.log(error);
@@ -64,7 +73,6 @@ export class HeaderComponent implements OnInit{
     this.productService.getGroups().subscribe({
       next: (groups: ProductGroups[]) => {
         this.groups = groups;
-        console.log(groups)
       },
       error: (error: HttpErrorResponse) => {
         console.log(error);
@@ -73,14 +81,43 @@ export class HeaderComponent implements OnInit{
   }
 
 
+
   onCategorySelected(categoryName: string) {
     console.log('Category selected in HeaderComponent:', categoryName);
-    this.categoryService.selectCategory(categoryName);
+    console.log(this.hoveredGroup + "hovered group")
+    this.categoryService.selectCategory(categoryName, this.hoveredGroup);
   }
 
-  onGroupSelected(groupName: string) {
+  ongroup(categoryName: string) {
+    console.log('Category selected in HeaderComponent:', categoryName);
+    this.categoryService.selectCategory("", this.hoveredGroup);
+    console.log(this.hoveredGroup + "hovered group")
+
+  }
+  onCategorySelectedforgallery(categoryName: string) {
+    console.log('Gallery selected in HeaderComponent:', "");
+    console.log("" + "hovered group")
+    this.categoryService.selectCategory('', '');
+  }
+
+
+
+
+
+
+
+  /*  onGroupSelected(groupName: string) {
     console.log('Group selected in HeaderComponent:', groupName);
     this.groupService.selectGroups(groupName);
+  } */
+
+
+
+  onGroupHover(groupName: string) {
+    this.hoveredGroup = groupName;
   }
 
+  onGroupLeave() {
+    this.hoveredGroup = ''; // Clear the hovered group on mouse leave
+  }
 }

@@ -36,6 +36,19 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  deleteUser(username: string): void {
+    this.userService.deleteUser(username).subscribe({
+      next: (response) => {
+        console.log('User deleted successfully:', response);
+        // Refresh the user list after deletion
+        this.getUsers(this.selectedFilter);
+      },
+      error: (error) => {
+        console.error('Error deleting user:', error);
+      }
+    });
+  }
+
 
 
 }

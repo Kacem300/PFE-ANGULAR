@@ -21,10 +21,10 @@
                           </div>
                       </div>
                       <div class="col-sm-12 col-md-6">
-                          <div class="mb-3"><label class="form-label" for="username"><strong> New Password</strong></label><input class="form-control" type="password" id="password" placeholder="Password" [(ngModel)]="CurrentUser.userPassword" [ngModelOptions]="{standalone: true}" [readonly]="!isEditable"></div>
+                          <div class="mb-3"><label class="form-label" for="username"><strong> New Password</strong></label><input class="form-control" type="password" id="password" placeholder="Password" [(ngModel)]="userPassword2" [ngModelOptions]="{standalone: true}" [readonly]="!isEditable"></div>
                       </div>
                       <div class="col-sm-12 col-md-6">
-                          <div class="mb-3"><label class="form-label" for="username"><strong>Confirm Password</strong></label><input class="form-control" type="password" id="verifyPassword" placeholder="Password" [readonly]="!isEditable"></div>
+                          <div class="mb-3"><label class="form-label" for="username"><strong>Confirm Password</strong></label><input class="form-control" type="password" id="verifyPassword" placeholder="Password" [(ngModel)]="confirmPassword" [ngModelOptions]="{standalone: true}"  [readonly]="!isEditable"></div>
                       </div>
                       <div class="col-sm-12 col-md-6">
                           <div class="mb-3"><label class="form-label" for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" placeholder="John" name="first_name" [(ngModel)]="CurrentUser.userFirstName" required="" [ngModelOptions]="{standalone: true}"[readonly]="!isEditable"></div>
@@ -32,14 +32,19 @@
                       <div class="col-sm-12 col-md-6">
                           <div class="mb-3"><label class="form-label" for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" placeholder="Doe" name="last_name" [(ngModel)]="CurrentUser.userLastname" required="" [readonly]="!isEditable"></div>
                       </div>
-                      <div class="col-12">
+                    <!--   <div class="col-12">
                           <p id="emailErrorMsg" class="text-danger" style="display:none;"></p>
                           <p id="passwordErrorMsg" class="text-danger" style="display:none;"></p>
+                      </div> -->
+                      <div class="col-12">
+                        <p id="emailErrorMsg" class="text-danger" style="display:none;"></p>
+                        <p id="passwordErrorMsg" class="text-danger" *ngIf="passwordMismatch">Passwords do not match.</p>
                       </div>
+
                       <div class="col-12 text-end">
-                        <button class="btn btn-primary btn-sm" id="editBtn" type="button" (click)="toggleEdit()">Edit</button>
-                          <button class="btn btn-primary btn-sm" id="cancelBtn" type="button" (click)="CancelToggleEdit()">Cancel</button>
-                          <button class="btn btn-primary btn-sm" id="submitBtn" type="submit"  (click)="updateUser()">Save Settings</button>
+                        <button class="btn btn-primary btn-sm" id="editBtn" type="button" (click)="toggleEdit()" [disabled]="isEditable">Edit</button>
+                          <button class="btn btn-primary btn-sm" id="cancelBtn" type="button" (click)="CancelToggleEdit()" [disabled]="!isEditable">Cancel</button>
+                          <button class="btn btn-primary btn-sm" id="submitBtn" type="submit"  (click)="updateUser()" [disabled]="!isEditable">Save Settings</button>
                       </div>
                   </div>
               </form>

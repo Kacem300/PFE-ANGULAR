@@ -9,10 +9,15 @@
             <label for="productName">Product Name</label>
             <input type="text" class="form-control" id="productName" [(ngModel)]="product.productName" name="productName" required>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="productDescription">Product Description</label>
             <input type="text" class="form-control" id="productDescription" [(ngModel)]="product.productDescription" name="productDescription" required>
+          </div> -->
+          <div class="form-group">
+            <label for="productDescription">Product Description</label>
+            <textarea class="form-control" id="productDescription" [(ngModel)]="product.productDescription" name="productDescription" required></textarea>
           </div>
+
           <div class="form-group">
             <label for="productDiscountPrice">Product Discount Price</label>
             <input type="number" class="form-control" id="productDiscountPrice" [(ngModel)]="product.productDiscountprice" name="productDiscountPrice" required>

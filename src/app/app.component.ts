@@ -9,6 +9,8 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   selectedCategory: string | null = null;
+  cartDetails:any []= [];
+
 
   showNavbar: boolean=true;
   constructor(public  authService: UserAuthService,private router:Router) {}
@@ -22,6 +24,7 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
   handleCategorySelection(categoryName: string) {
     console.log('Category selected in AppComponent:', categoryName);
     this.selectedCategory = categoryName;

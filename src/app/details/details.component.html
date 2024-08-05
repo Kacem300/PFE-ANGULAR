@@ -37,15 +37,15 @@
       <span data-reflow-variant="199976733_s" data-reflow-product="717978921" data-reflow-max-qty="999" data-reflow-quantity="1">
         <div class="ref-quantity-widget">
             <div class="ref-decrease" (click)="decreaseAmount()"><span></span></div>
-            <input type="text"  pInputText [(ngModel)]="amount" min="1" />
+            <input type="text"  pInputText [(ngModel)]="amount" min="1" [max]="getQuantityForSelectedSize(product, selectedSize)" />
             <div class="ref-increase" (click)="increaseAmount()"><span></span></div>
         </div>
     </span>
 
         <div class="mt-5 text-center">
-          <button  mat-raised-button color="warn" style="width: 200px;" (click)="buyProduct(product.productId)" [disabled]="!userService.roleMatch(['User'])"> Buy Now</button>
+          <button  mat-raised-button  style="width: 200px;" (click)="buyProduct()" > Back To Gallery</button>
           &nbsp;
-          <button  mat-raised-button  style="width: 200px;" (click)="addtocart(product,selectedSize)"  >Add to Cart</button>
+          <button  mat-raised-button color="warn" style="width: 200px;" (click)="addtocart(product,selectedSize)"  >Add to Cart</button>
       </div>
       </div>
       <div>
@@ -73,7 +73,23 @@
   </div>
       <div class="card">
         <div style="margin-bottom: 5vh;" *ngFor="let comment of comments; let i = index">
-          <div class="d-flex comment-box" style="padding-right: 30px;padding-left: 100px;padding-top: 0px;padding-bottom: 18px;"><img class="rounded-circle" [src]="comment.user.userImage.url"  width="72" height="72">
+          <div class="d-flex comment-box" style="padding-right: 30px;padding-left: 100px;padding-top: 0px;padding-bottom: 18px;">
+            <!-- <img class="rounded-circle" [src]="comment.user.userImage.url ? comment.user.userImage.url : '../../assets/default.png'" width="72" height="72"> -->
+            <div>
+              <!-- Template for the default image -->
+              <ng-template #defaultImage>
+                <img class="rounded-circle" src="../../assets/default.png" width="72" height="72">
+              </ng-template>
+
+              <!-- Main image with ngIf and else -->
+              <img *ngIf="comment.user.userImage && comment.user.userImage.url; else defaultImage"
+                   class="rounded-circle"
+                   [src]="comment.user.userImage.url"
+                   width="72"
+                   height="72">
+            </div>
+
+
               <div>
                   <div class="row text-end d-flex">
                       <div class="col-xl-12 d-flex align-items-center comment-user" style="padding-left: 23px;">
@@ -83,7 +99,8 @@
                           <p class="text-break text-start">{{comment.commentText}}</p>
                       </div>
                       <div class="col-xl-12 d-flex d-xl-flex justify-content-stretch align-items-stretch comment-reply">
-                        <div><a data-bs-toggle="collapse" aria-expanded="false" [attr.aria-controls]="'collapse-' + i" [attr.href]="'#collapse-' + i" role="button"><i class="fas fa-reply"></i> Reply</a>
+                        <div>
+                          <!-- <a data-bs-toggle="collapse" aria-expanded="false" [attr.aria-controls]="'collapse-' + i" [attr.href]="'#collapse-' + i" role="button"><i class="fas fa-reply"></i> Reply</a> -->
                           <div [attr.id]="'collapse-' + i" class="collapse">
                                   <div class="d-flex flex-shrink-1 card-header reply-box">
                                       <div class="col">

@@ -26,20 +26,13 @@ public deleteproduct(productId:number){
   return this.httpCLient.delete("http://localhost:9090/deleteProductDetails/"+productId);
   }
 
-public getAllProduct(page: number, keySearch: string = "", categoryName: string = "",groupName:string="") {
+public getAllProduct(page: number, keySearch: string = "", categoryName: string = "",productGroupsName:string="") {
   return this.httpCLient.get<Array<product>>(
-    "http://localhost:9090/getAllProduct?pageNumber=" + page + "&keySearch=" + keySearch + "&categoryName=" + categoryName+"&groupName"+groupName
+    "http://localhost:9090/getAllProduct?pageNumber=" + page + "&keySearch=" + keySearch + "&categoryName=" + categoryName+"&productGroupsName="+productGroupsName
   );
 }
 
-/* public uploadImages(images: File[]): Observable<Set<FileHandle>> {
-  const formData = new FormData();
-  for (let file of images) {
-    formData.append('multipartFiles', file, file.name);
-  }
-  return this.httpCLient.post<Set<FileHandle>>("http://localhost:9090/addImage", formData);
-}
- */
+
 public saveImage(imageFile: File[]): Observable<FileHandle> {
   const formData: FormData = new FormData();
 
@@ -86,6 +79,22 @@ public getCategoryById(productId:number){
   public getGroups(): Observable<ProductGroups[]> {
     return this.httpCLient.get<ProductGroups[]>("http://localhost:9090/getGroups");
   }
+
+/*   public updateCategory(ProductCategoryId: number, category: ProductCategory) {
+    return this.httpCLient.put<ProductCategory>(`http://localhost:9090/${ProductCategoryId}`, category);
+  }
+  public updateGroup(ProductGroupsId: number, groups: ProductGroups) {
+    return this.httpCLient.put<ProductGroups>(`http://localhost:9090/${ProductGroupsId}`, groups);
+  } */
+
+  public updateCategory(ProductCategoryId: number, category: ProductCategory) {
+    return this.httpCLient.put<ProductCategory>(`http://localhost:9090/category/${ProductCategoryId}`, category);
+}
+
+public updateGroup(ProductGroupsId: number, groups: ProductGroups) {
+    return this.httpCLient.put<ProductGroups>(`http://localhost:9090/group/${ProductGroupsId}`, groups);
+}
+
   /*Category & Groups*/
 
 
@@ -97,9 +106,7 @@ public placeOrder(orderDetails:orderDetails,single:any){
   return this.httpCLient.post<orderDetails>("http://localhost:9090/placeOrder"+"/"+single,orderDetails);
 }
 
-/* public addToCart(productId:number){
-  return this.httpCLient.get("http://localhost:9090/addToCart/"+productId);
-} */
+
 public addToCart(productIds: number[]){
   return this.httpCLient.post("http://localhost:9090/addToCart", productIds);
 }
@@ -109,13 +116,19 @@ public getCart(){
   return this.httpCLient.get("http://localhost:9090/getCart");
 }
 
-public getOrderDetails():Observable<MyorderDetails[]>{
+
+
+/* public getOrderDetails():Observable<MyorderDetails[]>{
   return this.httpCLient.get<MyorderDetails[]>("http://localhost:9090/getOrderDetails");
-}
-  public getAllOrderDetailsForAdmin(status: string): Observable<MyorderDetails[]> {
-  return this.httpCLient.get<MyorderDetails[]>("http://localhost:9090/getAllOrderDetails/"+status);
+} */
+
+public getOrderDetails(productName: string = ''): Observable<MyorderDetails[]> {
+  return this.httpCLient.get<MyorderDetails[]>(`http://localhost:9090/getOrderDetails?productName=${productName}`);
 }
 
+getAllOrderDetailsForAdmin(status: string, searchKeyword: string = ''): Observable<MyorderDetails[]> {
+  return this.httpCLient.get<MyorderDetails[]>(`http://localhost:9090/getAllOrderDetails/${status}?searchKeyword=${searchKeyword}`);
+}
 
 
 
@@ -169,6 +182,23 @@ public getNewRevenue(): Observable<Number> {
 }
 
 
+
+
+
+getNewContactFormCount(): Observable<number> {
+  return this.httpCLient.get<number>('http://localhost:9090/getNewContactFormCount');
+}
+
+getTotalContactFormCount(): Observable<number> {
+  return this.httpCLient.get<number>('http://localhost:9090/getTotalContactFormCount');
+}
+
+getContactFormCountsPerMonth(): Observable<OrderCount[]> {
+  return this.httpCLient.get<OrderCount[]>('http://localhost:9090/getContactFormCountsPerMonth');
+}
+
+
+
 /*ADMIN DASHBOARD*/
 
 
@@ -189,22 +219,30 @@ public rateProduct(productId: number, rating: number): Observable<Rating> {
 public getProductAverageRating(productId: number): Observable<number> {
   return this.httpCLient.get<number>(`http://localhost:9090/product/${productId}`);
 }
+public getOrderCountPerProduct(productId:number):Observable<number>{
+  return this.httpCLient.get<number>(`http://localhost:9090/getOrderCountPerProduct/${productId}`);
+}
 
 public getUserRatingForProduct(productId: number): Observable<number> {
   return this.httpCLient.get<number>(`http://localhost:9090/userRating/${productId}`);
 }
 
-
+// Home //
 public getRandomProducts(): Observable<product[]> {
   return this.httpCLient.get<product[]>("http://localhost:9090/getRandomProducts");
 }
 public getTopOrderedProducts(limit: number = 10): Observable<product[]> {
   return this.httpCLient.get<product[]>(`http://localhost:9090/getTopOrderedProducts?limit=${limit}`);
 }
+public getLeastOrderedProducts(limit: number = 10): Observable<product[]> {
+  return this.httpCLient.get<product[]>(`http://localhost:9090/getLeastOrderedProducts?limit=${limit}`);
+}
 public getTopRatedProducts(limit: number = 10): Observable<product[]> {
   return this.httpCLient.get<product[]>(`http://localhost:9090/getTopRatedProducts?limit=${limit}`);
 }
-
+public getWorstRatedProducts(limit: number = 10): Observable<product[]> {
+  return this.httpCLient.get<product[]>(`http://localhost:9090/getWorstRatedProducts?limit=${limit}`);
+}
 
 // Home //
 }

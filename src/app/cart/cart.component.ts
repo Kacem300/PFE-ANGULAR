@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, input } from '@angular/core';
 import { ProductService } from '../_Services/product.service';
 import { Router } from '@angular/router';
 import { product } from '../_model/product.model';
@@ -14,10 +14,9 @@ import { UserAuthService } from '../_Services/user-auth.service';
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements OnInit {
+  @Input() cartLength: number = 0;
   role: String="";
-/* role:[]=[]; */
 total:number = 0;
-
 orderSuccess: any;
 
  cartDetails:any []= [];
@@ -35,6 +34,9 @@ ngOnInit(): void {
     this.checkout();
 
   }
+  public updateCartLength() {
+    this.cartLength = this.cartDetails.length;
+  }
 
   public isUser(){
     return this.userauthservice.isUser();
@@ -49,6 +51,7 @@ ngOnInit(): void {
       this.cartDetails = []
       localStorage.setItem("Cart" , JSON.stringify(this.cartDetails))
       this.getCartTotal()
+      this.updateCartLength()
     }
 
     addAmount(index:number) {
@@ -57,6 +60,7 @@ ngOnInit(): void {
         localStorage.setItem("Cart" , JSON.stringify(this.cartDetails))
         this.getCartTotal();
       }
+      this.updateCartLength()
     }
 
     minsAmount(index:number) {
@@ -65,6 +69,8 @@ ngOnInit(): void {
         localStorage.setItem("Cart" , JSON.stringify(this.cartDetails))
         this.getCartTotal();
       }
+      this.updateCartLength()
+
     }
 
   detectChange() {
@@ -78,6 +84,8 @@ ngOnInit(): void {
       this.cartDetails.splice(index , 1)
       localStorage.setItem("Cart" , JSON.stringify(this.cartDetails))
       this.getCartTotal();
+      this.updateCartLength()
+
     }
 
     getCartTotal() {
@@ -127,6 +135,7 @@ navigate(){
   this.router.navigate(['/buyProduct', {
     single: false, productId:0
   }]);
+
 }
 getQuantityForSelectedSize(item: any): number {
   let size = item.product.productSizes.find((size: { size: any; }) => size.size === item.size);

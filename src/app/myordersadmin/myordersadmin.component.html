@@ -8,7 +8,7 @@
 
         <span class="block mt-2 md:mt-0 p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input  pInputText type="text" class="w-full sm:w-auto" />
+          <input [(ngModel)]="searchKeyword" (input)="getAllOrderDetailsForAdmin(selectedFilter)" pInputText type="text" class="w-full sm:w-auto" />
         </span>
 
       </div>
@@ -40,7 +40,15 @@
         <td class="border">{{order.orderFullOrder}}</td>
         <td class="border">{{order.orderContactNumber}}</td>
         <td class="border">{{order.orderAmount}}</td>
-        <td class="border">{{order.product.productName}}</td>
+        <td class="border">
+          <ng-container *ngIf="order.product?.productName; else noProductName">
+              {{ order.product.productName }}
+          </ng-container>
+          <ng-template #noProductName>
+              No product name available
+          </ng-template>
+      </td>
+
         <td class="border">{{order.orderDate | date:'dd, MMMM, yyyy'}}</td>
         <td class="border">
           <p-tag [severity]="orderTagSeverities[order.orderId]" value="{{order.orderStatus}}" [class]="'p-tag-' + orderTagSeverities[order.orderId]"></p-tag>
@@ -58,4 +66,3 @@
   </p-table>
 </div>
 
-<app-footer></app-footer>

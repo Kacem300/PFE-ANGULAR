@@ -13,6 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class AddcategoryComponent implements OnInit {
 
+  selected: boolean = false;
   showForm = false;
   showGroupForm = false;
 
@@ -36,6 +37,10 @@ export class AddcategoryComponent implements OnInit {
   ngOnInit(): void {
    this.getCategories()
    this.getGroups()
+   this.productCategory.selected = false;
+   this.productGroup.selected = false;
+
+
   }
 
   getCategories() {
@@ -73,6 +78,7 @@ export class AddcategoryComponent implements OnInit {
           categoryName: "",
           sizeType: false
         };
+        this.showGroupForm = false
         this.getCategories()
         this.getGroups()
       },
@@ -83,11 +89,12 @@ export class AddcategoryComponent implements OnInit {
   }
 
 addGroup(groupForm: NgForm) {
+
     const formData = new FormData();
     formData.append('productGroupId', this.productGroup.productGroupsId.toString());
     formData.append('productGroupsName', this.productGroup.productGroupsName);
 
-
+    this.showForm = false
     this.ProductService.addGroup(formData).subscribe({
       next: (response: ProductGroups) => {
         console.log(response);
@@ -97,6 +104,7 @@ addGroup(groupForm: NgForm) {
           productGroupsName: "",
 
         };
+
         this.getCategories()
         this.getGroups()
       },
@@ -141,6 +149,58 @@ addGroup(groupForm: NgForm) {
 
 
 
+  selectCategory(category: ProductCategory) {
+    this.categories.forEach(category => category.selected = false); // deselect all categories
+    category.selected = true; // select the clicked category
+    this.productCategory = category; // populate the form with the selected category
+    this.showForm = true; // show the form
+  }
+  updateCategory() {
+    if (this.productCategory.productCategoryId && this.productCategory.categoryName) {
+        this.ProductService.updateCategory(this.productCategory.productCategoryId, this.productCategory).subscribe({
+            next: (updatedCategory: ProductCategory) => {
+                console.log(updatedCategory);
+                this.productCategory = {
+                    productCategoryId: 0,
+                    categoryName: "",
+                    sizeType: false
+                };
+                this.getCategories();
+            },
+            error: (error: HttpErrorResponse) => {
+                console.log(error);
+            }
+        });
+    } else {
+        console.log("Category ID or name is missing");
+    }
+}
+  selectGroup(group: ProductGroups) {
+    this.groups.forEach(group => group.selected = false); // deselect all groups
+    group.selected = true; // select the clicked group
+    this.productGroup = group; // populate the form with the selected group
+    this.showGroupForm = true; // show the form
+  }
+
+  updateGroup() {
+    if (this.productGroup.productGroupsId && this.productGroup.productGroupsName) {
+        this.ProductService.updateGroup(this.productGroup.productGroupsId, this.productGroup).subscribe({
+            next: (updatedGroup: ProductGroups) => {
+                console.log(updatedGroup);
+                this.productGroup = {
+                    productGroupsId: 0,
+                    productGroupsName: "",
+                };
+                this.getGroups();
+            },
+            error: (error: HttpErrorResponse) => {
+                console.log(error);
+            }
+        });
+    } else {
+        console.log("Group ID or name is missing");
+    }
+}
 
 }
 

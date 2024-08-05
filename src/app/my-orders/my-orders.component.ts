@@ -9,6 +9,8 @@ import { MyorderDetails } from '../_model/order.model';
 })
 export class MyOrdersComponent implements OnInit {
   myOrderDetails: MyorderDetails[] = [];
+  searchKeyword: string ="";
+
 
 constructor(private productService:ProductService) { }
   ngOnInit(): void {
@@ -16,7 +18,7 @@ constructor(private productService:ProductService) { }
   }
 
 getOrderDetails(){
-  this.productService.getOrderDetails().subscribe({
+  this.productService.getOrderDetails(this.searchKeyword).subscribe({
     next:(Response:MyorderDetails[])=>{
 
       this.myOrderDetails =Response;

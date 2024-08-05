@@ -78,6 +78,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ContactComponent } from './contact/contact.component';
+import { ContactAdminComponent } from './contact-admin/contact-admin.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +110,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     AddcategoryComponent,
     ForgetpasswordComponent,
     ResetPasswordComponent,
+    ContactComponent,
+    ContactAdminComponent,
 
 
   ],

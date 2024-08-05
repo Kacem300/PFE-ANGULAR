@@ -1,61 +1,14 @@
-<!-- <div class="container mt-5">
-  <table mat-table
-         [dataSource]="myOrderDetails"
-         class="mat-elevation-z8">
 
-      <ng-container matColumnDef="Name">
-          <th mat-header-cell
-              *matHeaderCellDef> Name </th>
-          <td mat-cell
-              *matCellDef="let element"> {{element.orderFullName}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Address">
-          <th mat-header-cell
-              *matHeaderCellDef> Address </th>
-          <td mat-cell
-              *matCellDef="let element"> {{element.orderFullOrder}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Contact No.">
-          <th mat-header-cell
-              *matHeaderCellDef> Contact No. </th>
-          <td mat-cell
-              *matCellDef="let element"> {{element.orderContactNumber}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Amount">
-          <th mat-header-cell
-              *matHeaderCellDef> Amount </th>
-          <td mat-cell
-              *matCellDef="let element"> {{element.orderAmount}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Status">
-          <th mat-header-cell
-              *matHeaderCellDef> Status </th>
-          <td mat-cell
-              *matCellDef="let element"> {{element.orderStatus}} </td>
-      </ng-container>
-
-
-      <tr mat-header-row
-          *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row
-          *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</div>
- -->
 
  <div class="container mt-lg-3 mb-lg-3 pb-lg-3 pt-lg-3">
 
   <p-table responsiveLayout="scroll" [value]="myOrderDetails" class="responsive-table">
     <ng-template pTemplate="caption" >
       <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-        <h5 class="m-0">Manage Products</h5>
+        <h5 class="m-0">My Orders</h5>
         <span class="block mt-2 md:mt-0 p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input pInputText type="text" class="w-full sm:w-auto" />
+          <input  placeholder="Search By Product Name" [(ngModel)]="searchKeyword" (input)="getOrderDetails()" pInputText type="text" class="w-full sm:w-auto" />
         </span>
       </div>
     </ng-template>
@@ -77,7 +30,15 @@
         <td class="border">{{order.orderFullOrder}}</td>
         <td class="border">{{order.orderContactNumber}}</td>
         <td class="border">{{order.orderAmount}}</td>
-        <td class="border">{{order.product.productName}}</td>
+        <!-- <td class="border">{{order.product.productName}}</td> -->
+        <td class="border">
+          <ng-container *ngIf="order.product?.productName; else noProductName">
+              {{ order.product.productName }}
+          </ng-container>
+          <ng-template #noProductName>
+              No product name available
+          </ng-template>
+      </td>
 
         <td class="border">{{order.orderDate | date:'dd, MMMM, yyyy'}}</td>
         <td class="border">
@@ -87,4 +48,6 @@
   </p-table>
 </div>
 
-<app-footer></app-footer>
+
+
+

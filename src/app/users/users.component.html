@@ -25,6 +25,7 @@
         <th class="border">Email</th>
         <th class="border">Status</th>
         <th class="border">Registration Date</th>
+        <th class="border">Actions</th>
 
 
 
@@ -40,6 +41,9 @@
         <td class="border">{{user.userEmail}}</td>
         <td class="border">{{user.enabled ? 'Verified' : 'Not Verified'}}</td>
         <td class="border">{{user.registrationDate | date:'dd, MMMM, yyyy'}}</td>
+        <td class="border">
+          <p-button (click)="deleteUser(user.userName)" severity="danger" label="Delete User" [style]="{'font-size': '0.8rem', 'padding': '0.3em 0.6em', 'border-radius': '6px'}"></p-button>
+        </td>
 
 
         </tr>
